@@ -329,10 +329,13 @@ namespace Renko.Extensions
 				GameObject.Destroy(context.GetChild(0));
 		}
 
-		public static IEnumerator<Transform> NextDeepChild(this Transform context) {
+		/// <summary>
+		/// Returns an enumerator for getting this transform's deep children.
+		/// </summary>	
+		public static IEnumerator<Transform> DeepChildren(this Transform context) {
 			for(int i=0; i<context.childCount; i++) {
 				Transform curChild = context.GetChild(i);
-				var deepEnumerator = NextDeepChild(curChild);
+				var deepEnumerator = DeepChildren(curChild);
 
 				//Keep enumerating
 				while(deepEnumerator.MoveNext())
