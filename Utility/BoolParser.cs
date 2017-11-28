@@ -24,12 +24,8 @@ namespace Renko.Utility
 		/// <summary>
 		/// Adds a string value that will make the Parse method return true.
 		/// </summary>
-		public static void AddCondition(string condition)
-		{
-			//Cleanse the param
+		public static void AddCondition(string condition) {
 			condition = condition.Trim().ToLower();
-
-			//If doesn't exist in the conditions, add it
 			if(!trueConditions.Contains(condition))
 				trueConditions.Add(condition);
 		}
@@ -37,33 +33,21 @@ namespace Renko.Utility
 		/// <summary>
 		/// Removes a string value from conditions list.
 		/// </summary>
-		public static void RemoveCondition(string condition)
-		{
-			//Cleanse the param
+		public static void RemoveCondition(string condition) {
 			condition = condition.Trim().ToLower();
-
-			//Remove condition
 			trueConditions.Remove(condition);
 		}
 
 		/// <summary>
 		/// Parses the string value and returns result
 		/// </summary>
-		public static bool Parse(string s)
-		{
-			//If string is null, return false
+		public static bool Parse(string s) {
 			if(s == null)
 				return false;
-
-			//For each condition
-			for(int i=0; i<trueConditions.Count; i++)
-			{
-				//If there was any matching condition, return true
+			for(int i=0; i<trueConditions.Count; i++) {
 				if(trueConditions[i].Equals(s))
 					return true;
 			}
-
-			//No condition matched. return false
 			return false;
 		}
 	}
