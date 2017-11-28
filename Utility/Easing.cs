@@ -13,8 +13,7 @@ namespace Renko.Utility
 	/// <summary>
 	/// Types of ease interpolations available.
 	/// </summary>
-	public enum EaseType
-	{
+	public enum EaseType {
 		Linear = 0,
 		EaseOut,
 		EaseIn,
@@ -80,8 +79,7 @@ namespace Renko.Utility
 		/// <param name="b">Starting value.</param>
 		/// <param name="c">Change in value.</param>
 		/// <returns>The correct value.</returns>
-		public static float Linear( float t, float b, float c, float d )
-		{
+		public static float Linear( float t, float b, float c, float d ) {
 			return c * t + b;
 		}
 
@@ -93,8 +91,7 @@ namespace Renko.Utility
 		/// <param name="b">The blue component.</param>
 		/// <param name="c">C.</param>
 		/// <param name="d">D.</param>
-		public static float EaseOut( float t, float b, float c, float d )
-		{
+		public static float EaseOut( float t, float b, float c, float d ) {
 			return QuadEaseOut(t, b, c, d);
 		}
 
@@ -106,8 +103,7 @@ namespace Renko.Utility
 		/// <param name="b">The blue component.</param>
 		/// <param name="c">C.</param>
 		/// <param name="d">D.</param>
-		public static float EaseIn( float t, float b, float c, float d )
-		{
+		public static float EaseIn( float t, float b, float c, float d ) {
 			return QuadEaseIn(t, b, c, d);
 		}
 		
@@ -119,8 +115,7 @@ namespace Renko.Utility
 		/// <param name="b">Starting value.</param>
 		/// <param name="c">Change in value.</param>
 		/// <returns>The correct value.</returns>
-		public static float ExpoEaseOut( float t, float b, float c, float d )
-		{
+		public static float ExpoEaseOut( float t, float b, float c, float d ) {
 			return ( t == 1 ) ? b + c : c * ( -Mathf.Pow( 2, -10 * t ) + 1 ) + b;
 		}
 		
@@ -133,8 +128,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float ExpoEaseIn( float t, float b, float c, float d )
-		{
+		public static float ExpoEaseIn( float t, float b, float c, float d ) {
 			return ( t == 0 ) ? b : c * Mathf.Pow( 2, 10 * ( t - 1 ) ) + b;
 		}
 		
@@ -147,8 +141,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float ExpoEaseInOut( float t, float b, float c, float d )
-		{
+		public static float ExpoEaseInOut( float t, float b, float c, float d ) {
 			if ( t == 0 )
 				return b;
 			
@@ -170,8 +163,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float ExpoEaseOutIn( float t, float b, float c, float d )
-		{
+		public static float ExpoEaseOutIn( float t, float b, float c, float d ) {
 			if ( t < 0.5f )
 				return ExpoEaseOut( t * 2, b, c  * 0.5f, d );
 			
@@ -187,8 +179,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float CircEaseOut( float t, float b, float c, float d )
-		{
+		public static float CircEaseOut( float t, float b, float c, float d ) {
 			return c * Mathf.Sqrt( 1 - ( t = t - 1 ) * t ) + b;
 		}
 		
@@ -201,8 +192,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float CircEaseIn( float t, float b, float c, float d )
-		{
+		public static float CircEaseIn( float t, float b, float c, float d ) {
 			return -c * ( Mathf.Sqrt( 1 - t * t ) - 1 ) + b;
 		}
 		
@@ -215,8 +205,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float CircEaseInOut( float t, float b, float c, float d )
-		{
+		public static float CircEaseInOut( float t, float b, float c, float d ) {
 			if ( (t *= 2f) < 1 )
 				return -c * 0.5f * ( Mathf.Sqrt( 1 - t * t ) - 1 ) + b;
 			
@@ -232,8 +221,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float CircEaseOutIn( float t, float b, float c, float d )
-		{
+		public static float CircEaseOutIn( float t, float b, float c, float d ) {
 			if ( t < 0.5f )
 				return CircEaseOut( t * 2, b, c * 0.5f, d );
 			
@@ -249,8 +237,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float QuadEaseOut( float t, float b, float c, float d )
-		{
+		public static float QuadEaseOut( float t, float b, float c, float d ) {
 			return -c * t * ( t - 2 ) + b;
 		}
 		
@@ -263,8 +250,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float QuadEaseIn( float t, float b, float c, float d )
-		{
+		public static float QuadEaseIn( float t, float b, float c, float d ) {
 			return c * t * t + b;
 		}
 		
@@ -277,8 +263,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float QuadEaseInOut( float t, float b, float c, float d )
-		{
+		public static float QuadEaseInOut( float t, float b, float c, float d ) {
 			if ( (t *= 2f) < 1 )
 				return c * 0.5f * t * t + b;
 			
@@ -294,8 +279,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float QuadEaseOutIn( float t, float b, float c, float d )
-		{
+		public static float QuadEaseOutIn( float t, float b, float c, float d ) {
 			if ( t < 0.5f )
 				return QuadEaseOut( t * 2, b, c * 0.5f, d );
 			
@@ -311,8 +295,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float SineEaseOut( float t, float b, float c, float d )
-		{
+		public static float SineEaseOut( float t, float b, float c, float d ) {
 			return c * Mathf.Sin( t * ( Mathf.PI * 0.5f ) ) + b;
 		}
 		
@@ -325,8 +308,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float SineEaseIn( float t, float b, float c, float d )
-		{
+		public static float SineEaseIn( float t, float b, float c, float d ) {
 			return -c * Mathf.Cos( t * ( Mathf.PI * 0.5f ) ) + c + b;
 		}
 		
@@ -339,8 +321,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float SineEaseInOut( float t, float b, float c, float d )
-		{
+		public static float SineEaseInOut( float t, float b, float c, float d ) {
 			if ( ( t *= 2f ) < 1 )
 				return c * 0.5f * ( Mathf.Sin( Mathf.PI * t * 0.5f ) ) + b;
 			
@@ -356,8 +337,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float SineEaseOutIn( float t, float b, float c, float d )
-		{
+		public static float SineEaseOutIn( float t, float b, float c, float d ) {
 			if ( t < 0.5f )
 				return SineEaseOut( t * 2, b, c * 0.5f, d );
 			
@@ -373,8 +353,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float CubicEaseOut( float t, float b, float c, float d )
-		{
+		public static float CubicEaseOut( float t, float b, float c, float d ) {
 			return c * ( ( t = t - 1 ) * t * t + 1 ) + b;
 		}
 		
@@ -387,8 +366,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float CubicEaseIn( float t, float b, float c, float d )
-		{
+		public static float CubicEaseIn( float t, float b, float c, float d ) {
 			return c * t * t * t + b;
 		}
 		
@@ -401,8 +379,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float CubicEaseInOut( float t, float b, float c, float d )
-		{
+		public static float CubicEaseInOut( float t, float b, float c, float d ) {
 			if ( (t *= 2f) < 1 )
 				return c * 0.5f * t * t * t + b;
 			
@@ -418,8 +395,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float CubicEaseOutIn( float t, float b, float c, float d )
-		{
+		public static float CubicEaseOutIn( float t, float b, float c, float d ) {
 			if ( t < 0.5f )
 				return CubicEaseOut( t * 2, b, c * 0.5f, d );
 			
@@ -435,8 +411,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float QuartEaseOut( float t, float b, float c, float d )
-		{
+		public static float QuartEaseOut( float t, float b, float c, float d ) {
 			return -c * ( ( t = t - 1 ) * t * t * t - 1 ) + b;
 		}
 		
@@ -449,8 +424,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float QuartEaseIn( float t, float b, float c, float d )
-		{
+		public static float QuartEaseIn( float t, float b, float c, float d ) {
 			return c * t * t * t * t + b;
 		}
 		
@@ -463,8 +437,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float QuartEaseInOut( float t, float b, float c, float d )
-		{
+		public static float QuartEaseInOut( float t, float b, float c, float d ) {
 			if ( (t *= 2f) < 1 )
 				return c * 0.5f * t * t * t * t + b;
 			
@@ -480,8 +453,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float QuartEaseOutIn( float t, float b, float c, float d )
-		{
+		public static float QuartEaseOutIn( float t, float b, float c, float d ) {
 			if ( t < 0.5f )
 				return QuartEaseOut( t * 2, b, c * 0.5f, d );
 			
@@ -497,8 +469,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float QuintEaseOut( float t, float b, float c, float d )
-		{
+		public static float QuintEaseOut( float t, float b, float c, float d ) {
 			return c * ( ( t = t - 1 ) * t * t * t * t + 1 ) + b;
 		}
 		
@@ -511,8 +482,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float QuintEaseIn( float t, float b, float c, float d )
-		{
+		public static float QuintEaseIn( float t, float b, float c, float d ) {
 			return c * t * t * t * t * t + b;
 		}
 		
@@ -525,8 +495,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float QuintEaseInOut( float t, float b, float c, float d )
-		{
+		public static float QuintEaseInOut( float t, float b, float c, float d ) {
 			if ( (t *= 2f) < 1 )
 				return c * 0.5f * t * t * t * t * t + b;
 			return c * 0.5f * ( ( t -= 2 ) * t * t * t * t + 2 ) + b;
@@ -541,8 +510,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float QuintEaseOutIn( float t, float b, float c, float d )
-		{
+		public static float QuintEaseOutIn( float t, float b, float c, float d ) {
 			if ( t < 0.5f )
 				return QuintEaseOut( t * 2, b, c * 0.5f, d );
 			return QuintEaseIn( ( t * 2 ) - 1f, b + c * 0.5f, c * 0.5f, d );
@@ -557,8 +525,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float ElasticEaseOut( float t, float b, float c, float d )
-		{
+		public static float ElasticEaseOut( float t, float b, float c, float d ) {
 			if ( t == 1 )
 				return b + c;
 			
@@ -577,8 +544,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float ElasticEaseIn( float t, float b, float c, float d )
-		{
+		public static float ElasticEaseIn( float t, float b, float c, float d ) {
 			if ( t == 1 )
 				return b + c;
 			
@@ -597,8 +563,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float ElasticEaseInOut( float t, float b, float c, float d )
-		{
+		public static float ElasticEaseInOut( float t, float b, float c, float d ) {
 			if ( (t *= 2f) == 2 )
 				return b + c;
 			
@@ -619,8 +584,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float ElasticEaseOutIn( float t, float b, float c, float d )
-		{
+		public static float ElasticEaseOutIn( float t, float b, float c, float d ) {
 			if ( t < 0.5f )
 				return ElasticEaseOut( t * 2, b, c * 0.5f, d );
 			return ElasticEaseIn( ( t * 2 ) - 1f, b + c * 0.5f, c * 0.5f, d );
@@ -635,8 +599,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float BounceEaseOut( float t, float b, float c, float d )
-		{
+		public static float BounceEaseOut( float t, float b, float c, float d ) {
 			if ( t < 0.36363f )//1 * 0.36363f )
 				return c * ( 7.5625f * t * t ) + b;
 			else if ( t < 0.72726f )//2f * 0.36363f )
@@ -656,8 +619,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float BounceEaseIn( float t, float b, float c, float d )
-		{
+		public static float BounceEaseIn( float t, float b, float c, float d ) {
 			return c - BounceEaseOut( 1f - t, 0, c, d ) + b;
 		}
 		
@@ -670,8 +632,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float BounceEaseInOut( float t, float b, float c, float d )
-		{
+		public static float BounceEaseInOut( float t, float b, float c, float d ) {
 			if ( t < 0.5f )
 				return BounceEaseIn( t * 2, 0, c, d ) * 0.5f + b;
 			else
@@ -687,8 +648,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float BounceEaseOutIn( float t, float b, float c, float d )
-		{
+		public static float BounceEaseOutIn( float t, float b, float c, float d ) {
 			if ( t < 0.5f )
 				return BounceEaseOut( t * 2, b, c * 0.5f, d );
 			return BounceEaseIn( ( t * 2 ) - 1f, b + c * 0.5f, c * 0.5f, d );
@@ -703,8 +663,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float BackEaseOut( float t, float b, float c, float d )
-		{
+		public static float BackEaseOut( float t, float b, float c, float d ) {
 			return c * ( ( t = t - 1 ) * t * ( 2.70158f * t + 1.70158f ) + 1 ) + b;
 		}
 		
@@ -717,8 +676,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float BackEaseIn( float t, float b, float c, float d )
-		{
+		public static float BackEaseIn( float t, float b, float c, float d ) {
 			return c * t * t * ( 2.70158f * t - 1.70158f ) + b;
 		}
 		
@@ -731,8 +689,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float BackEaseInOut( float t, float b, float c, float d )
-		{
+		public static float BackEaseInOut( float t, float b, float c, float d ) {
 			float s = 1.70158f;
 			if ( (t *= 2f) < 1 )
 				return c * 0.5f * ( t * t * ( ( ( s *= 1.525f ) + 1 ) * t - s ) ) + b;
@@ -748,8 +705,7 @@ namespace Renko.Utility
 		/// <param name="c">Change in value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
-		public static float BackEaseOutIn( float t, float b, float c, float d )
-		{
+		public static float BackEaseOutIn( float t, float b, float c, float d ) {
 			if ( t < 0.5f )
 				return BackEaseOut( t * 2, b, c * 0.5f, d );
 			return BackEaseIn( ( t * 2 ) - 1f, b + c * 0.5f, c * 0.5f, d );

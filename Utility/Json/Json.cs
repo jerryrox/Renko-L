@@ -13,11 +13,15 @@ namespace Renko.Utility
 		/// <summary>
 		/// Parses the specified json string and returns a JsonData object.
 		/// </summary>
-		public static JsonData Parse(string json) { return JsonParser.Parse(json); }
+		public static JsonData Parse(string json) {
+			return JsonParser.Parse(json);
+		}
 
 		/// <summary>
 		/// Returns a string representation of specified JsonData.
 		/// </summary>
-		public static string ToString(JsonData data) { return JsonSerializer.Serialize(data); }
+		public static string ToString(JsonData data) {
+			return JsonSerializer.Serialize(data);
+		}
 	}
 }

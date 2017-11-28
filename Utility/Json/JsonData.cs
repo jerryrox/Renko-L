@@ -19,157 +19,121 @@ namespace Renko.Utility
 		private object rawObject;
 
 
-		#region Properties
 		/// <summary>
 		/// The raw object being used.
 		/// </summary>
-		public object Value { get { return rawObject; } set { rawObject = Value; } }
+		public object Value {
+			get { return rawObject; }
+			set { rawObject = Value; }
+		}
 
 		/// <summary>
 		/// Returns the specific type of the raw object.
 		/// </summary>
-		public Type Type { get { return rawObject.GetType(); } }
+		public Type Type {
+			get { return rawObject.GetType(); }
+		}
 
 		/// <summary>
 		/// Returns whether the raw object is null.
 		/// </summary>
-		public bool IsNull { get { return rawObject == null; } }
-		#endregion
+		public bool IsNull {
+			get { return rawObject == null; }
+		}
 
 
 		/// <summary>
 		/// Initializes a new JsonData instance with null object.
 		/// </summary>
-		public JsonData() : this(null) { }
+		public JsonData() : this(null) {
+
+		}
 
 		/// <summary>
 		/// Initializes a new JsonData instance with an object.
 		/// </summary>
-		public JsonData(object obj) { rawObject = obj; }
+		public JsonData(object obj) {
+			rawObject = obj;
+		}
 
-		#region Type conversions
 		/// <summary>
 		/// Returns an int value stored in this object.
 		/// </summary>
-		public int AsInt(int defaultValue = 0)
-		{
-			//If numeric value
+		public int AsInt(int defaultValue = 0) {
 			if(rawObject.IsNumeric())
 				return (int)rawObject;
-
-			//If a string value
-			if(rawObject is string)
-			{
-				//Get the string value and parse int from that.
+			if(rawObject is string) {
 				string str = (string)rawObject;
 				int i = 0;
 				if(int.TryParse(str, out i))
 					return i;
 			}
-
-			//Else, return 0
 			return defaultValue;
 		}
 
 		/// <summary>
 		/// Returns a long value stored in this object.
 		/// </summary>
-		public long AsLong(long defaultValue = 0L)
-		{
-			//If numeric value
+		public long AsLong(long defaultValue = 0L) {
 			if(rawObject.IsNumeric())
 				return (long)rawObject;
-
-			//If a string value
-			if(rawObject is string)
-			{
-				//Get the string value and parse long from that.
+			if(rawObject is string) {
 				string str = (string)rawObject;
 				long l = 0L;
 				long.TryParse(str, out l);
 				return l;
 			}
-
-			//Else, return 0
 			return defaultValue;
 		}
 
 		/// <summary>
 		/// Returns a float value stored in this object.
 		/// </summary>
-		public float AsFloat(float defaultValue = 0f)
-		{
-			//If numeric value
+		public float AsFloat(float defaultValue = 0f) {
 			if(rawObject.IsNumeric())
 				return (float)rawObject;
-
-			//If a string value
-			if(rawObject is string)
-			{
-				//Get the string value and parse float from that.
+			if(rawObject is string) {
 				string str = (string)rawObject;
 				float f = 0f;
 				float.TryParse(str, out f);
 				return f;
 			}
-
-			//Else, return 0
 			return defaultValue;
 		}
 
 		/// <summary>
 		/// Returns a double value stored in this object.
 		/// </summary>
-		public double AsDouble(double defaultValue = 0d)
-		{
-			//If numeric value
+		public double AsDouble(double defaultValue = 0d) {
 			if(rawObject.IsNumeric())
 				return (double)rawObject;
-
-			//If a string value
-			if(rawObject is string)
-			{
-				//Get the string value and parse double from that.
+			if(rawObject is string) {
 				string str = (string)rawObject;
 				double d = 0f;
 				double.TryParse(str, out d);
 				return d;
 			}
-
-			//Else, return 0
 			return defaultValue;
 		}
 
 		/// <summary>
 		/// Returns a bool value stored in this object.
 		/// </summary>
-		public bool AsBool(bool defaultValue = false)
-		{
-			//If object is a bool type
+		public bool AsBool(bool defaultValue = false) {
 			if(rawObject is bool)
 				return (bool)rawObject;
-
-			//If object is a string type
-			if(rawObject is string)
-			{
-				//Get string value and convert to bool
+			if(rawObject is string) {
 				return BoolParser.Parse(((string)rawObject).ToLower());
 			}
-
-			//Return default
 			return defaultValue;
 		}
 
 		/// <summary>
 		/// Returns a string value stored in this object.
 		/// </summary>
-		public string AsString(string defaultValue = null)
-		{
-			//If null object, return default value
+		public string AsString(string defaultValue = null) {
 			if(rawObject == null)
 				return defaultValue;
-
-			//Return a string representation.
 			return rawObject.ToString();
 		}
 
@@ -177,13 +141,9 @@ namespace Renko.Utility
 		/// Returns a JsonObject value stored in this object.
 		/// If you're looking for a System.Object type, use "Value" property.
 		/// </summary>
-		public JsonObject AsObject(JsonObject defaultValue = null)
-		{
-			//If raw object is the type of jsonobject
+		public JsonObject AsObject(JsonObject defaultValue = null) {
 			if(rawObject is JsonObject)
 				return (JsonObject)rawObject;
-
-			//Return default value
 			return defaultValue;
 		}
 
@@ -192,34 +152,28 @@ namespace Renko.Utility
 		/// </summary>
 		public JsonArray AsArray(JsonArray defaultValue = null)
 		{
-			//If raw object is the type of jsonarray
 			if(rawObject is JsonArray)
 				return (JsonArray)rawObject;
-
-			//Return default value
 			return defaultValue;
 		}
 
 		/// <summary>
 		/// Returns a generic type value stored in this object.
 		/// </summary>
-		public T As<T>(T defaultValue = default(T))
-		{
+		public T As<T>(T defaultValue = default(T)) {
 			//If convertible
-			if(rawObject is T) return (T)rawObject;
-
-			//If not, return default value
+			if(rawObject is T)
+				return (T)rawObject;
 			return defaultValue;
 		}
 
 		/// <summary>
-		/// Returns a serialized form of this data.
+		/// Returns a json-serialized form of this data.
 		/// If you're looking for a string value stored in this data, use "AsString" method.
 		/// </summary>
 		public override string ToString () { return JsonSerializer.Serialize(this); }
-		#endregion
 
-		#region Implicit conversion from JsonData
+		
 		public static implicit operator int(JsonData context) { return context.AsInt(); }
 
 		public static implicit operator long(JsonData context) { return context.AsLong(); }
@@ -235,9 +189,7 @@ namespace Renko.Utility
 		public static implicit operator JsonObject(JsonData context) { return context.AsObject(null); }
 
 		public static implicit operator JsonArray(JsonData context) { return context.AsArray(null); }
-		#endregion
-
-		#region Implicit conversion to JsonData
+		
 		public static implicit operator JsonData(int context) { return new JsonData(context); }
 
 		public static implicit operator JsonData(long context) { return new JsonData(context); }
@@ -253,6 +205,5 @@ namespace Renko.Utility
 		public static implicit operator JsonData(JsonObject context) { return new JsonData(context); }
 
 		public static implicit operator JsonData(JsonArray context) { return new JsonData(context); }
-		#endregion
 	}
 }

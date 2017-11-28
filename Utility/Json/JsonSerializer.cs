@@ -10,36 +10,35 @@ namespace Renko.Utility
 	/// A class that serializes JsonData to a string value.
 	/// Used MiniJSON for reference.
 	/// </summary>
-	public class JsonSerializer
-	{
+	public class JsonSerializer {
+
 		private StringBuilder sb;
 
 
-		#region Constructor
-		private JsonSerializer()
-		{
-			//Prepare a new string builder
+		private JsonSerializer() {
 			sb = new StringBuilder();
 		}
-		#endregion
 
-		#region Private methods
+		/// <summary>
+		/// Serializes the specified JsonData to a string value.
+		/// </summary>
+		public static string Serialize(JsonData data) {
+			JsonSerializer serializer = new JsonSerializer();
+			serializer.Process(data.Value);
+			return serializer.sb.ToString();
+		}
+		
 		/// <summary>
 		/// The base method for serializing an unknown json data.
 		/// </summary>
-		private void Process(object data)
-		{
-			//Temporary ref for type checking
+		private void Process(object data) {
 			JsonObject obj;
 			JsonArray arr;
 
-			//If data is JsonObject
 			if((obj = data as JsonObject) != null)
 				SerializeObject(obj);
-			//If data is JsonArray
 			else if((arr = data as JsonArray) != null)
 				SerializeArray(arr);
-			//If none of above
 			else
 				SerializeData(data);
 		}
@@ -47,108 +46,68 @@ namespace Renko.Utility
 		/// <summary>
 		/// Serializer method for json object.
 		/// </summary>
-		private void SerializeObject(JsonObject obj)
-		{
-			//Open bracket
-			sb.Append('{');
-
+		private void SerializeObject(JsonObject obj) {
 			//Whether it's the first loop
 			bool isFirst = true;
+			sb.Append('{');
 
-			//For each pair in object
-			foreach(var pair in obj)
-			{
-				//If not first loop, add a comma first
+			foreach(var pair in obj) {
 				if(!isFirst)
 					sb.Append(',');
-
-				//The key must be enclosed in quotes.
 				sb.Append('"').Append(pair.Key).Append("\":");
-
-				//Serize the pair's value
 				Process(pair.Value.Value);
-
-				//First loop end
 				isFirst = false;
 			}
 
-			//Close bracket
 			sb.Append('}');
 		}
 
 		/// <summary>
 		/// Serializer method for json array.
 		/// </summary>
-		private void SerializeArray(JsonArray arr)
-		{
-			//Open bracket
-			sb.Append('[');
-
+		private void SerializeArray(JsonArray arr) {
 			//Whether it's the first loop
 			bool isFirst = true;
+			sb.Append('[');
 
-			//For each item in array
-			for(int i=0; i<arr.Count; i++)
-			{
-				//If not first loop, add a comma first
+			for(int i=0; i<arr.Count; i++) {
 				if(!isFirst)
 					sb.Append(',');
-
-				//Serialize the item value
 				Process(arr[i].Value);
-
-				//First loop end
 				isFirst = false;
 			}
 
-			//Close bracket
 			sb.Append(']');
 		}
 
 		/// <summary>
 		/// Seializer method for json data.
 		/// </summary>
-		private void SerializeData(object data)
-		{
-			//If null
-			if(data == null)
-			{
+		private void SerializeData(object data) {
+			//Null json value
+			if(data == null) {
 				sb.Append("null");
 				return;
 			}
-
-			//If numeric or bool type
-			if(data.IsNumeric() || data is bool)
-			{
-				//Add the value without enclosing between quotes.
+			//Json value without quotes
+			else if(data.IsNumeric() || data is bool) {
 				sb.Append(data.ToString().ToLower());
 			}
-			//If not numeric
-			else
-			{
-				//Add the value enclosed between quotes.
+			//Json value with quotes
+			else {
 				sb.Append('"');
 				AppendEscapedString(data.ToString());
 				sb.Append('"');
 			}
 		}
-		#endregion
-
-		#region Helpers
+		
 		/// <summary>
 		/// Appends the given string value while escaping non-json-safe characters.
 		/// </summary>
-		private void AppendEscapedString(string source)
-		{
-			//For each char
-			for(int i=0; i<source.Length; i++)
-			{
-				//Current character
+		private void AppendEscapedString(string source) {
+			for(int i=0; i<source.Length; i++) {
 				char c = source[i];
-
-				//Check for changes required
-				switch(c)
-				{
+				switch(c) {
 				case '"':
 					sb.Append("\\\"");
 					break;
@@ -170,8 +129,7 @@ namespace Renko.Utility
 				case '\t':
 					sb.Append("\\t");
 					break;
-				default:
-					{
+				default: {
 						//Reference: http://www.asciitable.com/
 						int codeNumber = (int)c;
 						if ((codeNumber >= 32) && (codeNumber <= 126))
@@ -182,25 +140,8 @@ namespace Renko.Utility
 					}
 					break;
 				}
-
 			}
 		}
-		#endregion
-
-		#region Public methods
-		/// <summary>
-		/// Serializes the specified JsonData to a string value.
-		/// </summary>
-		public static string Serialize(JsonData data)
-		{
-			//Instantiate a new serializer
-			JsonSerializer serializer = new JsonSerializer();
-
-			//Handle serialization and return result
-			serializer.Process(data.Value);
-			return serializer.sb.ToString();
-		}
-		#endregion
 	}
 }
 

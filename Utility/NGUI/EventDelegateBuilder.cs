@@ -15,43 +15,26 @@ namespace Renko.Utility
 		private EventDelegate myDelegate;
 
 
-		#region Property
 		/// <summary>
 		/// Returns the event delegate object that you can add on certain events.
 		/// </summary>
-		public EventDelegate Value
-		{ get { return myDelegate; } }
-		#endregion
+		public EventDelegate Value {
+			get { return myDelegate; }
+		}
 
 
-		#region Constructor
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Renko.Utility.EventDelegateBuilder"/> class.
-		/// </summary>
-		public EventDelegateBuilder()
-		{
-			//Instantiate a new event delegate object
+		public EventDelegateBuilder() {
 			myDelegate = new EventDelegate();
 		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Renko.Utility.EventDelegateBuilder"/> class.
-		/// </summary>
-		public EventDelegateBuilder(MonoBehaviour target, string methodName) : this()
-		{
-			//Set target
+		public EventDelegateBuilder(MonoBehaviour target, string methodName) : this() {
 			SetTarget(target, methodName);
 		}
-		#endregion
-
-		#region Core
+		
 		/// <summary>
 		/// Sets the method name to call in target monobehaviour.
 		/// Returns this object to allow further calls in a single line.
 		/// </summary>
-		public EventDelegateBuilder SetTarget(MonoBehaviour target, string methodName)
-		{
-			//Set target monobehaviour and method name
+		public EventDelegateBuilder SetTarget(MonoBehaviour target, string methodName) {
 			myDelegate.Set(target, methodName);
 			return this;
 		}
@@ -60,13 +43,10 @@ namespace Renko.Utility
 		/// Sets the parameter details to send when the event delegate fires.
 		/// Returns this object to allow further calls in a single line.
 		/// </summary>
-		public EventDelegateBuilder SetParam(int index, Object value, string fieldName)
-		{
-			//Create a new parameter at specified index.
+		public EventDelegateBuilder SetParam(int index, Object value, string fieldName) {
 			myDelegate.parameters[index] = new EventDelegate.Parameter(value, fieldName);
 			return this;
 		}
-		#endregion
 	}
 }
 #endif

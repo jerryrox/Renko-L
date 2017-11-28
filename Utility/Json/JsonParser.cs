@@ -30,42 +30,33 @@ namespace Renko.Utility
 		private StringReader json;
 
 
-		#region Properties
 		/// <summary>
 		/// Returns the next readable character.
 		/// </summary>
-		private char PeekChar { get { return Convert.ToChar(json.Peek()); } }
+		private char PeekChar {
+			get { return Convert.ToChar(json.Peek()); }
+		}
 
 		/// <summary>
 		/// Returns the next read character.
 		/// </summary>
-		private char NextChar { get { return Convert.ToChar(json.Read()); } }
+		private char NextChar {
+			get { return Convert.ToChar(json.Read()); }
+		}
 
 		/// <summary>
 		/// Returns the next read word.
 		/// </summary>
-		private string NextWord
-		{
-			get
-			{
-				//If end of string, return null
+		private string NextWord {
+			get {
 				if (json.Peek() == -1)
 					return null;
-				
 				StringBuilder word = new StringBuilder();
-
-				//While next readable character doesn't break the word
-				while (WordBreaks.IndexOf(PeekChar) == -1)
-				{
-					//Add the next character
+				while (WordBreaks.IndexOf(PeekChar) == -1) {
 					word.Append(NextChar);
-
-					//If end of string, break
 					if (json.Peek() == -1)
 						break;
 				}
-
-				//Return word
 				return word.ToString();
 			}
 		}
@@ -73,22 +64,14 @@ namespace Renko.Utility
 		/// <summary>
 		/// Returns the next read token.
 		/// </summary>
-		/// <value>The next token.</value>
-		private Token NextToken
-		{
-			get
-			{
-				//Remove white spaces
+		private Token NextToken {
+			get {
 				EatWhitespace();
-
-				//If end of reader, return nothing
 				if (json.Peek() == -1)
 					return Token.NONE;
 
-				//Determine special chars or numbers
 				char c = PeekChar;
-				switch (c)
-				{
+				switch (c) {
 				case '{':
 					return Token.CURLY_OPEN;
 				case '}':
@@ -120,12 +103,9 @@ namespace Renko.Utility
 					return Token.NUMBER;
 				}
 
-				//If none of the above, we should check the word.
+				//If none of the above, we should check the whole 'word'.
 				string word = NextWord;
-
-				//Determine token
-				switch(word)
-				{
+				switch(word) {
 				case "null":
 					return Token.NULL;
 				case "false":
@@ -133,41 +113,34 @@ namespace Renko.Utility
 				case "true":
 					return Token.TRUE;
 				}
-
-				//Nothing found.
 				return Token.NONE;
 			}
 		}
-		#endregion
 
 
-		#region Constructor
+		private JsonParser(string jsonString) {
+			json = new StringReader(jsonString);
+		}
+
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Renko.Utility.JsonParser"/> class.
+		/// Returns a JsonData object from given string.
 		/// </summary>
-		private JsonParser(string jsonString) { json = new StringReader(jsonString); }
-		#endregion
+		public static JsonData Parse(string str) {
+			using(var parser = new JsonParser(str)) {
+				return new JsonData(parser.ParseValue());
+			}
+		}
 
-		#region IDisposable
-		/// <summary>
-		/// Releases all resource used by the <see cref="Renko.Utility.JsonParser"/> object.
-		/// </summary>
-		public void Dispose()
-		{
+		public void Dispose() {
 			json.Dispose();
 			json = null;
 		}
-		#endregion
 
-		#region Core
 		/// <summary>
 		/// Returns an object that contains a parsed value.
 		/// </summary>
-		object ParseByToken(Token token)
-		{
-			//Different parser based on token
-			switch (token)
-			{
+		object ParseByToken(Token token) {
+			switch (token) {
 			case Token.STRING:
 				return ParseString();
 			case Token.NUMBER:
@@ -190,19 +163,12 @@ namespace Renko.Utility
 		/// <summary>
 		/// Returns a parsed JsonObject.
 		/// </summary>
-		JsonObject ParseObject()
-		{
-			//Instantiate new json object
+		JsonObject ParseObject() {
 			var obj = new JsonObject();
-
 			//Skip opening brace
 			json.Read();
-
-			while (true)
-			{
-				//Determine action
-				switch (NextToken)
-				{
+			while (true) {
+				switch (NextToken) {
 				case Token.NONE:
 					return null;
 				case Token.COMMA:
@@ -210,19 +176,13 @@ namespace Renko.Utility
 				case Token.CURLY_CLOSE:
 					return obj;
 				default:
-					//Parse key
 					string key = ParseString();
 					if (key == null)
 						return null;
-
-					//If next token is not a colon, just return null
 					if (NextToken != Token.COLON)
 						return null;
-
 					//Skip the colon
 					json.Read();
-
-					//Parse value and set to key
 					obj[key] = new JsonData(ParseValue());
 					break;
 				}
@@ -232,21 +192,13 @@ namespace Renko.Utility
 		/// <summary>
 		/// Returns a parsed JsonArray.
 		/// </summary>
-		JsonArray ParseArray()
-		{
-			//Instantiate new json array
+		JsonArray ParseArray() {
 			var array = new JsonArray();
-
 			//Skip opening bracket
 			json.Read();
-
-			while (true)
-			{
-				//Get next token
+			while (true) {
 				Token token = NextToken;
-				//Determine action
-				switch (token)
-				{
+				switch (token) {
 				case Token.NONE:
 					return null;
 				case Token.COMMA:
@@ -263,51 +215,39 @@ namespace Renko.Utility
 		/// <summary>
 		/// Returns an object from next token.
 		/// </summary>
-		object ParseValue() { return ParseByToken(NextToken); }
+		object ParseValue() {
+			return ParseByToken(NextToken);
+		}
 
 		/// <summary>
 		/// Returns an unescaped string value.
 		/// </summary>
-		string ParseString()
-		{
-			//States
+		string ParseString() {
 			StringBuilder s = new StringBuilder();
 			char c;
 			bool parsing = true;
-
 			//Skip opening quote
 			json.Read();
-
-			//While parsing flag is true
-			while (parsing)
-			{
-				//If end of reader, no more parsing
-				if (json.Peek() == -1)
-				{
+			while (parsing) {
+				if (json.Peek() == -1) {
 					parsing = false;
 					break;
 				}
 
-				//Determining actions
 				c = NextChar;
 				switch (c) {
 				case '"':
 					parsing = false;
 					break;
 
-				case '\\':
-					{
-						//If end of reader, no more parsing
-						if (json.Peek() == -1)
-						{
+				case '\\': {
+						if (json.Peek() == -1) {
 							parsing = false;
 							break;
 						}
 
-						//Unescaping process
 						c = NextChar;
-						switch (c)
-						{
+						switch (c) {
 						case '"':
 						case '\\':
 						case '/':
@@ -343,73 +283,38 @@ namespace Renko.Utility
 					break;
 				}
 			}
-
-			//Return parsed value
 			return s.ToString();
 		}
 
 		/// <summary>
 		/// Returns an object that contains numeric (long/double) value.
 		/// </summary>
-		object ParseNumber()
-		{
-			//Parse number string
+		object ParseNumber() {
 			string number = NextWord;
-
-			//If a decimal point is not included
-			if (number.IndexOf('.') == -1)
-			{
-				//Parse the word as long value.
+			//No decimal point means it should be parsed to long value.
+			if (number.IndexOf('.') == -1) {
 				long parsedInt;
 				Int64.TryParse(number, out parsedInt);
 				return parsedInt;
 			}
-
-			//If decimal point is included, parse as double value.
 			double parsedDouble;
 			Double.TryParse(number, out parsedDouble);
 			return parsedDouble;
 		}
-		#endregion
-
-		#region Helpers
+		
 		/// <summary>
 		/// Removes all characters considered a 'white space'.
 		/// </summary>
-		void EatWhitespace()
-		{
-			//If end of reader, return
+		void EatWhitespace() {
 			if (json.Peek() == -1)
 				return;
-			
-			//If a white space
-			while (WhiteSpaces.IndexOf(PeekChar) != -1)
-			{
-				//Advance the reader
+			while (WhiteSpaces.IndexOf(PeekChar) != -1) {
 				json.Read();
-
-				//If end of reader, break
 				if (json.Peek() == -1)
 					break;
 			}
 		}
-		#endregion
-
-		#region Public static
-		/// <summary>
-		/// Returns a JsonData object from given string.
-		/// </summary>
-		public static JsonData Parse(string str)
-		{
-			//Create new parser
-			using(var parser = new JsonParser(str))
-			{
-				return new JsonData(parser.ParseValue());
-			}
-		}
-		#endregion
-
-		#region Enums
+		
 		/// <summary>
 		/// Type specification for some string/chars.
 		/// </summary>
@@ -427,7 +332,6 @@ namespace Renko.Utility
 			FALSE,
 			NULL
 		};
-		#endregion
 	}
 }
 
