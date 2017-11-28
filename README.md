@@ -7,7 +7,7 @@ I might as well use this chance to study how to use GitHub :p
 Unity Version: 5.6.4
 
 ### Few things to note
-- Some features may not work or require modification due to the difference in the API.
+- Some features may not work or require modification due to the difference in the API version.
 
 ## Namespaces
 
