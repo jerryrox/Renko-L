@@ -20,6 +20,11 @@ namespace Renko.Utility
 			/// </summary>
 			protected float startedTime;
 
+			/// <summary>
+			/// The current time value.
+			/// </summary>
+			protected float currentTime;
+
 
 			/// <summary>
 			/// The unique identifier for this item.
@@ -61,14 +66,15 @@ namespace Renko.Utility
 			/// Lerp value of current time between update start and end times.
 			/// </summary>
 			public virtual float Progress {
-				get; set;
+				get { return Mathf.Lerp(startedTime, startedTime + Duration, currentTime); }
+				set { currentTime = Mathf.Lerp(startedTime, startedTime + Duration, value); }
 			}
 
 			/// <summary>
 			/// Returns the amount of time passed since update start time.
 			/// </summary>
 			public virtual float TimePassed {
-				get;
+				get { return currentTime - startedTime; }
 			}
 
 			/// <summary>
@@ -136,7 +142,7 @@ namespace Renko.Utility
 			public virtual void Start() {
 				if(IsUpdating)
 					return;
-				startedTime = Timer.TimeSinceStartup;
+				currentTime = startedTime = Timer.TimeSinceStartup;
 				Reset();
 				if(OnItemStart != null)
 					OnItemStart(this);
@@ -146,6 +152,7 @@ namespace Renko.Utility
 			/// Update this instance for current frame.
 			/// </summary>
 			public virtual void Update() {
+				currentTime += DeltaTime * Speed;
 				if(OnItemUpdate != null)
 					OnItemUpdate(this);
 			}
