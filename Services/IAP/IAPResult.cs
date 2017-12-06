@@ -13,14 +13,15 @@ namespace Renko.Services
 		/// <summary>
 		/// Product which is purchased by the user.
 		/// </summary>
-		public Product product {get; private set;}
+		public Product product {
+			get; private set;
+		}
 
 
 		/// <summary>
 		/// Default constructor for success info.
 		/// </summary>
-		public IAPSuccess(Product @product)
-		{
+		public IAPSuccess(Product @product) {
 			//Store info
 			product = @product;
 		}
@@ -28,8 +29,7 @@ namespace Renko.Services
 		/// <summary>
 		/// Implicit boolean operator for short-typing null checks.
 		/// </summary>
-		public static implicit operator bool(IAPSuccess success)
-		{
+		public static implicit operator bool(IAPSuccess success) {
 			return success != null;
 		}
 	}
@@ -42,90 +42,81 @@ namespace Renko.Services
 		/// <summary>
 		/// Reason for failure.
 		/// </summary>
-		public Reason reason {get; private set;}
+		public Reason reason {
+			get; private set;
+		}
 
 
 		/// <summary>
 		/// Default constructor for fail info
 		/// </summary>
-		public IAPFail(Reason @reason)
-		{
-			//Store info
-			reason = @reason;
+		public IAPFail(Reason _reason) {
+			reason = _reason;
 		}
 
 		/// <summary>
 		/// Overloaded constructor for new fail info using PurchaseFailureReason enum.
 		/// </summary>
-		public IAPFail(PurchaseFailureReason @reason)
-		{
-			//Set reason from PurchaseFailureReason enum
-			SetReasonFromPurchaseFailureReason(@reason);
+		public IAPFail(PurchaseFailureReason _reason) {
+			SetReasonFromPurchaseFailureReason(_reason);
 		}
 
 		/// <summary>
 		/// Convenience method for mapping PurchaseFailureReason to IAPFail.Reason enum.
 		/// </summary>
-		public void SetReasonFromPurchaseFailureReason(PurchaseFailureReason failReason)
-		{
-			switch(failReason)
-			{
+		public void SetReasonFromPurchaseFailureReason(PurchaseFailureReason failReason) {
+			switch(failReason) {
 			case PurchaseFailureReason.PurchasingUnavailable:
-				reason = Reason.PurchaseNotAvailable; break;
+				reason = Reason.PurchaseNotAvailable;
+				break;
 			case PurchaseFailureReason.ExistingPurchasePending:
-				reason = Reason.ExistingPurchasePending; break;
+				reason = Reason.ExistingPurchasePending;
+				break;
 			case PurchaseFailureReason.ProductUnavailable:
-				reason = Reason.ProductNotAvailable; break;
+				reason = Reason.ProductNotAvailable;
+				break;
 			case PurchaseFailureReason.SignatureInvalid:
-				reason = Reason.SignatureInvalid; break;
+				reason = Reason.SignatureInvalid;
+				break;
 			case PurchaseFailureReason.UserCancelled:
-				reason = Reason.UserCancel; break;
+				reason = Reason.UserCancel;
+				break;
 			case PurchaseFailureReason.PaymentDeclined:
-				reason = Reason.PaymentDeclined; break;
+				reason = Reason.PaymentDeclined;
+				break;
 			case PurchaseFailureReason.DuplicateTransaction:
-				reason = Reason.DuplicateTransaction; break;
+				reason = Reason.DuplicateTransaction;
+				break;
 			case PurchaseFailureReason.Unknown:
-				reason = Reason.Unknown; break;
+				reason = Reason.Unknown;
+				break;
 			}
+		}
+
+		/// <summary>
+		/// Implicit boolean operator for short-typing null checks.
+		/// </summary>
+		public static implicit operator bool(IAPFail fail) {
+			return fail != null;
 		}
 
 
 		/// <summary>
 		/// Defines the type of failures.
 		/// </summary>
-		public enum Reason
-		{
+		public enum Reason {
 			NotInitialized = 0,
-
 			PlatformNotSupported,
-
 			ProductNotFound,
 			ProductNotAvailable,
-
 			PurchaseNotAvailable,
-
 			ExistingPurchasePending,
-
 			SignatureInvalid,
-
 			PaymentDeclined,
-
 			DuplicateTransaction,
-
 			UserCancel,
-
 			AppNotKnown,
-
 			Unknown
-		}
-
-
-		/// <summary>
-		/// Implicit boolean operator for short-typing null checks.
-		/// </summary>
-		public static implicit operator bool(IAPFail fail)
-		{
-			return fail != null;
 		}
 	}
 }

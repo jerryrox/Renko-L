@@ -17,19 +17,19 @@ namespace Renko.Services
 		public static ConfigurationBuilder AddProduct(this ConfigurationBuilder context, IAPProduct product)
 		{
 			//If product's storeIDs object is null
-			if(product.storeIDs == null)
+			if(product.StoreIDs == null)
 			{
 				return context.AddProduct(
-					product.productID,
-					product.productType
+					product.ProductID,
+					product.ProductType
 				);
 			}
 
 			//If not null, include it
 			return context.AddProduct(
-				product.productID,
-				product.productType,
-				product.storeIDs
+				product.ProductID,
+				product.ProductType,
+				product.StoreIDs
 			);
 		}
 	}

@@ -13,120 +13,103 @@ namespace Renko.Services
 		/// <summary>
 		/// The generic id for referring to all store-specific product ids.
 		/// </summary>
-		public string productID;
+		public string ProductID {
+			get; private set;
+		}
 
 		/// <summary>
 		/// The type of product.
 		/// </summary>
-		public ProductType productType;
+		public ProductType ProductType {
+			get; private set;
+		}
 
 		/// <summary>
 		/// The object which holds all store-specific product ids linked to this product.
 		/// </summary>
-		public IDs storeIDs;
+		public IDs StoreIDs {
+			get; private set;
+		}
 
 
 		#region Properties
 		/// <summary>
-		/// Non-consume product and Subscription only.
 		/// Returns true if this product is purchased and is valid.
+		/// Non-consumable product and Subscription only.
 		/// </summary>
-		public bool IsPurchased
-		{
-			get
-			{
-				//Get product
-				Product product = IAPManager.FindRawProduct(productID, false);
-				//If somehow null
-				if(product == null)
-				{
-					//Return false
-					IAPManager.LogMessage("IAPProduct.IsPurchased - Product with ID("+productID+") was not found.");
+		public bool IsPurchased {
+			get {
+				Product product = IAPManager.FindRawProduct(ProductID, false);
+				if(product == null) {
+					IAP.LogMessage("IAPProduct.IsPurchased - Product with ID("+ProductID+") was not found.");
 					return false;
 				}
-				//Having a receipt means it's purchased.
 				return product.hasReceipt;
 			}
 		}
 
 		/// <summary>
-		/// Unity's internal Product object which is wrapped by this class.
+		/// Returns internal Product object which is wrapped by this class.
 		/// </summary>
-		public Product RawProduct { get { return IAPManager.FindRawProduct(productID, false); } }
+		public Product RawProduct {
+			get { return IAPManager.FindRawProduct(ProductID, false); }
+		}
 		#endregion
 
 
 		/// <summary>
-		/// Just for hiding the constructor
+		/// Constructor should be hidden.
 		/// </summary>
-		private IAPProduct() { }
+		private IAPProduct() {}
+
+		/// <summary>
+		/// Returns a new IAPProduct instance with specified parameters.
+		/// </summary>
+		public static IAPProduct Create(string productID, ProductType productType, IDs storeIDs = null) {
+			return new IAPProduct() {
+				ProductID = productID,
+				ProductType = productType,
+				StoreIDs = storeIDs
+			};
+		}
 
 		/// <summary>
 		/// Adds a store-specific product id to link with this object.
+		/// Returns this instance.
 		/// </summary>
-		public IAPProduct AddStoreID(string storeProductId, params AppStore[] stores)
-		{
-			//If storeIDs is null, create new
-			if(storeIDs == null)
-				storeIDs = new IDs();
-
-			//Add data to store ids object
-			storeIDs.Add(storeProductId, stores);
-
-			//Return this IAPProduct
+		public IAPProduct AddStoreID(string storeProductId, params AppStore[] stores) {
+			if(StoreIDs == null)
+				StoreIDs = new IDs();
+			StoreIDs.Add(storeProductId, stores);
 			return this;
 		}
 
-		#region Static
+
 		/// <summary>
-		/// Helper method which creates a new IAPProduct object with given parameters.
+		/// A factory class that outputs an IAPProduct object.
 		/// </summary>
-		public static IAPProduct Create(string @productID, ProductType @productType, IDs @storeIDs = null)
-		{
-			//Create new product
-			IAPProduct product = new IAPProduct();
-
-			//Store values
-			product.productID = @productID;
-			product.productType = @productType;
-			product.storeIDs = @storeIDs;
-
-			//Return product
-			return product;
-		}
-		#endregion
-
-
-		#region Classes
 		public class Builder {
 
 			/// <summary>
 			/// The list of products to output.
 			/// </summary>
-			public List<IAPProduct> Products { get; private set; }
+			public List<IAPProduct> Products {
+				get; private set;
+			}
 
 
-			/// <summary>
-			/// Initializes a new instance of the <see cref="Renko.Services.IAPProduct+Builder"/> class.
-			/// </summary>
-			public Builder() { Products = new List<IAPProduct>(); }
-
+			public Builder() {
+				Products = new List<IAPProduct>();
+			}
 
 			/// <summary>
 			/// Adds a new IAPProduct object with specified id, type, and store ids.
 			/// </summary>
-			public IAPProduct Add(string productID, ProductType productType, IDs storeIDs = null)
-			{
-				//Create a new product
+			public IAPProduct Add(string productID, ProductType productType, IDs storeIDs = null) {
 				var product = IAPProduct.Create(productID, productType, storeIDs);
-
-				//Add the product to list
 				Products.Add(product);
-
-				//Return product
 				return product;
 			}
 		}
-		#endregion
 	}
 }
