@@ -21,9 +21,9 @@ namespace Renko.Services
 		/// <summary>
 		/// Default constructor for success info.
 		/// </summary>
-		public IAPSuccess(Product @product) {
+		public IAPSuccess(Product _product) {
 			//Store info
-			product = @product;
+			product = _product;
 		}
 
 		/// <summary>
