@@ -71,10 +71,31 @@ namespace Renko.Utility
 			}
 
 			/// <summary>
-			/// Returns the amount of time passed since update start time.
+			/// The amount of time passed since update start time.
 			/// </summary>
 			public virtual float TimePassed {
 				get { return currentTime - startedTime; }
+				set {
+					currentTime = Mathf.Clamp(
+						value + startedTime,
+						startedTime,
+						startedTime + Duration
+					);
+				}
+			}
+
+			/// <summary>
+			/// The amount of time left before current repeat finishes.
+			/// </summary>
+			public virtual float TimeLeft {
+				get { return startedTime + Duration - currentTime; }
+				set {
+					currentTime = Mathf.Clamp(
+						startedTime + Duration - value,
+						startedTime,
+						startedTime + Duration
+					);
+				}
 			}
 
 			/// <summary>
