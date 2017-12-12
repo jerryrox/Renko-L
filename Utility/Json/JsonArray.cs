@@ -18,13 +18,13 @@ namespace Renko.Utility
 
 		/// <summary>
 		/// Gets or sets data at specified index.
-		/// This property returns null if index is out of range.
+		/// This property returns null JsonData if index is out of range.
 		/// This property will automatically resize the array if index >= item count.
 		/// </summary>
 		public JsonData this[int index] {
 			get {
 				if(index >= listData.Count || index < 0)
-					return null;
+					return new JsonData(null);
 				return listData[index];
 			}
 			set {

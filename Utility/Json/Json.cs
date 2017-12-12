@@ -14,7 +14,19 @@ namespace Renko.Utility
 		/// Parses the specified json string and returns a JsonData object.
 		/// </summary>
 		public static JsonData Parse(string json) {
-			return JsonParser.Parse(json);
+			return JsonDeserializer.Parse(json);
+		}
+
+		/// <summary>
+		/// Parses the specified json string for a specific type.
+		/// Instance may be null, but if no adaptor is registered for this type and there is no parameterless constructor, the deserialization will not work.
+		/// </summary>
+		public static T Parse<T>(string json, T instance) where T : new() {
+			Type type = typeof(T);
+			object value = JsonDeserializer.Deserialize(type, instance, Parse(json).AsObject());
+			if(value == null || value.GetType() != type)
+				return default(T);
+			return (T)value;
 		}
 
 		/// <summary>

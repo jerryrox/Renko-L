@@ -61,7 +61,7 @@ namespace Renko.Utility
 		/// </summary>
 		public int AsInt(int defaultValue = 0) {
 			if(rawObject.IsNumeric())
-				return (int)rawObject;
+				return (int)(long)rawObject;
 			if(rawObject is string) {
 				string str = (string)rawObject;
 				int i = 0;
@@ -91,7 +91,7 @@ namespace Renko.Utility
 		/// </summary>
 		public float AsFloat(float defaultValue = 0f) {
 			if(rawObject.IsNumeric())
-				return (float)rawObject;
+				return (float)(double)rawObject;
 			if(rawObject is string) {
 				string str = (string)rawObject;
 				float f = 0f;

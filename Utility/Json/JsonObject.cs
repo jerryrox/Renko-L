@@ -19,13 +19,13 @@ namespace Renko.Utility
 
 		/// <summary>
 		/// Gets or sets data at the specified index.
-		/// This property will return null if key doesn't exist.
+		/// This property will return null JsonData if key doesn't exist.
 		/// This property will add a new key if it doesn't exist.
 		/// </summary>
 		public JsonData this[string index] {
 			get {
 				if(!objectData.ContainsKey(index))
-					return null;
+					return new JsonData(null);
 				return objectData[index];
 			}
 			set {
@@ -102,7 +102,6 @@ namespace Renko.Utility
 				RenLog.Log(LogLevel.Warning, "JsonObject.CopyTo - Parameter 'array' can't be null!");
 				return;
 			}
-			IEnumerator enumerator = objectData.GetEnumerator();
 			int loopCount = Mathf.Clamp(
 				objectData.Count,
 				0,

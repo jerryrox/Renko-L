@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System;
 using Renko.Extensions;
+using Renko.Utility.Internal;
 
 namespace Renko.Utility
 {
@@ -84,21 +85,55 @@ namespace Renko.Utility
 		/// Seializer method for json data.
 		/// </summary>
 		private void SerializeData(object data) {
-			//Null json value
 			if(data == null) {
 				sb.Append("null");
-				return;
 			}
-			//Json value without quotes
 			else if(data.IsNumeric() || data is bool) {
 				sb.Append(data.ToString().ToLower());
 			}
-			//Json value with quotes
-			else {
-				sb.Append('"');
+			else if(data is string) {
+				sb.Append('"');	
 				AppendEscapedString(data.ToString());
 				sb.Append('"');
 			}
+			else {
+				SerializeCustomData(data);
+			}
+		}
+
+		/// <summary>
+		/// Serializes using custom methods (JsonAdaptor, IJsonable, Type serializer).
+		/// </summary>
+		private void SerializeCustomData(object data) {
+			Type dataType = data.GetType();
+			JsonObject serializedData = null;
+
+			serializedData = JsonAdaptor.Serialize(dataType, data);
+			if(serializedData != null) {
+				SerializeObject(serializedData);
+				return;
+			}
+
+			IJsonable jsonableObject = data as IJsonable;
+			if(jsonableObject != null) {
+				serializedData = jsonableObject.ToJsonObject();
+				if(serializedData != null) {
+					SerializeObject(jsonableObject.ToJsonObject());
+					return;
+				}
+			}
+
+			serializedData = JsonTypeSerializer.Serialize(dataType, data);
+			if(serializedData != null) {
+				SerializeObject(serializedData);
+				return;
+			}
+
+			//This is when all the above methods fail.
+			//Just return the stringified data.
+			sb.Append('"');	
+			AppendEscapedString(data.ToString());
+			sb.Append('"');
 		}
 		
 		/// <summary>

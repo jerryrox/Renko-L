@@ -5,6 +5,8 @@ using System.IO;
 using System;
 using Renko.Debug;
 using Renko.Extensions;
+using Renko.Reflection;
+using Renko.Utility.Internal;
 
 namespace Renko.Utility
 {
@@ -12,7 +14,7 @@ namespace Renko.Utility
 	/// A class that parses json string into a JsonData object.
 	/// Used MiniJSON for reference.
 	/// </summary>
-	public class JsonParser : IDisposable {
+	public class JsonDeserializer : IDisposable {
 
 		/// <summary>
 		/// Chracters that should be ignored in general.
@@ -118,7 +120,7 @@ namespace Renko.Utility
 		}
 
 
-		private JsonParser(string jsonString) {
+		private JsonDeserializer(string jsonString) {
 			json = new StringReader(jsonString);
 		}
 
@@ -126,9 +128,44 @@ namespace Renko.Utility
 		/// Returns a JsonData object from given string.
 		/// </summary>
 		public static JsonData Parse(string str) {
-			using(var parser = new JsonParser(str)) {
+			using(var parser = new JsonDeserializer(str)) {
 				return new JsonData(parser.ParseValue());
 			}
+		}
+
+		/// <summary>
+		/// Deserializes the specified JsonData for a specific type.
+		/// Highly recommended to use Json.Parse with Type parameter instead.
+		/// </summary>
+		public static object Deserialize(Type t, object instance, JsonObject data) {
+			object adaptorResult = JsonAdaptor.Deserialize(t, data);
+			if(adaptorResult != null) {
+				return adaptorResult;
+			}
+
+			//IJsonable method requires an instance to be present.
+			if(instance == null) {
+				instance = DynamicService.CreateObject(t);
+				if(instance == null) {
+					RenLog.Log(LogLevel.Error, string.Format(
+						"JsonDeserializer.Deserialize - Failed to instantiate a dynamic object of type ({0}). If possible, try adding a parameterless constructor.",
+						t.Name
+					));
+					return null;
+				}
+			}
+
+			IJsonable jsonable = instance as IJsonable;
+			if(jsonable != null) {
+				jsonable.FromJsonObject(data);
+				return instance;
+			}
+
+			//No deserializer is available.
+			RenLog.Log(LogLevel.Warning, string.Format(
+				"JsonDeserializer.Deserialize - There is no deserializer available for type ({0}). Returning null."
+			));
+			return null;
 		}
 
 		public void Dispose() {
@@ -294,11 +331,11 @@ namespace Renko.Utility
 			//No decimal point means it should be parsed to long value.
 			if (number.IndexOf('.') == -1) {
 				long parsedInt;
-				Int64.TryParse(number, out parsedInt);
+				long.TryParse(number, out parsedInt);
 				return parsedInt;
 			}
 			double parsedDouble;
-			Double.TryParse(number, out parsedDouble);
+			double.TryParse(number, out parsedDouble);
 			return parsedDouble;
 		}
 		
