@@ -1,0 +1,23 @@
+<!-- These must go under "application" element. -->
+<activity android:name="com.reisenmoe.renkol.internal.PhotoCameraActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+<activity android:name="com.reisenmoe.renkol.internal.VideoCameraActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+<activity android:name="com.reisenmoe.renkol.internal.ImageCropperActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+<activity android:name="com.reisenmoe.renkol.internal.ImagePickerActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+<provider
+    android:name="com.reisenmoe.renkol.internal.FileProvidaNya"
+    android:authorities="com.reisenmoe.renkol.provider"
+    android:exported="false"
+    android:grantUriPermissions="true">
+    <meta-data
+        android:name="android.support.FILE_PROVIDER_PATHS"
+        android:resource="@xml/provider_paths"/>
+</provider>
+
+
+<!-- These must go outside of "application" element. -->
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.CAMERA" />
+
+<uses-feature android:name="android.hardware.camera" />
+<uses-feature android:name="android.hardware.camera.autofocus" />
