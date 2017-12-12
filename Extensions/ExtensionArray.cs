@@ -96,6 +96,16 @@ namespace Renko.Extensions
 			}
 			return default(T);
 		}
+
+		/// <summary>
+		/// Returns the first object in the array.
+		/// If this array is null or Length is 0, a default(T) will be returned.
+		/// </summary>
+		public static T FirstOrDefault<T>(this T[] context) {
+			if(context == null || context.Length == 0)
+				return default(T);
+			return context[0];
+		}
 	}
 }
 
