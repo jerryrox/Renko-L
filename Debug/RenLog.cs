@@ -17,11 +17,9 @@
 		/// Outputs a standard debug log with given level and message.
 		/// </summary>
 		public static void Log(LogLevel level, object message) {
-			//If specified level is lower than current log level, return
 			if((int)level < (int)CurrentLevel)
 				return;
-
-			//Switch level
+			
 			switch(level) {
 			case LogLevel.Info:
 				UnityEngine.Debug.Log(message);
