@@ -134,9 +134,10 @@ namespace Renko.Utility
 			}
 
 			/// <summary>
-			/// Event to fire when an item has repeated.
+			/// A custom handler for unique item-specific events.
+			/// For example: Repeat event for DelayItem
 			/// </summary>
-			public ItemRepeatHandler OnItemRepeat {
+			public ItemCustomHandler OnItemCustom {
 				protected get; set;
 			}
 

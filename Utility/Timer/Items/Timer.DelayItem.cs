@@ -58,8 +58,8 @@ namespace Renko.Utility
 					return false;
 
 				startedTime += Duration;
-				if(OnItemRepeat != null)
-					OnItemRepeat(this, repeatedCount);
+				if(OnItemCustom != null)
+					OnItemCustom(this, repeatedCount);
 				return true;
 			}
 		}

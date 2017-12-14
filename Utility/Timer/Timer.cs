@@ -78,7 +78,7 @@ namespace Renko.Utility
 		/// <summary>
 		/// Delegate that handles callback event when an item has reached the repeating point.
 		/// </summary>
-		public delegate void ItemRepeatHandler(Item item, int repeat);
+		public delegate void ItemCustomHandler(Item item, int repeat);
 		/// <summary>
 		/// Delegate that handles callback event when an item has finished updating.
 		/// </summary>
@@ -95,11 +95,8 @@ namespace Renko.Utility
 		public static void Initialize() {
 			if(I != null)
 				return;
-
-			I = GameObject.FindObjectOfType<Timer>();
-			if(I == null)
-				I = new GameObject("_Timer").AddComponent<Timer>();
-
+			
+			I = RenkoLibrary.CreateModule<Timer>();
 			speed = Time.timeScale;
 		}
 

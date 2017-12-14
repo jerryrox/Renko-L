@@ -57,7 +57,8 @@ namespace Renko.Plugin
 		public static void Initialize() {
 			if(I != null)
 				return;
-			CreateInstance();
+
+			I = RenkoLibrary.CreateModule<NativeCamera>();
 			SetupPlugin();
 		}
 
@@ -99,16 +100,6 @@ namespace Renko.Plugin
 
 			I.onVideoResult = callback;
 			I.camPlugin.TakeVideo(saveOptions, videoOptions);
-		}
-
-		/// <summary>
-		/// Creates a new instance of this class or finds an existing one.
-		/// </summary>
-		private static void CreateInstance() {
-			I = GameObject.FindObjectOfType<NativeCamera>();
-			if(I == null)
-				I = new GameObject("_NativeCamera").AddComponent<NativeCamera>();
-			DontDestroyOnLoad(I.gameObject);
 		}
 
 		/// <summary>

@@ -44,7 +44,8 @@ namespace Renko.Plugin
 		public static void Initialize() {
 			if(I != null)
 				return;
-			CreateInstance();
+
+			I = RenkoLibrary.CreateModule<GalleryPicker>();
 			SetupPlugin();
 		}
 
@@ -80,16 +81,6 @@ namespace Renko.Plugin
 			}
 			I.onVideoResult = callback;
 			I.galleryPlugin.PickVideo();
-		}
-
-		/// <summary>
-		/// Creates a new instance of this class or finds an existing one.
-		/// </summary>
-		private static void CreateInstance() {
-			I = GameObject.FindObjectOfType<GalleryPicker>();
-			if(I == null)
-				I = new GameObject("_GalleryPicker").AddComponent<GalleryPicker>();
-			DontDestroyOnLoad(I.gameObject);
 		}
 
 		/// <summary>

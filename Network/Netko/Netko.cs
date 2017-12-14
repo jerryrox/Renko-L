@@ -14,7 +14,7 @@ namespace Renko.Network
 		/// <summary>
 		/// Reference to Netko instance. Shouldn't be visible
 		/// </summary>
-		private static Netko Instance;
+		private static Netko I;
 		/// <summary>
 		/// Object that handles Netko's update process.
 		/// </summary>
@@ -25,14 +25,14 @@ namespace Renko.Network
 		/// Number of requests currently being processed.
 		/// </summary>
 		public static int CurrentRequestCount {
-			get { return Instance.processQueue.currentProcessCount; }
+			get { return I.processQueue.currentProcessCount; }
 		}
 		/// <summary>
 		/// Max number of requests that can be processed at once.
 		/// </summary>
 		public static int MaxConcurrentRequests {
-			get { return Instance.processQueue.maxProcessCount; }
-			set { Instance.processQueue.maxProcessCount = value; }
+			get { return I.processQueue.maxProcessCount; }
+			set { I.processQueue.maxProcessCount = value; }
 		}
 
 
@@ -40,20 +40,18 @@ namespace Renko.Network
 		/// Initializes Netko library.
 		/// </summary>
 		public static void Initialize() {
-			if(Instance != null)
+			if(I != null)
 				return;
-			Instance = GameObject.FindObjectOfType<Netko>();
-			if(Instance == null)
-				Instance = new GameObject("_Netko").AddComponent<Netko>();
-			Instance.processQueue = new ProcessQueue();
-			DontDestroyOnLoad(Instance.gameObject);
+			
+			I = RenkoLibrary.CreateModule<Netko>(true);
+			I.processQueue = new ProcessQueue();
 		}
 
 		/// <summary>
 		/// Registers the specified item to processing queue and returns it.
 		/// </summary>
 		public static Item RegisterItem(Item item) {
-			Instance.processQueue.AddItem(item);
+			I.processQueue.AddItem(item);
 			return item;
 		}
 
@@ -61,7 +59,7 @@ namespace Renko.Network
 		/// Terminates all items with specified id.
 		/// </summary>
 		public static void TerminateGroup(int id) {
-			Instance.processQueue.RemoveGroup(id);
+			I.processQueue.RemoveGroup(id);
 		}
 
 		void Update() {

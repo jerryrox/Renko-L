@@ -166,9 +166,8 @@ namespace Renko.Services
 		/// Prepares a new instance of IAPManager if it doesn't already exist.
 		/// </summary>
 		private static void SetupInstance() {
-			if(I != null)
-				return;
-			I = new IAPManager();
+			if(I == null)
+				I = new IAPManager();
 		}
 
 		/// <summary>
