@@ -14,7 +14,7 @@ namespace Renko
 	/// </summary>
 	public static class RenkoLibrary {
 
-		public static string GithubLink = "https://github.com/jerryrox/Renko-L";
+		public const string GithubLink = "https://github.com/jerryrox/Renko-L";
 
 
 		/// <summary>
