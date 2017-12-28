@@ -34,7 +34,7 @@ namespace Renko.Utility
 				}
 				//Add dummy items to avoid index out of range exception
 				AddDummy(index+1 - listData.Count);
-				listData[index] = GetNullSafeData(value);;
+				listData[index] = GetNullSafeData(value);
 			}
 		}
 

@@ -31,7 +31,7 @@ namespace Renko.Utility
 			set {
 				if(AddIfNotExists(index, value))
 					return;
-				objectData[index].Value = GetNullSafeData(value);
+				objectData[index] = GetNullSafeData(value);
 			}
 		}
 
@@ -66,9 +66,7 @@ namespace Renko.Utility
 		}
 
 
-		public JsonObject()
-		{
-			//Instantiate raw data dictionary
+		public JsonObject() {
 			objectData = new Dictionary<string, JsonData>();
 		}
 
@@ -172,7 +170,7 @@ namespace Renko.Utility
 		public override string ToString () {
 			return JsonSerializer.Serialize(this);
 		}
-		
+
 		/// <summary>
 		/// Adds the given key and value if key doesn't already exist.
 		/// Returns true if successfully added.
