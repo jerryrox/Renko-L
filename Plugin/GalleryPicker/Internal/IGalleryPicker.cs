@@ -26,13 +26,15 @@ namespace Renko.Plugin.Internal
 
 		/// <summary>
 		/// Processes extra work before firing the image callback.
+		/// Returns the final result.
 		/// </summary>
-		void FinalizeImagePick(string result);
+		string FinalizeImagePick(string result);
 
 		/// <summary>
 		/// Processes extra work before firing the video callback.
+		/// Returns the final result.
 		/// </summary>
-		void FinalizeVideoPick(string result);
+		string FinalizeVideoPick(string result);
 	}
 }
 

@@ -59,7 +59,7 @@ namespace Renko.Utility
 
 				startedTime += Duration;
 				if(OnItemCustom != null)
-					OnItemCustom(this, repeatedCount);
+					OnItemCustom(this);
 				return true;
 			}
 		}

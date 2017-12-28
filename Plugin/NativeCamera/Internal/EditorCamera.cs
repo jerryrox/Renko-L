@@ -32,12 +32,12 @@ namespace Renko.Plugin.Internal
 			});
 		}
 
-		public void FinalizePhoto(string filePath) {
-			
+		public string FinalizePhoto(string filePath) {
+			return filePath;
 		}
 
-		public void FinalizeVideo(string filePath) {
-			
+		public string FinalizeVideo(string filePath) {
+			return filePath;
 		}
 	}
 }

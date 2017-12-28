@@ -74,6 +74,8 @@ namespace Renko.Plugin
 
 		/// <summary>
 		/// Takes a new photo and saves at specified file path.
+		/// On iOS, the photo will be saved to the library along with documents directory,
+		/// as you can't directly access files in the photo library.
 		/// </summary>
 		public static void TakePhoto(SaveOption saveOptions, CropOption cropOptions, PhotoResultHandler callback) {
 			if(I == null) {
@@ -89,6 +91,8 @@ namespace Renko.Plugin
 
 		/// <summary>
 		/// Takes a new video and saves at specified file path.
+		/// On iOS, the photo will be saved to the library along with documents directory,
+		/// as you can't directly access files in the photo library.
 		/// </summary>
 		public static void TakeVideo(SaveOption saveOptions, VideoOption videoOptions, VideoResultHandler callback) {
 			if(I == null) {
@@ -125,7 +129,7 @@ namespace Renko.Plugin
 		/// Photo saved callback from camera plugin.
 		/// </summary>
 		void OnPhotoCallback(string path) {
-			I.camPlugin.FinalizePhoto(path);
+			path = I.camPlugin.FinalizePhoto(path);
 			if(onPhotoResult != null)
 				onPhotoResult(path);
 		}
@@ -134,7 +138,7 @@ namespace Renko.Plugin
 		/// Video saved callback from camera plugin.
 		/// </summary>
 		void OnVideoCallback(string path) {
-			I.camPlugin.FinalizeVideo(path);
+			path = I.camPlugin.FinalizeVideo(path);
 			if(onVideoResult != null)
 				onVideoResult(path);
 		}

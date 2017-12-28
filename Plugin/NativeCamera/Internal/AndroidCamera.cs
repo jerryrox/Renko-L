@@ -57,7 +57,7 @@ namespace Renko.Plugin.Internal
 			#endif
 		}
 
-		public void FinalizePhoto(string filePath) {
+		public string FinalizePhoto(string filePath) {
 			// If the photo is saved in persistent datapath and image should be cropped,
 			// We must get rid of the original image before cropping.
 			if(lastSaveOption != null && lastCropOption != null &&
@@ -72,10 +72,11 @@ namespace Renko.Plugin.Internal
 					File.Delete(originalPath);
 				}
 			}
+			return filePath;
 		}
 
-		public void FinalizeVideo(string filePath) {
-
+		public string FinalizeVideo(string filePath) {
+			return filePath;
 		}
 	}
 }

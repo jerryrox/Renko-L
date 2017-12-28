@@ -3,14 +3,16 @@
 <activity android:name="com.reisenmoe.renkol.internal.VideoCameraActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 <activity android:name="com.reisenmoe.renkol.internal.ImageCropperActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 <activity android:name="com.reisenmoe.renkol.internal.ImagePickerActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+<!-- Make sure to replace YOUR_PACKAGE_NAME with your own. -->
 <provider
     android:name="com.reisenmoe.renkol.internal.FileProvidaNya"
-    android:authorities="com.reisenmoe.renkol.provider"
+    android:authorities="YOUR_PACKAGE_NAME.provider"
     android:exported="false"
     android:grantUriPermissions="true">
     <meta-data
-        android:name="android.support.FILE_PROVIDER_PATHS"
-        android:resource="@xml/provider_paths"/>
+    android:name="android.support.FILE_PROVIDER_PATHS"
+    android:resource="@xml/provider_paths"/>
 </provider>
 
 
@@ -21,3 +23,4 @@
 
 <uses-feature android:name="android.hardware.camera" />
 <uses-feature android:name="android.hardware.camera.autofocus" />
+

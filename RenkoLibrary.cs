@@ -6,6 +6,7 @@ using Renko.Network;
 using Renko.Plugin;
 using Renko.Threading;
 using Renko.Utility;
+using Renko.Effects;
 
 namespace Renko
 {
@@ -14,6 +15,8 @@ namespace Renko
 	/// </summary>
 	public static class RenkoLibrary {
 
+		public const string AuthorNickname = "jerryrox";
+		public const string AuthorName = "Jerry Kim";
 		public const string GithubLink = "https://github.com/jerryrox/Renko-L";
 
 

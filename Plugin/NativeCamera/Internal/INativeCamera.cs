@@ -28,12 +28,14 @@ namespace Renko.Plugin
 
 		/// <summary>
 		/// Processes extra work before firing a photo callback.
+		/// Returns the final result.
 		/// </summary>
-		void FinalizePhoto(string filePath);
+		string FinalizePhoto(string filePath);
 
 		/// <summary>
 		/// Processes extra work before firing a photo callback.
+		/// Returns the final result.
 		/// </summary>
-		void FinalizeVideo(string filePath);
+		string FinalizeVideo(string filePath);
 	}
 }

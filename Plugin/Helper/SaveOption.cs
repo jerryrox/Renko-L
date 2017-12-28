@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using Renko.Extensions;
 using Renko.Utility;
+using Renko.IO;
 
 namespace Renko.Plugin
 {
@@ -26,7 +28,7 @@ namespace Renko.Plugin
 			get { return savePath; }
 			set {
 				if(string.IsNullOrEmpty(value))
-					value = DateTime.Now.ToUnixTimestamp().ToString();
+					value = Path.Combine(NyanPath.RelativeTempDirectory, DateTime.Now.ToUnixTimestamp().ToString());
 				savePath = value;
 			}
 		}

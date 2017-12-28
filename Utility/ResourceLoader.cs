@@ -8,7 +8,7 @@ namespace Renko.Utility
 	/// A class for loading assets from resources folder.
 	/// </summary>
 	public static class ResourceLoader {
-		
+
 		/// <summary>
 		/// Loads an audio from resources.
 		/// </summary>
@@ -29,6 +29,15 @@ namespace Renko.Utility
 		public static GameObject LoadGameObject(string path) {
 			return (GameObject)Resources.Load(path, typeof(GameObject));
 		}
+
+		#if NGUI
+		/// <summary>
+		/// Loads a gameobject from resources, instantiates it, and returns its transform.
+		/// </summary>
+		public static Transform LoadUI(GameObject parent, string path) {
+			return NGUITools.AddChild( parent, LoadGameObject(path) ).transform;
+		}
+		#endif
 
 		/// <summary>
 		/// Loads a text asset from resources.

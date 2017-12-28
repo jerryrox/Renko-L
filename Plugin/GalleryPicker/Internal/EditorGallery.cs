@@ -29,12 +29,12 @@ namespace Renko.Plugin.Internal
 			
 		}
 
-		public void FinalizeImagePick (string result) {
-			
+		public string FinalizeImagePick (string result) {
+			return result;
 		}
 
-		public void FinalizeVideoPick (string result) {
-			
+		public string FinalizeVideoPick (string result) {
+			return result;
 		}
 	}
 }

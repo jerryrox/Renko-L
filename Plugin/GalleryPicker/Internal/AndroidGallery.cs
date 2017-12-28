@@ -40,14 +40,12 @@ namespace Renko.Plugin.Internal
 			#endif
 		}
 
-		public void FinalizeImagePick (string result) {
-			#if UNITY_ANDROID
-			#endif
+		public string FinalizeImagePick (string result) {
+			return result;
 		}
 
-		public void FinalizeVideoPick (string result) {
-			#if UNITY_ANDROID
-			#endif
+		public string FinalizeVideoPick (string result) {
+			return result;
 		}
 	}
 }

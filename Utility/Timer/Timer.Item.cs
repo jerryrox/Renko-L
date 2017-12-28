@@ -63,7 +63,7 @@ namespace Renko.Utility
 			}
 
 			/// <summary>
-			/// Lerp value of current time between update start and end times.
+			/// A value of current time (0~1) between update start and end times.
 			/// </summary>
 			public virtual float Progress {
 				get { return Mathf.Lerp(startedTime, startedTime + Duration, currentTime); }
@@ -113,11 +113,11 @@ namespace Renko.Utility
 			}
 
 			/// <summary>
-			/// Whether this item has stopped processing.
+			/// Whether this item has stopped processing and should be disposed in the next update.
 			/// </summary>
 			public bool IsStopped {
 				get; protected set;
-    			}
+    		}
 
 			/// <summary>
 			/// Event to fire when an item has started updating.

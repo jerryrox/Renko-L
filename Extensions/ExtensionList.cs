@@ -12,7 +12,7 @@ namespace Renko.Extensions
 		/// </summary>
 		public static void AddList<T>(this List<T> context, List<T> source) {
 			for(int i=0; i<source.Count; i++)
-				context.Add(context[i]);
+				context.Add(source[i]);
 		}
 
 		/// <summary>

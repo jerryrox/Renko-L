@@ -76,9 +76,9 @@ namespace Renko.Utility
 		/// </summary>
 		public delegate void ItemUpdateHandler(Item item);
 		/// <summary>
-		/// Delegate that handles callback event when an item has reached the repeating point.
+		/// Delegate that handles special callback event for item-specifiec events.
 		/// </summary>
-		public delegate void ItemCustomHandler(Item item, int repeat);
+		public delegate void ItemCustomHandler(Item item);
 		/// <summary>
 		/// Delegate that handles callback event when an item has finished updating.
 		/// </summary>
@@ -90,7 +90,7 @@ namespace Renko.Utility
 		}
 
 		/// <summary>
-		/// Initializes a new instance of Timer.
+		/// Initializes a new instance of Timer if doesn't already exist.
 		/// </summary>
 		public static void Initialize() {
 			if(I != null)
@@ -101,7 +101,7 @@ namespace Renko.Utility
 		}
 
 		/// <summary>
-		/// Registerss the specified item to processing list.
+		/// Registers the specified item to processing list.
 		/// </summary>
 		public static void RegisterItem(Timer.Item item) {
 			I.processor.AddItem(item);
@@ -133,7 +133,7 @@ namespace Renko.Utility
 		/// </summary>
 		private static void CacheTime() {
 			DeltaTime = Time.unscaledDeltaTime;
-			TimeSinceStartup = Time.unscaledTime;
+			TimeSinceStartup = Time.realtimeSinceStartup;
 		}
 
 		/// <summary>
