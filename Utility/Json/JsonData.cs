@@ -60,8 +60,14 @@ namespace Renko.Utility
 		/// Returns an int value stored in this object.
 		/// </summary>
 		public int AsInt(int defaultValue = 0) {
-			if(rawObject.IsNumeric())
-				return (int)(long)rawObject;
+			if(rawObject.IsNumeric()) {
+				try {
+					return Convert.ToInt32(rawObject);
+				}
+				catch(Exception e) {
+					return defaultValue;
+				}
+			}
 			if(rawObject is string) {
 				string str = (string)rawObject;
 				int i = 0;
@@ -75,8 +81,14 @@ namespace Renko.Utility
 		/// Returns a long value stored in this object.
 		/// </summary>
 		public long AsLong(long defaultValue = 0L) {
-			if(rawObject.IsNumeric())
-				return (long)rawObject;
+			if(rawObject.IsNumeric()) {
+				try {
+					return Convert.ToInt64(rawObject);
+				}
+				catch(Exception e) {
+					return defaultValue;
+				}
+			}
 			if(rawObject is string) {
 				string str = (string)rawObject;
 				long l = 0L;
@@ -90,8 +102,14 @@ namespace Renko.Utility
 		/// Returns a float value stored in this object.
 		/// </summary>
 		public float AsFloat(float defaultValue = 0f) {
-			if(rawObject.IsNumeric())
-				return (float)(double)rawObject;
+			if(rawObject.IsNumeric()) {
+				try {
+					return Convert.ToSingle(rawObject);
+				}
+				catch(Exception e) {
+					return defaultValue;
+				}
+			}
 			if(rawObject is string) {
 				string str = (string)rawObject;
 				float f = 0f;
@@ -105,8 +123,14 @@ namespace Renko.Utility
 		/// Returns a double value stored in this object.
 		/// </summary>
 		public double AsDouble(double defaultValue = 0d) {
-			if(rawObject.IsNumeric())
-				return (double)rawObject;
+			if(rawObject.IsNumeric()) {
+				try {
+					return Convert.ToDouble(rawObject);
+				}
+				catch(Exception e) {
+					return defaultValue;
+				}
+			}
 			if(rawObject is string) {
 				string str = (string)rawObject;
 				double d = 0f;
@@ -120,8 +144,9 @@ namespace Renko.Utility
 		/// Returns a bool value stored in this object.
 		/// </summary>
 		public bool AsBool(bool defaultValue = false) {
-			if(rawObject is bool)
+			if(rawObject is bool) {
 				return (bool)rawObject;
+			}
 			if(rawObject is string) {
 				return BoolParser.Parse(((string)rawObject).ToLower());
 			}
@@ -173,7 +198,7 @@ namespace Renko.Utility
 		/// </summary>
 		public override string ToString () { return JsonSerializer.Serialize(this); }
 
-		
+
 		public static implicit operator int(JsonData context) { return context.AsInt(); }
 
 		public static implicit operator long(JsonData context) { return context.AsLong(); }
@@ -189,7 +214,7 @@ namespace Renko.Utility
 		public static implicit operator JsonObject(JsonData context) { return context.AsObject(null); }
 
 		public static implicit operator JsonArray(JsonData context) { return context.AsArray(null); }
-		
+
 		public static implicit operator JsonData(int context) { return new JsonData(context); }
 
 		public static implicit operator JsonData(long context) { return new JsonData(context); }
