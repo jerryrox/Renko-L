@@ -170,7 +170,7 @@ namespace Renko.Utility
 		public override string ToString () {
 			return JsonSerializer.Serialize(this);
 		}
-
+		
 		/// <summary>
 		/// Adds the given key and value if key doesn't already exist.
 		/// Returns true if successfully added.

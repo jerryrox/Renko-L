@@ -198,7 +198,7 @@ namespace Renko.Utility
 		/// </summary>
 		public override string ToString () { return JsonSerializer.Serialize(this); }
 
-
+		
 		public static implicit operator int(JsonData context) { return context.AsInt(); }
 
 		public static implicit operator long(JsonData context) { return context.AsLong(); }
@@ -214,7 +214,7 @@ namespace Renko.Utility
 		public static implicit operator JsonObject(JsonData context) { return context.AsObject(null); }
 
 		public static implicit operator JsonArray(JsonData context) { return context.AsArray(null); }
-
+		
 		public static implicit operator JsonData(int context) { return new JsonData(context); }
 
 		public static implicit operator JsonData(long context) { return new JsonData(context); }

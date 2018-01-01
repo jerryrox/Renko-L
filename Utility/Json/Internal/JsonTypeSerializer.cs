@@ -62,11 +62,14 @@ namespace Renko.Utility.Internal
 		/// Creates a new array with the specified info's name and instance values.
 		/// </summary>
 		void ProcessEnumerableField(FieldInfo info) {
-			IEnumerator enumerator = (info.GetValue(instance) as IEnumerable).GetEnumerator();
-			if(enumerator != null) {
-				JsonArray arr = json[info.Name] = new JsonArray();
-				while(enumerator.MoveNext())
-					arr.Add(new JsonData(enumerator.Current));
+			JsonArray arr = json[info.Name] = new JsonArray();
+			IEnumerable enumerable = info.GetValue(instance) as IEnumerable;
+			if(enumerable != null) {
+				IEnumerator enumerator = enumerable.GetEnumerator();
+				if(enumerator != null) {
+					while(enumerator.MoveNext())
+						arr.Add(new JsonData(enumerator.Current));
+				}
 			}
 		}
 
@@ -81,11 +84,14 @@ namespace Renko.Utility.Internal
 		/// Creates a new item with the specified info's name and instance values.
 		/// </summary>
 		void ProcessEnumerableProperty(PropertyInfo info) {
-			IEnumerator enumerator = (info.GetValue(instance, null) as IEnumerable).GetEnumerator();
-			if(enumerator != null) {
-				JsonArray arr = json[info.Name] = new JsonArray();
-				while(enumerator.MoveNext())
-					arr.Add(new JsonData(enumerator.Current));
+			JsonArray arr = json[info.Name] = new JsonArray();
+			IEnumerable enumerable = info.GetValue(instance, null) as IEnumerable;
+			if(enumerable != null) {
+				IEnumerator enumerator = enumerable.GetEnumerator();
+				if(enumerator != null) {
+					while(enumerator.MoveNext())
+						arr.Add(new JsonData(enumerator.Current));
+				}
 			}
 		}
 	}
