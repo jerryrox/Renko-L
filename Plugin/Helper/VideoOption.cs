@@ -11,6 +11,7 @@ namespace Renko.Plugin
 		/// <summary>
 		/// The max duration in seconds for limiting video recording.
 		/// </summary>
+		[JsonAllowSerialize]
 		public int MaxDuration {
 			get; set;
 		}

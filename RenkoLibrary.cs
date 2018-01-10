@@ -34,6 +34,7 @@ namespace Renko
 			if(includePluginModules) {
 				GalleryPicker.Initialize();
 				NativeCamera.Initialize();
+				PluginTools.Initialize();
 			}
 		}
 

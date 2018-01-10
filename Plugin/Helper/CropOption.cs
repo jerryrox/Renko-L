@@ -13,6 +13,7 @@ namespace Renko.Plugin
 		/// <summary>
 		/// The target aspect ratio of your image.
 		/// </summary>
+		[JsonAllowSerialize]
 		public Vector2 Ratio {
 			get; set;
 		}
@@ -20,6 +21,7 @@ namespace Renko.Plugin
 		/// <summary>
 		/// The target resolution of your image.
 		/// </summary>
+		[JsonAllowSerialize]
 		public Vector2 Size {
 			get; set;
 		}
@@ -27,6 +29,7 @@ namespace Renko.Plugin
 		/// <summary>
 		/// Returns whether the cropping process will be done.
 		/// </summary>
+		[JsonAllowSerialize]
 		public bool IsCropping {
 			get {
 				Vector2 ratio = Ratio;

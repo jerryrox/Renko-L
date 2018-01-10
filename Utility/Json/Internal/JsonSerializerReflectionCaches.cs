@@ -105,16 +105,18 @@ namespace Renko.Utility.Internal
 			FieldInfo[] publicFields = type.GetFields(BindingFlags.Public | BindingFlags.FlattenHierarchy | BindingFlags.Instance);// | BindingFlags.NonPublic);
 
 			for(int i=0; i<nonPublicFields.Length; i++) {
-				//Non-public fields that are explicitly allowed to be serialized
-				if(nonPublicFields[i].GetCustomAttributes(typeof(JsonAllowSerializeAttribute), false).Length > 0) {
-					yield return nonPublicFields[i];
-				}
+				// Non-public fields require explicit confirmation for serialization.
+				if(nonPublicFields[i].GetCustomAttributes(typeof(JsonAllowSerializeAttribute), false).Length == 0)
+					continue;
+
+				yield return nonPublicFields[i];
 			}
 			for(int i=0; i<publicFields.Length; i++) {
-				//Ignoring JsonIgnoreAttribute'd fields
-				if(publicFields[i].GetCustomAttributes(typeof(JsonIgnoreSerializeAttribute), false).Length == 0) {
-					yield return publicFields[i];
-				}
+				// Ignoring JsonIgnoreAttribute'd fields
+				if(publicFields[i].GetCustomAttributes(typeof(JsonIgnoreSerializeAttribute), false).Length > 0)
+					continue;
+
+				yield return publicFields[i];
 			}
 		}
 
@@ -146,25 +148,17 @@ namespace Renko.Utility.Internal
 		/// Enumerates through all properties in specified type and returns "half-eligible" properties.
 		/// </summary>
 		private static IEnumerator<PropertyInfo> PropertyEnumerator(Type type) {
-			PropertyInfo[] nonPublicProperties = type.GetProperties(BindingFlags.NonPublic | BindingFlags.FlattenHierarchy | BindingFlags.Instance);
-			PropertyInfo[] publicProperties = type.GetProperties(BindingFlags.Public | BindingFlags.FlattenHierarchy | BindingFlags.Instance);
+			PropertyInfo[] properties = type.GetProperties(BindingFlags.Public | BindingFlags.FlattenHierarchy | BindingFlags.Instance | BindingFlags.NonPublic);
 
-			for(int i=0; i<nonPublicProperties.Length; i++) {
-				//Non-public properties that are explicitly allowed to be serialized
-				if(nonPublicProperties[i].GetCustomAttributes(typeof(JsonAllowSerializeAttribute), false).Length > 0) {
-					//Property must be gettable
-					if(nonPublicProperties[i].GetGetMethod(true) != null || nonPublicProperties[i].GetGetMethod(false) != null) {
-						yield return nonPublicProperties[i];
-					}
-				}
-			}
-			for(int i=0; i<publicProperties.Length; i++) {
-				//Ignoring JsonIgnoreAttribute'd fields
-				if(publicProperties[i].GetCustomAttributes(typeof(JsonIgnoreSerializeAttribute), false).Length == 0) {
-					//Property must be gettable
-					if(publicProperties[i].GetGetMethod(false) != null)
-						yield return publicProperties[i];
-				}
+			for(int i=0; i<properties.Length; i++) {
+				// Property must be flagged explicitly whether it'll be serialized.
+				if(properties[i].GetCustomAttributes(typeof(JsonAllowSerializeAttribute), false).Length == 0)
+					continue;
+				// Property must be gettable.
+				if(properties[i].GetGetMethod(true) == null && properties[i].GetGetMethod(false) == null)
+					continue;
+
+				yield return properties[i];
 			}
 		}
 	}

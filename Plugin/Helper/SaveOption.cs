@@ -10,13 +10,14 @@ namespace Renko.Plugin
 	/// Object that contains saving information for the plugin.
 	/// </summary>
 	public class SaveOption {
-		
+
 		private string savePath;
 
 
 		/// <summary>
 		/// Whether the camera output should be saved to the library or Application.persistentDataPath.
 		/// </summary>
+		[JsonAllowSerialize]
 		public bool SaveToLibrary {
 			get; set;
 		}
@@ -24,11 +25,12 @@ namespace Renko.Plugin
 		/// <summary>
 		/// The desired name of the new photo to be taken.
 		/// </summary>
+		[JsonAllowSerialize]
 		public string FileName {
 			get { return savePath; }
 			set {
 				if(string.IsNullOrEmpty(value))
-					value = Path.Combine(NyanPath.RelativeTempDirectory, DateTime.Now.ToUnixTimestamp().ToString());
+					value = DateTime.Now.ToUnixTimestamp().ToString();
 				savePath = value;
 			}
 		}
