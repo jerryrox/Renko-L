@@ -23,7 +23,7 @@ namespace Renko.Plugin
 		}
 
 		/// <summary>
-		/// The desired name of the new photo to be taken.
+		/// The desired name of your new file, WITHOUT extension.
 		/// </summary>
 		[JsonAllowSerialize]
 		public string FileName {

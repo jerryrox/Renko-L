@@ -7,7 +7,7 @@
 <!-- Make sure to replace YOUR_PACKAGE_NAME with your own. -->
 <provider
     android:name="com.reisenmoe.renkol.internal.FileProvidaNya"
-    android:authorities="YOUR_PACKAGE_NAME.provider"
+    android:authorities="YOUR_PACKAGE_NAME.fileprovider"
     android:exported="false"
     android:grantUriPermissions="true">
     <meta-data
