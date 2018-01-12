@@ -3,6 +3,7 @@
 #import "SaveOption.h"
 #import "CropOption.h"
 #import "VideoOption.h"
+#import "NyanPath.h"
 #import "Utils.h"
 #import "Permissions.h"
 
@@ -17,7 +18,7 @@ static NSString* RESULT_CANCEL = @"cancel";
 }
 
 -(void)SetOptions:(SaveOption*)saveOption :(CropOption*)cropOption :(VideoOption*)videoOption {
-    saveOption->fileName = [Utils GetDocumentPath:saveOption->fileName];
+    saveOption->fileName = [NyanPath GetTempPath:saveOption->fileName];
     if(self->isTakingPhoto)
         saveOption->fileName = [saveOption->fileName stringByAppendingString:@".jpg"];
     else

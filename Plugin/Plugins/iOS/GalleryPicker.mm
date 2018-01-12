@@ -1,6 +1,6 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "GalleryPicker.h"
-#import "Utils.h"
+#import "NyanPath.h"
 #import "CropOption.h"
 #import "Vector2.h"
 
@@ -16,7 +16,7 @@ static GalleryPicker* Instance;
 }
 
 -(void)SetOptions:(NSString*)savePath :(CropOption*)cropOption {
-    self->savePath = [Utils GetDocumentPath:savePath];
+    self->savePath = [NyanPath GetTempPath:savePath];
     if(self->isPickingImage)
         self->savePath = [self->savePath stringByAppendingString:@".jpg"];
     else
