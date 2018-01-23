@@ -254,6 +254,12 @@ namespace Renko.Network
 			public NetkoRequestInfo RequestInfo {
 				get; set;
 			}
+			/// <summary>
+			/// An additional (optional) data associated with this item.
+			/// </summary>
+			public object ExtraData {
+				get; set;
+			}
 			#endregion
 
 

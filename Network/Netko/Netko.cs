@@ -15,24 +15,39 @@ namespace Renko.Network
 		/// Reference to Netko instance. Shouldn't be visible
 		/// </summary>
 		private static Netko I;
+
 		/// <summary>
 		/// Object that handles Netko's update process.
 		/// </summary>
 		private ProcessQueue processQueue;
 
+		/// <summary>
+		/// Backing field of NewGroupId property.
+		/// </summary>
+		private int nextGroupId;
+
 
 		/// <summary>
-		/// Number of requests currently being processed.
+		/// Returns the number of requests currently being processed.
 		/// </summary>
 		public static int CurrentRequestCount {
 			get { return I.processQueue.currentProcessCount; }
 		}
+
 		/// <summary>
 		/// Max number of requests that can be processed at once.
 		/// </summary>
 		public static int MaxConcurrentRequests {
 			get { return I.processQueue.maxProcessCount; }
 			set { I.processQueue.maxProcessCount = value; }
+		}
+
+		/// <summary>
+		/// Returns a new integer value for specifying a group id for Netko Items.
+		/// Will increment every call.
+		/// </summary>
+		public static int NewGroupId {
+			get { return ++I.nextGroupId; }
 		}
 
 
