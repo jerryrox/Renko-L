@@ -42,11 +42,14 @@ namespace Renko.Utility
 			public override void Update () {
 				if(IsPaused || IsStopped)
 					return;
-				base.Update ();
-				if(currentTime >= startedTime + Duration) {
-					if(!Repeat())
+				// Checking this before update ensures that at least 1 frame is passed before notifying end.
+				if(currentTime > startedTime + Duration) {
+					if(!Repeat()) {
 						Stop();
+						return;
+					}
 				}
+				base.Update ();
 			}
 
 			/// <summary>

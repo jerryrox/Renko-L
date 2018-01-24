@@ -37,21 +37,6 @@ namespace Renko.Utility
 
 
 		/// <summary>
-		/// Sets the Time.timeScale and all items' speed to specified value.
-		/// </summary>
-		public static float TimeScale {
-			get { return speed; }
-			set {
-				if(value < 0)
-					value = 0f;
-				speed = Time.timeScale = value;
-				var items = I.processor.Items;
-				for(int i=0; i<items.Count; i++)
-					items[i].Speed = value;
-			}
-		}
-
-		/// <summary>
 		/// Sets all items' speed to specified value without changing Time.timeScale.
 		/// </summary>
 		public static float Speed {

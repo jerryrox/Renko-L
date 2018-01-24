@@ -6,72 +6,82 @@
 // figuring out why.
 
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Renko.Utility
 {
 	/// <summary>
-	/// Types of ease interpolations available.
-	/// </summary>
-	public enum EaseType {
-		Linear = 0,
-		EaseOut,
-		EaseIn,
-		ExpoEaseOut,
-		ExpoEaseIn,
-		ExpoEaseInOut,
-		ExpoEaseOutIn,
-		CircEaseOut,
-		CircEaseIn,
-		CircEaseInOut,
-		CircEaseOutIn,
-		QuadEaseOut,
-		QuadEaseIn,
-		QuadEaseInOut,
-		QuadEaseOutIn,
-		SineEaseOut,
-		SineEaseIn,
-		SineEaseInOut,
-		SineEaseOutIn,
-		CubicEaseOut,
-		CubicEaseIn,
-		CubicEaseInOut,
-		CubicEaseOutIn,
-		QuartEaseOut,
-		QuartEaseIn,
-		QuartEaseInOut,
-		QuartEaseOutIn,
-		QuintEaseOut,
-		QuintEaseIn,
-		QuintEaseInOut,
-		QuintEaseOutIn,
-		ElasticEaseOut,
-		ElasticEaseIn,
-		ElasticEaseInOut,
-		ElasticEaseOutIn,
-		BounceEaseOut,
-		BounceEaseIn,
-		BounceEaseInOut,
-		BounceEaseOutIn,
-		BackEaseOut,
-		BackEaseIn,
-		BackEaseInOut,
-		BackEaseOutIn,
-
-		END
-	}
-
-	/// <summary>
-	/// Delegate for handling ease events.
-	/// </summary>
-	public delegate float EaseHandler(float t, float b, float c, float d);
-
-	/// <summary>
 	/// Animates the change in value of a float property using 
 	/// Robert Penner's easing equations for interpolation over a specified duration.
 	/// </summary>
 	public static class Easing {
-		
+
+		/// <summary>
+		/// Dictionary of ease functions mapped to their corresponding EaseType values.
+		/// You'll have to call Easing.Initialize() first though.
+		/// </summary>
+		public static Dictionary<EaseType, EaseHandler> Handlers;
+
+		/// <summary>
+		/// Delegate for handling ease events.
+		/// </summary>
+		public delegate float EaseHandler(float t, float b, float c, float d);
+
+
+		/// <summary>
+		/// Initializes easing handler dictionary.
+		/// </summary>
+		public static void Initialize() {
+			if(Handlers != null)
+				return;
+			
+			Handlers = new Dictionary<EaseType, EaseHandler>();
+			Handlers.Add(EaseType.BackEaseIn, BackEaseIn);
+			Handlers.Add(EaseType.BackEaseInOut, BackEaseInOut);
+			Handlers.Add(EaseType.BackEaseOut, BackEaseOut);
+			Handlers.Add(EaseType.BackEaseOutIn, BackEaseOutIn);
+			Handlers.Add(EaseType.BounceEaseIn, BounceEaseIn);
+			Handlers.Add(EaseType.BounceEaseInOut, BounceEaseInOut);
+			Handlers.Add(EaseType.BounceEaseOut, BounceEaseOut);
+			Handlers.Add(EaseType.BounceEaseOutIn, BounceEaseOutIn);
+			Handlers.Add(EaseType.CircEaseIn, CircEaseIn);
+			Handlers.Add(EaseType.CircEaseInOut, CircEaseInOut);
+			Handlers.Add(EaseType.CircEaseOut, CircEaseOut);
+			Handlers.Add(EaseType.CircEaseOutIn, CircEaseOutIn);
+			Handlers.Add(EaseType.CubicEaseIn, CubicEaseIn);
+			Handlers.Add(EaseType.CubicEaseInOut, CubicEaseInOut);
+			Handlers.Add(EaseType.CubicEaseOut, CubicEaseOut);
+			Handlers.Add(EaseType.CubicEaseOutIn, CubicEaseOutIn);
+			Handlers.Add(EaseType.EaseIn, EaseIn);
+			Handlers.Add(EaseType.EaseOut, EaseOut);
+			Handlers.Add(EaseType.ElasticEaseIn, ElasticEaseIn);
+			Handlers.Add(EaseType.ElasticEaseInOut, ElasticEaseInOut);
+			Handlers.Add(EaseType.ElasticEaseOut, ElasticEaseOut);
+			Handlers.Add(EaseType.ElasticEaseOutIn, ElasticEaseOutIn);
+			Handlers.Add(EaseType.ExpoEaseIn, ExpoEaseIn);
+			Handlers.Add(EaseType.ExpoEaseInOut, ExpoEaseInOut);
+			Handlers.Add(EaseType.ExpoEaseOut, ExpoEaseOut);
+			Handlers.Add(EaseType.ExpoEaseOutIn, ExpoEaseOutIn);
+			Handlers.Add(EaseType.Linear, Linear);
+			Handlers.Add(EaseType.QuadEaseIn, QuadEaseIn);
+			Handlers.Add(EaseType.QuadEaseInOut, QuadEaseInOut);
+			Handlers.Add(EaseType.QuadEaseOut, QuadEaseOut);
+			Handlers.Add(EaseType.QuadEaseOutIn, QuadEaseOutIn);
+			Handlers.Add(EaseType.QuartEaseIn, QuartEaseIn);
+			Handlers.Add(EaseType.QuartEaseInOut, QuartEaseInOut);
+			Handlers.Add(EaseType.QuartEaseOut, QuartEaseOut);
+			Handlers.Add(EaseType.QuartEaseOutIn, QuartEaseOutIn);
+			Handlers.Add(EaseType.QuintEaseIn, QuintEaseIn);
+			Handlers.Add(EaseType.QuintEaseInOut, QuintEaseInOut);
+			Handlers.Add(EaseType.QuintEaseOut, QuintEaseOut);
+			Handlers.Add(EaseType.QuintEaseOutIn, QuintEaseOutIn);
+			Handlers.Add(EaseType.SineEaseIn, SineEaseIn);
+			Handlers.Add(EaseType.SineEaseInOut, SineEaseInOut);
+			Handlers.Add(EaseType.SineEaseOut, SineEaseOut);
+			Handlers.Add(EaseType.SineEaseOutIn, SineEaseOutIn);
+		}
+
 		/// <summary>
 		/// Linear change in value.
 		/// </summary>
@@ -710,5 +720,56 @@ namespace Renko.Utility
 				return BackEaseOut( t * 2, b, c * 0.5f, d );
 			return BackEaseIn( ( t * 2 ) - 1f, b + c * 0.5f, c * 0.5f, d );
 		}
+	}
+
+	/// <summary>
+	/// Types of ease interpolations available.
+	/// </summary>
+	public enum EaseType {
+		Linear = 0,
+		EaseOut,
+		EaseIn,
+		ExpoEaseOut,
+		ExpoEaseIn,
+		ExpoEaseInOut,
+		ExpoEaseOutIn,
+		CircEaseOut,
+		CircEaseIn,
+		CircEaseInOut,
+		CircEaseOutIn,
+		QuadEaseOut,
+		QuadEaseIn,
+		QuadEaseInOut,
+		QuadEaseOutIn,
+		SineEaseOut,
+		SineEaseIn,
+		SineEaseInOut,
+		SineEaseOutIn,
+		CubicEaseOut,
+		CubicEaseIn,
+		CubicEaseInOut,
+		CubicEaseOutIn,
+		QuartEaseOut,
+		QuartEaseIn,
+		QuartEaseInOut,
+		QuartEaseOutIn,
+		QuintEaseOut,
+		QuintEaseIn,
+		QuintEaseInOut,
+		QuintEaseOutIn,
+		ElasticEaseOut,
+		ElasticEaseIn,
+		ElasticEaseInOut,
+		ElasticEaseOutIn,
+		BounceEaseOut,
+		BounceEaseIn,
+		BounceEaseInOut,
+		BounceEaseOutIn,
+		BackEaseOut,
+		BackEaseIn,
+		BackEaseInOut,
+		BackEaseOutIn,
+
+		END
 	}
 }
