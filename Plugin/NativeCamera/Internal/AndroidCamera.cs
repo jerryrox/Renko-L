@@ -3,7 +3,7 @@ using System.IO;
 using System;
 using UnityEngine;
 using Renko.Extensions;
-using Renko.Debug;
+using Renko.Diagnostics;
 using Renko.Utility;
 
 namespace Renko.Plugin.Internal

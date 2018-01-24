@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using Renko.Debug;
+using Renko.Diagnostics;
 
 namespace Renko.Utility
 {

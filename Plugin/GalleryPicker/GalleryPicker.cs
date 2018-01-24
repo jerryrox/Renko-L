@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Renko.Debug;
+using Renko.Diagnostics;
 using Renko.Plugin.Internal;
 
 namespace Renko.Plugin

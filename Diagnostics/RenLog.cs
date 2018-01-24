@@ -1,4 +1,4 @@
-﻿namespace Renko.Debug
+﻿namespace Renko.Diagnostics
 {
 	/// <summary>
 	/// A class used by Renko L for outputting log messages.

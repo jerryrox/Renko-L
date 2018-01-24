@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
-using Renko.Debug;
+using Renko.Diagnostics;
 
 namespace Renko.Utility
 {

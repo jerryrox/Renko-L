@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.Networking;
-using Renko.Debug;
+using Renko.Diagnostics;
 using Renko.Network.Internal;
 using Renko.Utility;
 

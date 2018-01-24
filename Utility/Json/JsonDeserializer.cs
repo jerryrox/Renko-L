@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System;
-using Renko.Debug;
+using Renko.Diagnostics;
 using Renko.Extensions;
 using Renko.Reflection;
 using Renko.Utility.Internal;

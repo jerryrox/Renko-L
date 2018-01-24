@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 using System.Security.Cryptography;
-using Renko.Debug;
+using Renko.Diagnostics;
 
 namespace Renko.Security
 {

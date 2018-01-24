@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Purchasing;
 using UnityEngine.Store;
 
-using Renko.Debug;
+using Renko.Diagnostics;
 
 namespace Renko.Services
 {

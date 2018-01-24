@@ -1,4 +1,4 @@
-﻿using Renko.Debug;
+﻿using Renko.Diagnostics;
 
 namespace Renko.Security
 {

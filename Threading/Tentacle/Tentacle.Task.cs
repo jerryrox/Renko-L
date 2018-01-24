@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using UnityEngine;
-using Renko.Debug;
+using Renko.Diagnostics;
 
 using ThreadPriority = System.Threading.ThreadPriority;
 

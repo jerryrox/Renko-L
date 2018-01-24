@@ -12,7 +12,7 @@ using UnityEngine.Store;
 using UnityEngine.Purchasing;
 using UnityEngine.Purchasing.Security;
 
-using Renko.Debug;
+using Renko.Diagnostics;
 
 namespace Renko.Services
 {

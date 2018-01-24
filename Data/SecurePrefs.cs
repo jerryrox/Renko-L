@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Renko.Security;
-using Renko.Debug;
+using Renko.Diagnostics;
 
 namespace Renko.Data
 {

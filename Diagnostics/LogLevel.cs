@@ -1,4 +1,4 @@
-﻿namespace Renko.Debug
+﻿namespace Renko.Diagnostics
 {
 	/// <summary>
 	/// Levels of log for display.

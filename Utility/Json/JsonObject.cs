@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-using Renko.Debug;
+using Renko.Diagnostics;
 
 namespace Renko.Utility
 {

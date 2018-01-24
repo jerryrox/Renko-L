@@ -1,6 +1,6 @@
 ﻿using System;
 using UnityEngine;
-using Renko.Debug;
+using Renko.Diagnostics;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif

@@ -3,7 +3,7 @@ using System.Threading;
 using System.Collections.Generic;
 using UnityEngine;
 using Renko.Extensions;
-using Renko.Debug;
+using Renko.Diagnostics;
 
 namespace Renko.Threading
 {
