@@ -723,7 +723,7 @@ namespace Renko.Utility
 	}
 
 	/// <summary>
-	/// Types of ease interpolations available.
+	/// Types of ease methods available.
 	/// </summary>
 	public enum EaseType {
 		Linear = 0,

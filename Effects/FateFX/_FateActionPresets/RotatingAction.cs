@@ -16,9 +16,11 @@ namespace Renko.Effects
 		private Vector3 rotateChange;
 
 
-		public RotatingAction(Transform target, Vector3 from, Vector3 to, EaseType easeType) : base(easeType) {
+		public RotatingAction(Transform target, Vector3 from, Vector3 to, EaseType easeType = EaseType.Linear) {
 			SetTransform(target);
 			SetRotations(from, to);
+
+			EaseMethod = easeType;
 		}
 
 		public void SetTransform(Transform target) {

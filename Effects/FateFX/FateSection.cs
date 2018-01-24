@@ -91,17 +91,17 @@ namespace Renko.Effects
 		/// Updates fate actions.
 		/// </summary>
 		public void Update(float curTime, float lastTime) {
-			if(curTime <= startTime || lastTime >= endTime)
+			if(curTime < delayedStartTime || lastTime >= delayedEndTime)
 				return;
 
 			// On start event
-			if(lastTime <= startTime) {
+			if(lastTime <= delayedStartTime) {
 				InvokeEvent(OnStart);
 			}
 
 			// On end event.
 			// Here, we manually call AnimateActions with progress 1 so it should just return after event
-			if(curTime >= endTime) {
+			if(curTime >= delayedEndTime) {
 				AnimateActions(1f);
 				InvokeEvent(OnEnd);
 				return;
@@ -109,8 +109,8 @@ namespace Renko.Effects
 
 			// Update progress
 			AnimateActions(Cirno.InverseLerpUnclamped(
-				startTime,
-				endTime,
+				delayedStartTime,
+				delayedEndTime,
 				curTime
 			));
 		}
@@ -119,6 +119,9 @@ namespace Renko.Effects
 		/// Disposes the section.
 		/// </summary>
 		public void Dispose() {
+			for(int i=0; i<actions.Count; i++) {
+				actions[i].IsControlled = false;
+			}
 			actions.Clear();
 		}
 
@@ -135,6 +138,7 @@ namespace Renko.Effects
 		/// </summary>
 		public void AddAction(FateAction action) {
 			action.Duration = Duration;
+			action.IsControlled = true;
 			actions.Add(action);
 		}
 

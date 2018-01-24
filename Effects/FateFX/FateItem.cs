@@ -169,7 +169,9 @@ namespace Renko.Effects
 			else
 				curTime = Mathf.Clamp(time, 0f, totalDuration);
 
-			UpdateSections(curTime, curTime);
+			Debug.Log("Seeked curtime to : " + curTime);
+			Debug.Log("Seeked lasttime to : " + (curTime - FateFX.DeltaTime * speed));
+			UpdateSections(curTime, curTime - FateFX.DeltaTime * speed);
 		}
 
 		/// <summary>
@@ -199,6 +201,15 @@ namespace Renko.Effects
 		}
 
 		/// <summary>
+		/// Creates a fate section for callback event when current time reaches the specified value.
+		/// </summary>
+		public FateSection CreateEvent(float time, FateSection.CallbackHandler callback) {
+			FateSection section = new FateSection(time, time);
+			section.OnStart = callback;
+			return AddSection(section);
+		}
+
+		/// <summary>
 		/// Adds the specified section and returns it.
 		/// </summary>
 		public FateSection AddSection(FateSection section) {
@@ -222,7 +233,8 @@ namespace Renko.Effects
 			ApplyDelay();
 			FindDuration();
 
-			totalDuration = duration + startDelay + endDelay;
+			// startDelay is already included in duration.
+			totalDuration = duration + endDelay;
 		}
 
 		/// <summary>

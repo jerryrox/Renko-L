@@ -18,9 +18,11 @@ namespace Renko.Effects
 		private Vector3 cachedVector;
 
 
-		public RotatingAction2D(Transform target, float from, float to, EaseType easeType) : base(easeType) {
+		public RotatingAction2D(Transform target, float from, float to, EaseType easeType = EaseType.Linear) {
 			SetTransform(target);
 			SetRotations(from, to);
+
+			EaseMethod = easeType;
 		}
 
 		public void SetTransform(Transform target) {

@@ -21,10 +21,13 @@ namespace Renko.Effects
 		/// </summary>
 		public float Duration;
 
+		/// <summary>
+		/// Whether this action is currently included in any FateSection.
+		/// Will be set from FateSection so don't change this value unless you understand the FateFX process.
+		/// You can effectively recycle actions using this flag with BaseRecycler class for performance.
+		/// </summary>
+		public bool IsControlled;
 
-		public FateAction(EaseType easeType) {
-			EaseMethod = easeType;
-		}
 
 		/// <summary>
 		/// Animates with specified progress value (0~1).

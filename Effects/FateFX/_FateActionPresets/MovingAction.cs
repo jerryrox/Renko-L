@@ -16,9 +16,11 @@ namespace Renko.Effects
 		private Vector3 moveChange;
 
 
-		public MovingAction(Transform target, Vector3 from, Vector3 to, EaseType easeType = EaseType.Linear) : base(easeType) {
+		public MovingAction(Transform target, Vector3 from, Vector3 to, EaseType easeType = EaseType.Linear) {
 			SetTransform(target);
 			SetPositions(from, to);
+
+			EaseMethod = easeType;
 		}
 
 		public void SetTransform(Transform target) {
