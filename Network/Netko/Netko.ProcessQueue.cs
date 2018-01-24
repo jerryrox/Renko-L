@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Renko.Diagnostics;
 
 namespace Renko.Network
 {
@@ -90,7 +89,9 @@ namespace Renko.Network
 						currentProcessCount --;
 						CheckError(item);
 						item.DispatchEvent(2);
-						if(item.AutoTerminate)
+						// Even if the item is flagged for auto termination (which is true, by default)
+						// We must also take 'retries' into account.
+						if(item.AutoTerminate && item.IsProcessing)
 							item.Terminate();
 						continue;
 					}
