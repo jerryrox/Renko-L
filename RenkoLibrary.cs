@@ -30,6 +30,8 @@ namespace Renko
 			Netko.Initialize();
 			UnityThread.Initialize();
 			Timer.Initialize();
+			FateFX.Initialize();
+			Easing.Initialize();
 
 			if(includePluginModules) {
 				GalleryPicker.Initialize();
