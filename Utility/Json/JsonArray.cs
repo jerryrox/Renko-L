@@ -57,6 +57,10 @@ namespace Renko.Utility
 			listData = new List<JsonData>();
 		}
 
+		public JsonArray(ICollection collection) : this() {
+			AddCollection(collection);
+		}
+
 		/// <summary>
 		/// Returns the index of specified item.
 		/// </summary>
@@ -125,6 +129,15 @@ namespace Renko.Utility
 		/// </summary>
 		IEnumerator IEnumerable.GetEnumerator () {
 			return listData.GetEnumerator();
+		}
+
+		/// <summary>
+		/// Adds all elements from specified collection.
+		/// </summary>
+		public void AddCollection(ICollection collection) {
+			var enumerator = collection.GetEnumerator();
+			while(enumerator.MoveNext())
+				Add(new JsonData(enumerator.Current));
 		}
 
 		public override string ToString () {

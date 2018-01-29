@@ -38,7 +38,6 @@ namespace Renko.Utility
 		/// <summary>
 		/// Returns the number of items stored in this object.
 		/// </summary>
-		/// <value>The count.</value>
 		public int Count {
 			get { return objectData.Count; }
 		}
@@ -53,7 +52,6 @@ namespace Renko.Utility
 		/// <summary>
 		/// Returns a collection of keys in this object.
 		/// </summary>
-		/// <value>The keys.</value>
 		public ICollection<string> Keys {
 			get { return objectData.Keys; }
 		}
@@ -80,7 +78,6 @@ namespace Renko.Utility
 		/// <summary>
 		/// Adds the specified key value pair.
 		/// </summary>
-		/// <param name="item">Item.</param>
 		public void Add (KeyValuePair<string, JsonData> item) {
 			AddIfNotExists(item.Key, item.Value);
 		}
