@@ -64,7 +64,7 @@ namespace Renko.Extensions
 		public static int FirstIndexOf(this string context, char c) {
 			int length = context.Length;
 			for(int i=0; i<length; i++) {
-				if(context[i].Equals( c ))
+				if(context[i] == c)
 					return i;
 			}
 			return -1;
@@ -76,7 +76,7 @@ namespace Renko.Extensions
 		public static int NthIndexOf(this string context, int n, char c) {
 			int length = context.Length;
 			for(int i=0; i<length; i++) {
-				if(context[i].Equals( c )) {
+				if(context[i] == c) {
 					n--;
 					if(n <= 0)
 						return i;
@@ -91,7 +91,7 @@ namespace Renko.Extensions
 		public static int NthIndexFromLast(this string context, int n, char c) {
 			int length = context.Length;
 			for(int i=length-1; i>=0; i--) {
-				if(context[i].Equals( c )) {
+				if(context[i] == c) {
 					n--;
 					if(n <= 0)
 						return i;
@@ -106,7 +106,7 @@ namespace Renko.Extensions
 		public static int EntryCountOf(this string context, char c) {
 			int count = 0;
 			for(int i=0; i<context.Length; i++) {
-				if(context[i].Equals(c))
+				if(context[i] == c)
 					count++;
 			}
 			return count;

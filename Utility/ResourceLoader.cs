@@ -13,21 +13,21 @@ namespace Renko.Utility
 		/// Loads an audio from resources.
 		/// </summary>
 		public static AudioClip LoadAudioClip(string path) {
-			return (AudioClip)Resources.Load(path, typeof(AudioClip));
+			return Resources.Load(path, typeof(AudioClip)) as AudioClip;
 		}
 
 		/// <summary>
 		/// Loads a texture2d from resources.
 		/// </summary>
 		public static Texture2D LoadTexture2D(string path) {
-			return (Texture2D)Resources.Load(path, typeof(Texture2D));
+			return Resources.Load(path, typeof(Texture2D)) as Texture2D;
 		}
 
 		/// <summary>
 		/// Loads a gameobject from resources.
 		/// </summary>
 		public static GameObject LoadGameObject(string path) {
-			return (GameObject)Resources.Load(path, typeof(GameObject));
+			return Resources.Load(path, typeof(GameObject)) as GameObject;
 		}
 
 		#if NGUI
@@ -43,14 +43,14 @@ namespace Renko.Utility
 		/// Loads a text asset from resources.
 		/// </summary>
 		public static TextAsset LoadTextAsset(string path) {
-			return (TextAsset)Resources.Load(path, typeof(TextAsset));
+			return Resources.Load(path, typeof(TextAsset)) as TextAsset;
 		}
 
 		/// <summary>
 		/// Loads a generic type of object from resources.
 		/// </summary>
 		public static T Load<T>(string path) where T : Object {
-			return (T)Resources.Load(path, typeof(T));
+			return Resources.Load(path, typeof(T)) as T;
 		}
 
 		/// <summary>

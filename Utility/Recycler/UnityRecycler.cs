@@ -45,9 +45,9 @@ namespace Renko.Utility
 		/// If handler is undefined, the item's activeInHierarchy value will be returned.
 		/// </summary>
 		protected override bool FireOnCheckValid(T item) {
-			if(!base.FireOnCheckValid(item))
-				return item.gameObject.activeInHierarchy;
-			return true;
+			if(OnCheckValidHandler != null)
+				return OnCheckValidHandler(item);
+			return item.gameObject.activeInHierarchy;
 		}
 
 		/// <summary>

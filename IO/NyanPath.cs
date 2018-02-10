@@ -4,8 +4,6 @@ using UnityEngine;
 
 namespace Renko.IO
 {
-	//TODO: Add more useful stuffs
-
 	/// <summary>
 	/// A class with additional features for System.IO.Path.
 	/// </summary>
@@ -70,6 +68,69 @@ namespace Renko.IO
 			foreach(DirectoryInfo subDirectory in tempDir.GetDirectories())
 				subDirectory.Delete(true);
 		}
+
+		#if UNITY_EDITOR
+		/// <summary>
+		/// Returns the RenkoLibrary path.
+		/// </summary>
+		public static string GetLibraryPath(string innerPath = "") {
+			return Path.Combine(
+				Application.dataPath+"/Renko-L",
+				innerPath
+			);
+		}
+
+		/// <summary>
+		/// Returns the relative path inside the project's asset folder.
+		/// </summary>
+		public static string EditorRelativePath(string path) {
+			return path.Remove(0, Application.dataPath.Length+1);
+		}
+
+		/// <summary>
+		/// Returns whether specified path is inside the current project' asset folder and
+		/// is not located in Resources, Plugins, Editor, or StreamingAssets directory.
+		/// </summary>
+		public static bool IsStandardProjectPath(string path) {
+			return IsProjectPath(path) && !IsStreamingAssetsPath(path) && !IsResourcesPath(path) &&
+				!IsPluginsPath(path) && !IsEditorPath(path);
+		}
+
+		/// <summary>
+		/// Returns whether specified path is located inside the current project's asset folder.
+		/// </summary>
+		public static bool IsProjectPath(string path) {
+			return path.Contains(Application.dataPath);
+		}
+
+		/// <summary>
+		/// Returns whether specified path is located inside the current project's streaming assets folder.
+		/// </summary>
+		public static bool IsStreamingAssetsPath(string path) {
+			return path.Contains(Application.streamingAssetsPath);
+		}
+
+		/// <summary>
+		/// Returns whether specified path is located inside the project's resources folder.
+		/// </summary>
+		public static bool IsResourcesPath(string path) {
+			return path.Contains("/Resources/") || path.EndsWith("/Resources");
+		}
+
+		/// <summary>
+		/// Returns whether specified path is located inside the project's plugins folder.
+		/// </summary>
+		public static bool IsPluginsPath(string path) {
+			return path.Contains("/Plugins/") || path.EndsWith("/Plugins");
+		}
+
+		/// <summary>
+		/// Returns whether specified path is located inside the project's editor folder.
+		/// </summary>
+		public static bool IsEditorPath(string path) {
+			return path.Contains("/Editor/") || path.EndsWith("/Editor");
+		}
+		#endif
 	}
 }
 

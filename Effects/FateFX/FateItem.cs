@@ -16,7 +16,7 @@ namespace Renko.Effects
 		/// use it as an on-end callback.
 		/// Will be called upon: Loop, Stop
 		/// </summary>
-		public ResetHandler OnReset;
+		public event ResetHandler OnReset;
 
 		/// <summary>
 		/// Time sections of this item.

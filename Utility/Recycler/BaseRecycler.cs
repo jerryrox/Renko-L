@@ -55,13 +55,25 @@ namespace Renko.Utility
 		}
 
 		/// <summary>
-		/// Returns the number of active (valid) items in this recycler.
+		/// Returns the number of active items in this recycler.
 		/// </summary>
-		public int ValidCount {
+		public int ActiveCount {
 			get {
 				int valid = 0;
 				for(int i=0; i<items.Count; i++)
 					valid += (FireOnCheckValid(items[i]) ? 1 : 0);
+				return valid;
+			}
+		}
+
+		/// <summary>
+		/// Returns the number of inactive items in this recycler.
+		/// </summary>
+		public int InactiveCount {
+			get {
+				int valid = 0;
+				for(int i=0; i<items.Count; i++)
+					valid += (FireOnCheckValid(items[i]) ? 0 : 1);
 				return valid;
 			}
 		}
@@ -156,7 +168,6 @@ namespace Renko.Utility
 					continue;
 				return FireOnReset(item);
 			}
-			RenLog.Log(LogLevel.Info, "BaseRecycler.NextItem - There is no available item. Creating a new item.");
 			return FireOnReset(Add());
 		}
 

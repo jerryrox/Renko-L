@@ -1,4 +1,6 @@
-﻿namespace Renko.Diagnostics
+﻿using UnityEngine;
+
+namespace Renko.Diagnostics
 {
 	/// <summary>
 	/// A class used by Renko L for outputting log messages.
@@ -22,15 +24,15 @@
 			
 			switch(level) {
 			case LogLevel.Info:
-				UnityEngine.Debug.Log(message);
+				Debug.Log(message);
 				break;
 
 			case LogLevel.Warning:
-				UnityEngine.Debug.LogWarning(message);
+				Debug.LogWarning(message);
 				break;
 
 			case LogLevel.Error:
-				UnityEngine.Debug.LogError(message);
+				Debug.LogError(message);
 				break;
 			}
 		}

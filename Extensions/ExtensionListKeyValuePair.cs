@@ -10,7 +10,7 @@ namespace Renko.Extensions
 		/// </summary>
 		public static bool ContainsPair<K,V>(this List<KeyValuePair<K,V>> context, string key) {
 			for(int i=0; i<context.Count; i++) {
-				if(context[i].Key.Equals( key ))
+				if(context[i].Key.Equals(key))
 					return true;
 			}
 			return false;
@@ -22,7 +22,7 @@ namespace Renko.Extensions
 		/// </summary>
 		public static KeyValuePair<K,V> GetPair<K,V>(this List<KeyValuePair<K,V>> context, string key) {
 			for(int i=0; i<context.Count; i++) {
-				if(context[i].Key.Equals( key ))
+				if(context[i].Key.Equals(key))
 					return context[i];
 			}
 			throw new Exception("ExtensionListKeyValuePair.GetPair - Key was not present in the list.");

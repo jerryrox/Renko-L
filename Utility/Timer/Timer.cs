@@ -87,6 +87,7 @@ namespace Renko.Utility
 
 		/// <summary>
 		/// Registers the specified item to processing list.
+		/// If you have a custom Timer Item, make sure to register it by calling this method.
 		/// </summary>
 		public static void RegisterItem(Timer.Item item) {
 			I.processor.AddItem(item);

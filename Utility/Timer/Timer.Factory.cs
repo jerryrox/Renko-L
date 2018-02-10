@@ -22,6 +22,15 @@ namespace Renko.Utility
 			RegisterItem(item);
 			return item;
 		}
+
+		/// <summary>
+		/// Creates a new item that provides a callback event after a frame.
+		/// </summary>
+		public static Item CreateFrameDelay(ItemFinishHandler finishHandler) {
+			DelayItem item = new DelayItem(0f, 0, finishHandler);
+			RegisterItem(item);
+			return item;
+		}
 	}
 }
 
