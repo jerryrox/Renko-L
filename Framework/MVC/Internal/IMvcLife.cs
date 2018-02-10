@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if NGUI
+using System;
 using Renko.Utility;
 
 namespace Renko.MVCFramework.Internal
@@ -21,4 +22,4 @@ namespace Renko.MVCFramework.Internal
 		void DisposeView(IMvcView view);
 	}
 }
-
+#endif

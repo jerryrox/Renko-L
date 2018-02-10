@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if NGUI
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Renko.Utility;
@@ -67,4 +68,4 @@ namespace Renko.MVCFramework
 		void OnDisposeView();
 	}
 }
-
+#endif

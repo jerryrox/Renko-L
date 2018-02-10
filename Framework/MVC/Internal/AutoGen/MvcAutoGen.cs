@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if NGUI
+using System;
 using System.Text;
 using System.IO;
 using Renko.IO;
@@ -60,4 +61,4 @@ namespace Renko.MVCFramework.Internal
 		}
 	}
 }
-
+#endif

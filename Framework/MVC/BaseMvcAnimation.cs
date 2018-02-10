@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if NGUI
+using System;
 using UnityEngine;
 using Renko.Effects;
 using Renko.Utility;
@@ -60,4 +61,4 @@ namespace Renko.MVCFramework
 		OnViewHide
 	}
 }
-
+#endif

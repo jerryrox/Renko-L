@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if NGUI
+using System;
 using UnityEngine;
 using RenkoEditor;
 using Renko.Diagnostics;
@@ -45,4 +46,4 @@ namespace Renko.MVCFramework
 		}
 	}
 }
-
+#endif

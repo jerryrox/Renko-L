@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if NGUI
+using System;
 
 namespace Renko.MVCFramework
 {
@@ -23,4 +24,4 @@ namespace Renko.MVCFramework
 		Recycle
 	}
 }
-
+#endif

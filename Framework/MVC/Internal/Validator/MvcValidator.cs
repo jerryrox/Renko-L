@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if NGUI
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Renko.Extensions;
@@ -90,4 +91,4 @@ namespace Renko.MVCFramework
 		}
 	}
 }
-
+#endif

@@ -1,4 +1,5 @@
-﻿#if UNITY_EDITOR
+﻿#if NGUI
+#if UNITY_EDITOR
 using UnityEditor;
 #endif
 
@@ -248,3 +249,4 @@ namespace Renko.MVCFramework
 		#endif
 	}
 }
+#endif
