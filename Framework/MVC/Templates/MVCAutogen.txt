@@ -1,0 +1,25 @@
+/*
+ * AUTO GENERATED FILE.
+ * DO NOT MODIFY OR DELETE THIS FILE!
+ */
+using System;
+using UnityEngine;
+using Renko.MVCFramework.Internal;
+
+namespace Renko.MVCFramework
+{
+	public partial class MVC : MonoBehaviour {
+		
+		private void InitializeCore() {
+
+			// Set initial view type.
+|0|
+
+			// Add view metadatas.
+|1|
+
+			// Initialized
+			isCoreInitialized = true;
+		}
+	}
+}

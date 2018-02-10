@@ -1,0 +1,54 @@
+/*
+ * AUTO GENERATED FILE.
+ * DO NOT MODIFY OR DELETE THIS FILE!
+ */
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Renko.MVCFramework;
+using Renko.Utility;
+
+[RequireComponent(typeof({0}Model))]
+[RequireComponent(typeof({0}Controller))]
+public partial class {0}View : {1} {
+
+	[HideInInspector]
+	public {0}Model Model;
+	[HideInInspector]
+	public {0}Controller Controller;
+
+
+ 	public override void Awake() {
+ 		base.Awake();
+
+ 		Model = GetComponent<{0}Model>();
+ 		Controller = GetComponent<{0}Controller>();
+ 		Model.View = this;
+ 		Controller.View = this;
+ 		Model.Controller = Controller;
+ 		Controller.Model = Model;
+ 	}
+}
+
+public partial class {0}Model : MonoBehaviour {
+
+	[HideInInspector]
+	public {0}View View;
+	[HideInInspector]
+	public {0}Controller Controller;
+
+	/// <summary>
+	/// Parameters received on view creation.
+	/// </summary>
+	public JsonObject Params;
+}
+
+public partial class {0}Controller : MonoBehaviour {
+
+	[HideInInspector]
+	public {0}View View;
+	[HideInInspector]
+	public {0}Model Model;
+
+}

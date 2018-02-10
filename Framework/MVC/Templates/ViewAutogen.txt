@@ -1,0 +1,52 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Renko.MVCFramework;
+using Renko.Utility;
+
+public partial class {0}View : {1} {
+
+	/// <summary>
+	/// Use this method to handle initialization of fields, resources, etc.
+	/// Called ONLY once right after Awake().
+	/// </summary>
+	public override void OnInitialize(int viewId, JsonObject param) {
+		base.OnInitialize(viewId, param);
+		Model.Params = param;
+	}
+
+	/// <summary>
+	/// Use this method to handle re-initialization of fields, resources, etc.
+	/// Will invoke OnViewInitialize() afterwards.
+	/// Called everytime this view is being recycled.
+	/// </summary>
+	public override void OnRecycle(int viewId, JsonObject param) {
+		base.OnRecycle(viewId, param);
+		Model.Params = param;
+	}
+
+	/// <summary>
+	/// Use this method to handle view setup. Ideal place for a show animation, if any.
+	/// Called after a frame to make sure that all anchoring in the view is finished.
+	/// </summary>
+	public override void OnViewShow() {
+		base.OnViewShow();
+	}
+
+	/// <summary>
+	/// Use this method to handle view hiding. Ideal place for a hide animation, if any.
+	/// You should return a JsonObject value that represents a return data from this view.
+	/// If none, just return null.
+	/// </summary>
+	public override JsonObject OnViewHide() {
+		return base.OnViewHide();
+	}
+
+	/// <summary>
+	/// Use this method to dispose unused resources.
+	/// Called right before destruction/deactivation of the view for cleanup.
+	/// </summary>
+	public override void OnDisposeView() {
+		base.OnDisposeView();
+	}
+}
