@@ -17,8 +17,8 @@ namespace Renko.Effects
 			private List<FateItem> items;
 
 
-			public Updater() {
-				items = new List<FateItem>();
+			public Updater(int listCapacity) {
+				items = new List<FateItem>(listCapacity);
 			}
 
 			/// <summary>

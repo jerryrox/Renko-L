@@ -83,6 +83,19 @@ namespace Renko.Utility
 		}
 
 		/// <summary>
+		/// Adds all items from specified JsonObject.
+		/// </summary>
+		public void MergeFrom (JsonObject other, bool overwrite = true) {
+			foreach(var pair in other) {
+				if(!overwrite) {
+					if(objectData.ContainsKey(pair.Key))
+						continue;
+				}
+				this[pair.Key] = pair.Value;
+			}
+		}
+
+		/// <summary>
 		/// Clears all keys and values.
 		/// </summary>
 		public void Clear() {

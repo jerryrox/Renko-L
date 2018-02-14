@@ -32,10 +32,10 @@ namespace Renko.Utility
 
 		#if NGUI
 		/// <summary>
-		/// Loads a gameobject from resources, instantiates it, and returns its transform.
+		/// Loads a gameobject from resources, instantiates it, and returns the gameobject.
 		/// </summary>
-		public static Transform LoadUI(GameObject parent, string path) {
-			return NGUITools.AddChild( parent, LoadGameObject(path) ).transform;
+		public static GameObject CreateObject(GameObject parent, string path) {
+			return NGUITools.AddChild( parent, LoadGameObject(path) );
 		}
 		#endif
 

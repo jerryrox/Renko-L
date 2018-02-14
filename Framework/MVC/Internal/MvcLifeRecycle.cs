@@ -18,7 +18,7 @@ namespace Renko.MVCFramework.Internal
 		public MvcLifeRecycle() {
 			recycler = new BaseRecycler<IMvcView>(
 				delegate() {
-					var view = ResourceLoader.LoadUI(owner.ViewParent, owner.ResourcePath).GetComponent<IMvcView>();
+					var view = ResourceLoader.CreateObject(owner.ViewParent, owner.ResourcePath).GetComponent<IMvcView>();
 					return view;
 				},
 				delegate(IMvcView obj) {

@@ -52,12 +52,12 @@ namespace Renko.Effects
 		/// <summary>
 		/// Initializes FateFX module.
 		/// </summary>
-		public static void Initialize() {
+		public static void Initialize(int listCapacity = 0) {
 			if(I != null)
 				return;
 
 			I = RenkoLibrary.CreateModule<FateFX>();
-			I.updater = new Updater();
+			I.updater = new Updater(listCapacity);
 			I.speed = 1f;
 
 			// Dependency

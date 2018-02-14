@@ -90,6 +90,14 @@ namespace Renko.Utility
 		}
 
 		/// <summary>
+		/// Adds all items from specified JsonArray.
+		/// </summary>
+		public void MergeFrom (JsonArray other) {
+			for(int i=0; i<other.Count; i++)
+				this.Add(other[i]);
+		}
+
+		/// <summary>
 		/// Clears all items from the array.
 		/// </summary>
 		public void Clear () {

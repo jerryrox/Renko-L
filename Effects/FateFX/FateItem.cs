@@ -8,7 +8,7 @@ namespace Renko.Effects
 	/// <summary>
 	/// The item which represents a single FateFX animation.
 	/// </summary>
-	public class FateItem : IDisposable {
+	public class FateItem {
 
 		/// <summary>
 		/// Callback for resetting process.
@@ -16,7 +16,7 @@ namespace Renko.Effects
 		/// use it as an on-end callback.
 		/// Will be called upon: Loop, Stop
 		/// </summary>
-		public event ResetHandler OnReset;
+		public ResetHandler OnReset;
 
 		/// <summary>
 		/// Time sections of this item.
@@ -110,9 +110,9 @@ namespace Renko.Effects
 		public delegate void ResetHandler(FateItem item);
 
 
-		public FateItem() {
+		public FateItem(int listCapacity = 0) {
 			speed = 1f;
-			sections = new List<FateSection>();
+			sections = new List<FateSection>(listCapacity);
 		}
 
 		/// <summary>
@@ -168,18 +168,14 @@ namespace Renko.Effects
 				curTime = Mathf.Lerp(0f, totalDuration, time);
 			else
 				curTime = Mathf.Clamp(time, 0f, totalDuration);
-
-			Debug.Log("Seeked curtime to : " + curTime);
-			Debug.Log("Seeked lasttime to : " + (curTime - FateFX.DeltaTime * speed));
+			
 			UpdateSections(curTime, curTime - FateFX.DeltaTime * speed);
 		}
 
 		/// <summary>
-		/// Disposes the item.
+		/// Clears all sections in this item.
 		/// </summary>
-		public void Dispose() {
-			for(int i=0; i<sections.Count; i++)
-				sections[i].Dispose();
+		public void Clear() {
 			sections.Clear();
 		}
 
@@ -196,15 +192,15 @@ namespace Renko.Effects
 		/// <summary>
 		/// Creates a new section, adds it, and returns it.
 		/// </summary>
-		public FateSection CreateSection(float startTime, float endTime) {
-			return AddSection(new FateSection(startTime, endTime));
+		public FateSection CreateSection(float startTime, float endTime, int listCapacity = 0) {
+			return AddSection(new FateSection(startTime, endTime, listCapacity));
 		}
 
 		/// <summary>
 		/// Creates a fate section for callback event when current time reaches the specified value.
 		/// </summary>
 		public FateSection CreateEvent(float time, FateSection.CallbackHandler callback) {
-			FateSection section = new FateSection(time, time);
+			FateSection section = new FateSection(time, time, 1);
 			section.OnStart = callback;
 			return AddSection(section);
 		}

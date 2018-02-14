@@ -8,7 +8,7 @@ namespace Renko.Effects
 	/// <summary>
 	/// A class that represents a time section within FateFX.
 	/// </summary>
-	public class FateSection : IDisposable {
+	public class FateSection {
 
 		/// <summary>
 		/// Callback for on start event.
@@ -23,7 +23,7 @@ namespace Renko.Effects
 		/// <summary>
 		/// List of actions to perform during this section.
 		/// </summary>
-		private List<FateAction> actions;
+		private List<ActionHandler> actions;
 
 		/// <summary>
 		/// The starting time of this section.
@@ -76,13 +76,18 @@ namespace Renko.Effects
 
 
 		/// <summary>
+		/// Delegate for handling the animation process.
+		/// </summary>
+		public delegate void ActionHandler(float progress);
+
+		/// <summary>
 		/// Delegate for handling callback events on section start/end.
 		/// </summary>
 		public delegate void CallbackHandler(FateSection section);
 
 
-		public FateSection(float startTime, float endTime) {
-			actions = new List<FateAction>();
+		public FateSection(float startTime, float endTime, int listCapacity = 0) {
+			actions = new List<ActionHandler>(listCapacity);
 			this.startTime = startTime;
 			this.endTime = endTime;
 		}
@@ -116,12 +121,9 @@ namespace Renko.Effects
 		}
 
 		/// <summary>
-		/// Disposes the section.
+		/// Clears all actions in this section.
 		/// </summary>
-		public void Dispose() {
-			for(int i=0; i<actions.Count; i++) {
-				actions[i].IsControlled = false;
-			}
+		public void Clear() {
 			actions.Clear();
 		}
 
@@ -136,9 +138,7 @@ namespace Renko.Effects
 		/// <summary>
 		/// Adds the specified action to this section.
 		/// </summary>
-		public void AddAction(FateAction action) {
-			action.Duration = Duration;
-			action.IsControlled = true;
+		public void AddAction(ActionHandler action) {
 			actions.Add(action);
 		}
 
@@ -155,7 +155,7 @@ namespace Renko.Effects
 		/// </summary>
 		void AnimateActions(float progress) {
 			for(int i=0; i<actions.Count; i++)
-				actions[i].Animate(progress);
+				actions[i](progress);
 		}
 	}
 }
