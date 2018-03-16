@@ -26,12 +26,12 @@ namespace Renko.MVCFramework
 		private static MVC I;
 
 		/// <summary>
-		/// Collection of UI create handlers.
+		/// Immutable collection of UI create handlers.
 		/// </summary>
 		private Dictionary<Type,MvcViewMeta> uiMetadatas;
 
 		/// <summary>
-		/// Dynamic collection of UI callback handlers.
+		/// Mutable collection of UI callback handlers.
 		/// </summary>
 		private Dictionary<int,UICallbackHandler> uiCallbacks;
 
@@ -111,7 +111,6 @@ namespace Renko.MVCFramework
 		void Awake() {
 			// Field initialization
 			I = this;
-			uiMetadatas = new Dictionary<Type, MvcViewMeta>();
 			uiCallbacks = new Dictionary<int, UICallbackHandler>();
 			activeViews = new List<IMvcView>();
 

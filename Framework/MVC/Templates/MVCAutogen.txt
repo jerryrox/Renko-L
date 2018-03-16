@@ -3,6 +3,7 @@
  * DO NOT MODIFY OR DELETE THIS FILE!
  */
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Renko.MVCFramework.Internal;
 
@@ -15,8 +16,11 @@ namespace Renko.MVCFramework
 			// Set initial view type.
 |0|
 
-			// Add view metadatas.
+			// Instantiate metadata list.
 |1|
+
+			// Add view metadatas.
+|2|
 
 			// Initialized
 			isCoreInitialized = true;

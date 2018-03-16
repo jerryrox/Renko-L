@@ -13,7 +13,12 @@ namespace Renko.MVCFramework.Internal
 
 		private const string ScriptFileName = "MVC.AutoGen.cs";
 		private const string FirstViewLine = "\t\t\tfirstViewType = typeof({0});";
+		private const string MetaListLine = "\t\t\tuiMetadatas = new Dictionary<Type, MvcViewMeta>({0});";
 		private const string ViewMetaLine = "\t\t\tuiMetadatas.Add(typeof({0}), new MvcViewMeta(this, MvcLifeType.{1}, \"{2}\", ViewParent));";
+
+		private const string FirstViewReplaceTarget = "|0|";
+		private const string MetaListReplaceTarget = "|1|";
+		private const string ViewMetaReplaceTarget = "|2|";
 
 
 		/// <summary>
@@ -38,24 +43,31 @@ namespace Renko.MVCFramework.Internal
 		private static string GetScriptContents(MvcConfig config) {
 			StringBuilder baseSB = new StringBuilder(File.ReadAllText(TemplateFilePath));
 
-			// Initial view setup
+			// Variable setup
 			var initialView = config.InitialView;
+			var views = config.Views;
+
+			// Initial view setup
 			if(initialView != null) {
 				baseSB.Replace("|0|", string.Format(FirstViewLine, initialView.ViewName));
 			}
 			else {
-				baseSB.Replace("|0|", "");
+				baseSB.Replace(FirstViewReplaceTarget, "");
 			}
+
+			// Metadata list instantiation setup
+			baseSB.Replace(MetaListReplaceTarget, string.Format(
+				MetaListLine, views.Count
+			));
 
 			// Views setup
 			StringBuilder viewsSB = new StringBuilder();
-			var views = config.Views;
 			for(int i=0; i<views.Count; i++)  {
 				viewsSB.AppendLine(string.Format(
 					ViewMetaLine, views[i].ViewName, views[i].LifeType, views[i].ResourcePath
 				));
 			}
-			baseSB.Replace("|1|", viewsSB.ToString());
+			baseSB.Replace(ViewMetaReplaceTarget, viewsSB.ToString());
 
 			return baseSB.ToString();
 		}
