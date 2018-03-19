@@ -41,15 +41,15 @@ namespace RenkoEditor.Console.Internal.CustomCommand
 			StringBuilder sb = new StringBuilder();
 			sb.AppendFormat(
 				"{0} -h\t(Displays this message.)\n",
-				CommandName,
+				CommandName
 			);
 			sb.AppendFormat(
 				"{0} -ls\t(Displays the list of namespaces to use during compilation.)\n",
-				CommandName,
+				CommandName
 			);
 			sb.AppendFormat(
 				"{0} -a arg\t(Adds the argument to the namespace list for compilation.)\n",
-				CommandName,
+				CommandName
 			);
 
 			OutputHistory.AddResultOutput(sb.ToString());
