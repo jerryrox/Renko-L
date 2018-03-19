@@ -10,6 +10,12 @@ namespace Renko.IO
 	public static class NyanPath {
 
 		/// <summary>
+		/// Renko-L's root directory name.
+		/// </summary>
+		public const string LibraryName = "Renko-L";
+
+
+		/// <summary>
 		/// Returns the directory for storing cache data.
 		/// </summary>
 		public static string CachesDirectory {
@@ -75,7 +81,17 @@ namespace Renko.IO
 		/// </summary>
 		public static string GetLibraryPath(string innerPath = "") {
 			return Path.Combine(
-				Application.dataPath+"/Renko-L",
+				Application.dataPath+'/'+LibraryName,
+				innerPath
+			);
+		}
+
+		/// <summary>
+		/// Returns the RenkoLibrary path that starts from Assets directory.
+		/// </summary>
+		public static string GetAssetLibraryPath(string innerPath = "") {
+			return Path.Combine(
+				"Assets/"+LibraryName,
 				innerPath
 			);
 		}
