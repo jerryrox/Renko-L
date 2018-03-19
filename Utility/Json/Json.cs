@@ -22,8 +22,16 @@ namespace Renko.Utility
 		/// Instance may be null, but if no adaptor is registered for this type and there is no parameterless constructor, the deserialization will not work.
 		/// </summary>
 		public static T Parse<T>(string json, T instance) where T : new() {
+			return Parse<T>(Parse(json).AsObject(), instance);
+		}
+
+		/// <summary>
+		/// Parses the specified json object for a specific type.
+		/// Instance may be null, but if no adaptor is registered for this type and there is no parameterless constructor, the deserialization will not work.
+		/// </summary>
+		public static T Parse<T>(JsonObject json, T instance) where T : new() {
 			Type type = typeof(T);
-			object value = JsonDeserializer.Deserialize(type, instance, Parse(json).AsObject());
+			object value = JsonDeserializer.Deserialize(type, instance, json);
 			if(value == null || value.GetType() != type)
 				return default(T);
 			return (T)value;
