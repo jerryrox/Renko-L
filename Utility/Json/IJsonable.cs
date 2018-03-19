@@ -16,7 +16,7 @@ namespace Renko.Utility
 		/// <summary>
 		/// Parses values from specified JsonObject.
 		/// </summary>
-		void FromJsonObject(JsonObject value);
+		void FromJsonObject(JsonObject json);
 	}
 }
 
