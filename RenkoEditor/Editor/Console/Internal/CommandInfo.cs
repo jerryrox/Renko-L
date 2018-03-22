@@ -106,40 +106,44 @@ namespace RenkoEditor.Console.Internal
 				if(parsingString || parsingChar)
 					sb.Append(ch);
 				else {
-					// Ignoring spaces.
-					//if(!char.IsWhiteSpace(ch)) {
-						// Parsing variables
-						if(!parsingVar) {
-							// Should we start parsing a new variable name?
-							if(ch == '$') {
-								curVariable = "$";
-								parsingVar = true;
-							}
+					// Parsing variables
+					if(!parsingVar) {
+						// Should we start parsing a new variable name?
+						if(ch == '$') {
+							curVariable = "$";
+							parsingVar = true;
 						}
+					}
+					else {
+						string charString = null;
+						do {
+							ch = OriginalString[i++];
+							charString = char.ToString(ch);
+						}
+						while(char.IsWhiteSpace(ch) && i < OriginalString.Length);
+						if(i >= OriginalString.Length)
+							break;
+
+						// Checking for different ending characters.
+						// The variable should keep registering.
+						if(Regex.IsMatch(charString, "[a-zA-Z_0-9]")) {
+							curVariable += charString;
+						}
+						// End of variable parsing.
 						else {
-							string charString = char.ToString(ch);
-
-							// Checking for different ending characters.
-							// The variable should keep registering.
-							if(Regex.IsMatch(charString, "[a-zA-Z_0-9]")) {
-								curVariable += charString;
+							// The variable is being assigned to a certain value.
+							if(ch == '=') {
+								AssignedVariableNames.Add(curVariable);
 							}
-							// End of variable parsing.
+							// The variable is simply being referenced for further use within its context.
 							else {
-								// The variable is being assigned to a certain value.
-								if(ch == '=') {
-									AssignedVariableNames.Add(curVariable);
-								}
-								// The variable is simply being referenced for further use within its context.
-								else {
-									ReferencedVariableNames.Add(curVariable);
-								}
-								parsingVar = false;
+								ReferencedVariableNames.Add(curVariable);
 							}
+							parsingVar = false;
 						}
+					}
 
-						sb.Append(ch);
-					//}
+					sb.Append(ch);
 				}
 			}
 
