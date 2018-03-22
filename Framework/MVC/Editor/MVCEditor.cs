@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using Renko.MVCFramework.Internal;
+using Renko.IO;
+using RenkoEditor;
 
 namespace Renko.MVCFramework
 {
@@ -33,6 +35,27 @@ namespace Renko.MVCFramework
 			UiLifecycleMethod = serializedObject.FindProperty("UiLifeType");
 		}
 
+		/// <summary>
+		/// Use this method to show a dialog for setting new workspace directory.
+		/// </summary>
+		public static void SelectWorkspaceDirectory() {
+			// Get valid folder path
+			string folderPath = EditorDialog.OpenDirectory();
+			if(string.IsNullOrEmpty(folderPath))
+				return;
+			if(!NyanPath.IsStandardProjectPath(folderPath)) {
+				EditorDialog.OpenAlert(
+					"Error",
+					"Workspace must be placed inside the project, but outside of StreamingAssets, Resources, " +
+					"Plugins, and Editor folder."
+				);
+				return;
+			}
+
+			// Setup workspace
+			MvcWorkspace.SetWorkspace(folderPath);
+		}
+
 		public override void OnInspectorGUI() {
 			serializedObject.Update();
 
@@ -48,8 +71,6 @@ namespace Renko.MVCFramework
 
 			serializedObject.ApplyModifiedProperties();
 		}
-
-
 	}
 }
 #endif

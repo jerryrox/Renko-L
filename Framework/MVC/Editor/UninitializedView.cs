@@ -20,26 +20,8 @@ namespace Renko.MVCFramework
 		public static void Render(MVCEditor editor) {
 			GUILayout.Label("Select a new or existing MVC workspace.");
 			if(GUILayout.Button("Select directory")) {
-				OnSelectDirectory();
+				MVCEditor.SelectWorkspaceDirectory();
 			}
-		}
-
-		private static void OnSelectDirectory() {
-			// Get valid folder path
-			string folderPath = EditorDialog.OpenDirectory();
-			if(string.IsNullOrEmpty(folderPath))
-				return;
-			if(!NyanPath.IsStandardProjectPath(folderPath)) {
-				EditorDialog.OpenAlert(
-					"Error",
-					"Workspace must be placed inside the project, but outside of StreamingAssets, Resources, " +
-					"Plugins, and Editor folder."
-				);
-				return;
-			}
-
-			// Setup workspace
-			MvcWorkspace.SetWorkspace(folderPath);
 		}
 	}
 }
