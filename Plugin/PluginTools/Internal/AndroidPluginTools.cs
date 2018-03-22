@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using UnityEngine;
 
 namespace Renko.Plugin.Internal
@@ -51,6 +52,16 @@ namespace Renko.Plugin.Internal
 		/// </summary>
 		public void RemoveNetworkCache() {
 			// Nothing to do!
+		}
+
+		/// <summary>
+		/// Returns whether current device is rooted / jailbroken.
+		/// </summary>
+		public bool IsRooted() {
+			#if UNITY_ANDROID
+			return pluginClass.CallStatic<bool>("IsRooted");
+			#endif
+			return false;
 		}
 	}
 }

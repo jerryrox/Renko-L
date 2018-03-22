@@ -15,6 +15,9 @@ namespace Renko.Plugin.Internal
 
 		[DllImport("__Internal")]
 		private static extern void _PluginTools_RemoveNetworkCache();
+
+		[DllImport("__Internal")]
+		private static extern bool _PluginTools_IsRooted();
 		#endif
 
 
@@ -56,6 +59,16 @@ namespace Renko.Plugin.Internal
 			#if UNITY_IPHONE
 			_PluginTools_RemoveNetworkCache();
 			#endif
+		}
+
+		/// <summary>
+		/// Returns whether current device is rooted / jailbroken.
+		/// </summary>
+		public bool IsRooted() {
+			#if UNITY_IPHONE
+			return _PluginTools_IsRooted();
+			#endif
+			return false;
 		}
 	}
 }

@@ -41,6 +41,13 @@ namespace Renko.Plugin.Internal
 		public void RemoveNetworkCache() {
 			// Nothing to do!
 		}
+
+		/// <summary>
+		/// Returns whether current device is rooted / jailbroken.
+		/// </summary>
+		public bool IsRooted() {
+			return false;
+		}
 	}
 }
 

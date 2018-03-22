@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import "RootUtil.h"
 
 extern "C" {
     
@@ -20,6 +21,10 @@ extern "C" {
     
     void _PluginTools_RemoveNetworkCache() {
         [[NSURLCache sharedURLCache] removeAllCachedResponses];
+    }
+    
+    bool _PluginTools_IsRooted() {
+        return [RootUtil IsRooted];
     }
 }
 
