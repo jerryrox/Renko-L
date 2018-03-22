@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditorInternal;
 using RenkoEditor;
+using Renko.IO;
 using Renko.MVCFramework.Internal;
 
 namespace Renko.MVCFramework
@@ -142,6 +143,20 @@ namespace Renko.MVCFramework
 				"of this framework's process, it's highly recommended to just leave the settings as-is.",
 				MessageType.Warning
 			);
+
+			RenderSpace();
+
+			EditorGUILayout.LabelField(
+				"Current workspace directory: " + NyanPath.EditorRelativePath(MvcWorkspace.WorkspacePath)
+			);
+			EditorGUILayout.HelpBox(
+				"If you change the workspace directory, you must move/delete script files already created in " +
+				"the previous directory.",
+				MessageType.Warning
+			);
+			if(GUILayout.Button("Change workspace directory")) {
+				MVCEditor.SelectWorkspaceDirectory();
+			}
 
 			RenderSpace();
 
