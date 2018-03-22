@@ -75,15 +75,20 @@ namespace Renko.IO
 				subDirectory.Delete(true);
 		}
 
-		#if UNITY_EDITOR
+
 		/// <summary>
 		/// Returns the RenkoLibrary path.
+		/// Will return empty path on non-editor.
 		/// </summary>
 		public static string GetLibraryPath(string innerPath = "") {
+			#if UNITY_EDITOR
 			return Path.Combine(
 				Application.dataPath+'/'+LibraryName,
 				innerPath
 			);
+			#else
+			return "";
+			#endif
 		}
 
 		/// <summary>
@@ -146,7 +151,6 @@ namespace Renko.IO
 		public static bool IsEditorPath(string path) {
 			return path.Contains("/Editor/") || path.EndsWith("/Editor");
 		}
-		#endif
 	}
 }
 

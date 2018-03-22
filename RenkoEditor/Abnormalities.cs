@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using UnityEngine;
-using UnityEditor;
 using Renko.IO;
 
 namespace RenkoEditor

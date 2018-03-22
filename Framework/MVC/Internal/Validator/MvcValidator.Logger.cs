@@ -1,7 +1,9 @@
 ﻿#if NGUI
+#if UNITY_EDITOR
+using RenkoEditor;
+#endif
 using System;
 using UnityEngine;
-using RenkoEditor;
 using Renko.Diagnostics;
 
 namespace Renko.MVCFramework
@@ -14,7 +16,9 @@ namespace Renko.MVCFramework
 			/// Displays the validation result via editor alert message.
 			/// </summary>
 			public static void DisplayAlert(ValidationResult result) {
+#if UNITY_EDITOR
 				EditorDialog.OpenAlert(result.ToString(), ParseMessage(result));
+#endif
 			}
 
 			/// <summary>

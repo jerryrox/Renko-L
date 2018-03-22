@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using UnityEditor;
 using Renko.Diagnostics;
 using Renko.IO;
 using Renko.Utility;

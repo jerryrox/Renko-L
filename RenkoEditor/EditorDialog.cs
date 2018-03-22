@@ -1,7 +1,8 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+using UnityEditor;
+using System;
 using System.IO;
 using UnityEngine;
-using UnityEditor;
 using Renko.IO;
 
 namespace RenkoEditor
@@ -88,4 +89,4 @@ namespace RenkoEditor
 		}
 	}
 }
-
+#endif
