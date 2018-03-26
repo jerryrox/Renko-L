@@ -98,10 +98,8 @@ namespace Renko.MVCFramework
 			var result = MvcValidator.CheckBaseViewClassName(value);
 			if(result == ValidationResult.Success)
 				BaseClassName = value;
-			else {
-				MvcValidator.Output.DisplayAlert(result);
+			else
 				BaseClassName = BaseMvcView.ClassName;
-			}
 		}
 
 		/// <summary>
@@ -133,7 +131,7 @@ namespace Renko.MVCFramework
 			JsonArray views = json["views"].AsArray();
 			if(views != null) {
 				for(int i=0; i<views.Count; i++) {
-					Views.Add(new View(views[i].AsObject()));
+					Views.Add(new View(this, views[i].AsObject()));
 				}
 			}
 		}
@@ -220,12 +218,13 @@ namespace Renko.MVCFramework
 			}
 
 
-			public View() {
+			public View(MvcConfig owner) {
+				Owner = owner;
 				Version = LatestVersion;
-				BaseClassName = BaseMvcView.ClassName;
+				BaseClassName = owner.BaseClassName;
 			}
 
-			public View(JsonObject json) : this() {
+			public View(MvcConfig owner, JsonObject json) : this(owner) {
 				Load(json);
 			}
 

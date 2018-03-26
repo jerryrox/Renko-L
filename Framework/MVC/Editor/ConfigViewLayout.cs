@@ -51,7 +51,7 @@ namespace Renko.MVCFramework
 			}
 
 			if(GUILayout.Button("Create View")) {
-				config.Views.Add(new MvcConfig.View() {
+				config.Views.Add(new MvcConfig.View(config) {
 					Name = "View"+config.Views.Count
 				});
 

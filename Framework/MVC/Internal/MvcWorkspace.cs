@@ -33,6 +33,7 @@ namespace Renko.MVCFramework.Internal
 		/// </summary>
 		public static void SetWorkspace(string path) {
 			WorkspacePath = path;
+			PlayerPrefs.Save();
 
 			MvcResources.Setup();
 		}
