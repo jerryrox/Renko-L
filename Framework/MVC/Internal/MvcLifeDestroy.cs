@@ -26,9 +26,7 @@ namespace Renko.MVCFramework.Internal
 		public IMvcView NewView (int viewId, JsonObject param) {
 			var view = ResourceLoader.CreateObject(owner.ViewParent, owner.ResourcePath).GetComponent<IMvcView>();
 			view.OnInitialize(viewId, param);
-			Timer.CreateFrameDelay(delegate(Timer.Item item) {
-				view.OnViewShow();
-			});
+			view.OnViewShow();
 			return view;
 		}
 

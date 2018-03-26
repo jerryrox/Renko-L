@@ -27,7 +27,6 @@ public partial class {0}View : {1} {
 
 	/// <summary>
 	/// Use this method to handle view setup. Ideal place for a show animation, if any.
-	/// Called after a frame to make sure that all anchoring in the view is finished.
 	/// </summary>
 	public override void OnViewShow() {
 		base.OnViewShow();

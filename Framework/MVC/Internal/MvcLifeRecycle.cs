@@ -49,9 +49,7 @@ namespace Renko.MVCFramework.Internal
 			if(recycler.InactiveCount == 0) {
 				view = recycler.NextItem();
 				view.OnInitialize(viewId, param);
-				Timer.CreateFrameDelay(delegate(Timer.Item item) {
-					view.OnViewShow();
-				});
+				view.OnViewShow();
 			}
 			// Else, we have a recyclable view.
 			else {

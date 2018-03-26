@@ -11,7 +11,7 @@ namespace Renko.MVCFramework
 	/// You can implement this interface to create your custom base class for MVC views.
 	/// </summary>
 	public interface IMvcView {
-		
+
 		/// <summary>
 		/// Returns the gameObject component of this view.
 		/// </summary>
@@ -50,7 +50,6 @@ namespace Renko.MVCFramework
 
 		/// <summary>
 		/// Use this method to handle view setup. Ideal place for a show animation, if any.
-		/// Called after a frame to make sure that all anchoring in the view is finished.
 		/// </summary>
 		void OnViewShow();
 

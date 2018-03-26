@@ -11,6 +11,8 @@ using Renko.Utility;
 
 [RequireComponent(typeof({0}Model))]
 [RequireComponent(typeof({0}Controller))]
+[RequireComponent(typeof(UIPanel))]
+[RequireComponent(typeof(UIWidgetContainer))]
 public partial class {0}View : {1} {
 
 	[HideInInspector]

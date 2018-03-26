@@ -21,10 +21,11 @@ namespace Renko.MVCFramework
 		/// <summary>
 		/// Whether to reset the UIPanel's rect based on current resolution.
 		/// </summary>
-		public bool ResizePanel;
+		public bool ResizePanel = true;
+
 
 		/// <summary>
-		/// Whether the view is no longer being managed by UIController.
+		/// Whether the view is no longer being managed by MVC.
 		/// </summary>
 		private bool isDestroyed;
 
@@ -37,6 +38,7 @@ namespace Renko.MVCFramework
 		/// Backing field of Animations property for caching.
 		/// </summary>
 		private BaseMvcAnimation[] animations;
+
 
 		/// <summary>
 		/// Returns the gameObject component of this view.
@@ -104,8 +106,6 @@ namespace Renko.MVCFramework
 
 		/// <summary>
 		/// Use this method to handle view setup. Ideal place for a show animation, if any.
-		/// Called after a frame to make sure that all anchoring in the view is finished.
-		/// Don't call this base method if you wish to handle animation yourself.
 		/// </summary>
 		public virtual void OnViewShow() {
 			PlayShowAnimations();
