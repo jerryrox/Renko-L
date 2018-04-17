@@ -12,9 +12,9 @@ namespace Renko.Data
 
 		/// <summary>
 		/// The crypto method to use.
-		/// Default encryptor/decryptor is MD5.
+		/// Default encryptor/decryptor is AES.
 		/// </summary>
-		private static ICrypto Crypto = new CryptoMD5();
+		private static ICrypto Crypto = new CryptoAES();
 
 
 		/// <summary>

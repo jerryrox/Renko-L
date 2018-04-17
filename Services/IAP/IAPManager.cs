@@ -8,9 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
-using UnityEngine.Store;
 using UnityEngine.Purchasing;
-using UnityEngine.Purchasing.Security;
 
 using Renko.Diagnostics;
 

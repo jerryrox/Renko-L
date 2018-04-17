@@ -59,7 +59,7 @@ namespace Renko.MVCFramework
 		/// If you're using Recycle method, MVC will check for this flag whether this view can be reused.
 		/// </summary>
 		public bool IsActive {
-			get { return gameObject.activeInHierarchy && isDestroyed; }
+			get { return gameObject.activeInHierarchy && !isDestroyed; }
 		}
 
 		/// <summary>
@@ -156,6 +156,9 @@ namespace Renko.MVCFramework
 					else if(curAni.Duration > longestAni.Duration) {
 						longestAni = curAni;
 					}
+				}
+				else if(curAni.TargetEvent == MvcAnimationEvent.OnViewShow) {
+					curAni.FateAni.Stop();
 				}
 			}
 

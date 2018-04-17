@@ -37,6 +37,12 @@ namespace Renko.MVCFramework
 		}
 
 
+		public virtual void OnDestroy() {
+			var fate = FateAni;
+			if(fate != null)
+				fate.Stop();
+		}
+
 		/// <summary>
 		/// Plays the animation with no condition checks.
 		/// </summary>

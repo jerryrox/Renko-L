@@ -134,6 +134,7 @@ namespace Renko.Effects
 		/// Plays the animation.
 		/// </summary>
 		public void Play() {
+			SeekTo(curTime, false);
 			FateFX.RegisterItem(this);
 		}
 

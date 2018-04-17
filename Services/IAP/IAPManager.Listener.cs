@@ -1,8 +1,6 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Store;
 using UnityEngine.Purchasing;
-using UnityEngine.Purchasing.Security;
 
 namespace Renko.Services
 {
