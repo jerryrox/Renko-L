@@ -22,11 +22,6 @@ namespace Renko.MVCFramework.Internal
 		public GameObject ViewParent;
 
 		/// <summary>
-		/// Instance of the MVC manager.
-		/// </summary>
-		private MVC mvc;
-
-		/// <summary>
 		/// Interface to a specific MVC view life handler.
 		/// </summary>
 		private IMvcLife mvcLifeHandler;
@@ -36,7 +31,6 @@ namespace Renko.MVCFramework.Internal
 		public MvcViewMeta(MVC mvc, MvcLifeType lifeType, string resourcePath, GameObject viewParent) {
 			ResourcePath = resourcePath;
 			ViewParent = viewParent;
-			this.mvc = mvc;
 
 			mvcLifeHandler = GetLifeHandler(lifeType == MvcLifeType.Default ? mvc.UiLifeType : lifeType);
 			mvcLifeHandler.Initialize(this);

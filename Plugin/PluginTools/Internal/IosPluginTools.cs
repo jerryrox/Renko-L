@@ -67,8 +67,9 @@ namespace Renko.Plugin.Internal
 		public bool IsRooted() {
 			#if UNITY_IPHONE
 			return _PluginTools_IsRooted();
-			#endif
+			#else
 			return false;
+			#endif
 		}
 	}
 }

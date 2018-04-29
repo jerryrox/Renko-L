@@ -45,13 +45,14 @@ namespace Renko.Services
 			}
 
 			IAPFail.Reason GetInitFailReason(InitializationFailureReason error) {
-				if(error == InitializationFailureReason.AppNotKnown)
+				switch(error) {
+				case InitializationFailureReason.AppNotKnown:
 					return IAPFail.Reason.AppNotKnown;
-				else if(error == InitializationFailureReason.NoProductsAvailable)
+				case InitializationFailureReason.NoProductsAvailable:
 					return IAPFail.Reason.ProductNotAvailable;
-				else
+				case InitializationFailureReason.PurchasingUnavailable:
 					return IAPFail.Reason.PurchaseNotAvailable;
-				
+				}
 				return IAPFail.Reason.Unknown;
 			}
 		}

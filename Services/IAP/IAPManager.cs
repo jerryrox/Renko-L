@@ -50,11 +50,6 @@ namespace Renko.Services
 		private static IAP.OnRestoredHandler onRestoreComplete;
 
 		/// <summary>
-		/// A nested object inside IAPManager for IStoreListener implementation.
-		/// </summary>
-		private static Listener StoreListener;
-
-		/// <summary>
 		/// An object that handles product restoration process.
 		/// </summary>
 		private static Restorer ProductRestorer;
@@ -83,16 +78,11 @@ namespace Renko.Services
 				return;
 			}
 
-			var builder = ConfigurationBuilder.Instance(
-				StandardPurchasingModule.Instance()
-			);
+			var builder = ConfigurationBuilder.Instance( StandardPurchasingModule.Instance() );
 			for(int i=0; i<products.Count; i++)
 				builder.AddProduct(products[i]);
 			
-			UnityPurchasing.Initialize(
-				StoreListener = new Listener(),
-				builder
-			);
+			UnityPurchasing.Initialize(new Listener(), builder);
 		}
 
 

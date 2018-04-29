@@ -64,7 +64,7 @@ namespace Renko.Utility
 				try {
 					return Convert.ToInt32(rawObject);
 				}
-				catch(Exception e) {
+				catch(Exception) {
 					return defaultValue;
 				}
 			}
@@ -85,7 +85,7 @@ namespace Renko.Utility
 				try {
 					return Convert.ToInt64(rawObject);
 				}
-				catch(Exception e) {
+				catch(Exception) {
 					return defaultValue;
 				}
 			}
@@ -106,7 +106,7 @@ namespace Renko.Utility
 				try {
 					return Convert.ToSingle(rawObject);
 				}
-				catch(Exception e) {
+				catch(Exception) {
 					return defaultValue;
 				}
 			}
@@ -127,7 +127,7 @@ namespace Renko.Utility
 				try {
 					return Convert.ToDouble(rawObject);
 				}
-				catch(Exception e) {
+				catch(Exception) {
 					return defaultValue;
 				}
 			}
@@ -175,8 +175,7 @@ namespace Renko.Utility
 		/// <summary>
 		/// Returns a JsonArray value stored in this object.
 		/// </summary>
-		public JsonArray AsArray(JsonArray defaultValue = null)
-		{
+		public JsonArray AsArray(JsonArray defaultValue = null) {
 			if(rawObject is JsonArray)
 				return (JsonArray)rawObject;
 			return defaultValue;
@@ -186,7 +185,6 @@ namespace Renko.Utility
 		/// Returns a generic type value stored in this object.
 		/// </summary>
 		public T As<T>(T defaultValue = default(T)) {
-			//If convertible
 			if(rawObject is T)
 				return (T)rawObject;
 			return defaultValue;
