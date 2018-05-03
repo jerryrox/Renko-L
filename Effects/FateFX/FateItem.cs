@@ -58,6 +58,11 @@ namespace Renko.Effects
 		/// </summary>
 		private bool isLoop;
 
+		/// <summary>
+		/// Backing field of IsPlaying property.
+		/// </summary>
+		private bool isPlaying;
+
 
 		/// <summary>
 		/// The speed of this item.
@@ -73,6 +78,13 @@ namespace Renko.Effects
 		public bool IsLoop {
 			get { return isLoop; }
 			set { isLoop = value; }
+		}
+
+		/// <summary>
+		/// Returns whether animation is playing.
+		/// </summary>
+		public bool IsPlaying {
+			get { return isPlaying; }
 		}
 
 		/// <summary>
@@ -134,6 +146,8 @@ namespace Renko.Effects
 		/// Plays the animation.
 		/// </summary>
 		public void Play() {
+			isPlaying = true;
+
 			SeekTo(curTime, false);
 			FateFX.RegisterItem(this);
 		}
@@ -142,6 +156,8 @@ namespace Renko.Effects
 		/// Pauses the animation.
 		/// </summary>
 		public void Pause() {
+			isPlaying = false;
+
 			FateFX.RemoveItem(this);
 		}
 
@@ -151,6 +167,8 @@ namespace Renko.Effects
 		/// Else, only the time is set to 0 and the view state will stay.
 		/// </summary>
 		public void Stop(bool update = false) {
+			isPlaying = false;
+
 			if(update)
 				SeekTo(0f, false);
 			else
