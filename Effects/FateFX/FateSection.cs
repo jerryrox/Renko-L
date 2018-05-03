@@ -129,6 +129,7 @@ namespace Renko.Effects
 
 		/// <summary>
 		/// Sets the amount of delay to apply on start.
+		/// Only for FateItem class and therefore shouldn't be used outside.
 		/// </summary>
 		public void SetDelay(float delay) {
 			delayedStartTime = startTime + delay;
