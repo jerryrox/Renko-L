@@ -60,8 +60,9 @@ namespace Renko.Plugin.Internal
 		public bool IsRooted() {
 			#if UNITY_ANDROID
 			return pluginClass.CallStatic<bool>("IsRooted");
-			#endif
+			#else
 			return false;
+			#endif
 		}
 	}
 }
