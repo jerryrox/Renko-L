@@ -1,6 +1,6 @@
 ﻿#if NGUI
 using System;
-using Renko.Utility;
+using Renko.Data;
 
 namespace Renko.MVCFramework.Internal
 {

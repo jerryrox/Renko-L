@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using Info = Renko.Utility.JsonAdaptor.Info;
+using Info = Renko.Data.JsonAdaptor.Info;
 
-namespace Renko.Utility.Internal
+namespace Renko.Data.Internal
 {
 	/// <summary>
 	/// A static class that contains presets for JsonAdaptor.

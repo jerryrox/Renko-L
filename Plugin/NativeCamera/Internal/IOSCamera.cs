@@ -2,8 +2,7 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using UnityEngine;
-using Renko.Utility;
-using Renko.Diagnostics;
+using Renko.Data;
 
 namespace Renko.Plugin.Internal
 {
@@ -56,8 +55,8 @@ namespace Renko.Plugin.Internal
 			
 			#if UNITY_IPHONE
 			_NativeCamera_TakePhoto(
-				Json.ToString(new JsonData(saveOptions)),
-				Json.ToString(new JsonData(cropOptions))
+				new JsonData(saveOptions).ToString(),
+				new JsonData(cropOptions).ToString()
 			);
 			#endif
 		}
@@ -65,8 +64,8 @@ namespace Renko.Plugin.Internal
 		public void TakeVideo (SaveOption saveOptions, VideoOption videoOptions) {
 			#if UNITY_IPHONE
 			_NativeCamera_TakeVideo(
-				Json.ToString(new JsonData(saveOptions)),
-				Json.ToString(new JsonData(videoOptions))
+				new JsonData(saveOptions).ToString(),
+				new JsonData(videoOptions).ToString()
 			);
 			#endif
 		}

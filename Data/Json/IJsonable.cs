@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Renko.Utility
+namespace Renko.Data
 {
 	/// <summary>
 	/// An interface that provides methods for customized serialization of a class.
