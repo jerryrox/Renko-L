@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using Renko.Extensions;
+using Renko.Utility;
 
-namespace Renko.Utility
+namespace Renko.Data
 {
 	/// <summary>
 	/// A wrapper of System object class for this Json module.
@@ -191,10 +192,19 @@ namespace Renko.Utility
 		}
 
 		/// <summary>
-		/// Returns a json-serialized form of this data.
+		/// Returns the string representation of this object using default options.
 		/// If you're looking for a string value stored in this data, use "AsString" method.
 		/// </summary>
-		public override string ToString () { return JsonSerializer.Serialize(this); }
+		public override string ToString () {
+			return ToString(JsonSerializeOptions.Default);
+		}
+
+		/// <summary>
+		/// Returns the string representation of this object using specified options.
+		/// </summary>
+		public string ToString(JsonSerializeOptions options) {
+			return JsonSerializer.Serialize(this, options);
+		}
 
 		
 		public static implicit operator int(JsonData context) { return context.AsInt(); }

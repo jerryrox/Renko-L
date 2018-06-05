@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Renko;
+using Renko.Data;
 using Renko.Utility;
 using Renko.Effects;
 using Renko.Diagnostics;

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System;
 using Renko.Extensions;
-using Renko.Utility.Internal;
+using Renko.Data.Internal;
 
-namespace Renko.Utility
+namespace Renko.Data
 {
 	/// <summary>
 	/// A class that serializes JsonData to a string value.
@@ -16,17 +16,19 @@ namespace Renko.Utility
 		private StringBuilder sb;
 
 
-		private JsonSerializer() {
+		private JsonSerializer(object data) {
 			sb = new StringBuilder();
+			Process(data);
 		}
 
 		/// <summary>
 		/// Serializes the specified JsonData to a string value.
 		/// </summary>
-		public static string Serialize(JsonData data) {
-			JsonSerializer serializer = new JsonSerializer();
-			serializer.Process(data.Value);
-			return serializer.sb.ToString();
+		public static string Serialize(JsonData data, JsonSerializeOptions options) {
+			if(!JsonSerializeSafety.IsJsonSafe(data, options))
+				throw new Exception("JsonSerializer.Serialize - Failed to serialize data. See console for details.");
+
+			return new JsonSerializer(data.Value).sb.ToString();
 		}
 		
 		/// <summary>

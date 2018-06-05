@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using Renko.Utility;
+using Renko.Data;
 
-namespace Renko.Utility.Internal
+namespace Renko.Data.Internal
 {
 	/// <summary>
 	/// A class that automatically serializes another class to a JsonData type using its properties and fields.
@@ -62,6 +62,8 @@ namespace Renko.Utility.Internal
 		/// Creates a new array with the specified info's name and instance values.
 		/// </summary>
 		void ProcessEnumerableField(FieldInfo info) {
+			UnityEngine.Debug.Log("Field name: " + info.Name);
+			
 			JsonArray arr = json[info.Name] = new JsonArray();
 			IEnumerable enumerable = info.GetValue(instance) as IEnumerable;
 			if(enumerable != null) {

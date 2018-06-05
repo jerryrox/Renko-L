@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using Renko.Utility;
+using Renko.Data;
 
 namespace Renko.Plugin.Internal
 {
@@ -34,7 +34,7 @@ namespace Renko.Plugin.Internal
 			#if UNITY_IPHONE
 			_GalleryPicker_PickImage(
 				new SaveOption().FileName,
-				Json.ToString(new JsonData(cropOption))
+				new JsonData(cropOption).ToString()
 			);
 			#endif
 		}

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Renko.Utility;
 using Renko.Effects;
+using Renko.Data;
 
 namespace Renko.MVCFramework
 {
