@@ -6,9 +6,9 @@ using System;
 using Renko.Diagnostics;
 using Renko.Extensions;
 using Renko.Reflection;
-using Renko.Data.Internal;
+using Renko.Utility.Internal;
 
-namespace Renko.Data
+namespace Renko.Utility
 {
 	/// <summary>
 	/// A class that parses json string into a JsonData object.

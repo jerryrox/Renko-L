@@ -1,5 +1,5 @@
 ﻿using System;
-using Renko.Data;
+using Renko.Utility;
 
 namespace Renko.Plugin
 {

@@ -4,11 +4,7 @@ using System.Text;
 using UnityEngine;
 using Renko.Diagnostics;
 
-using SOCollection = System.Collections.Generic.ICollection<
-	System.Collections.Generic.KeyValuePair<string, object>
->;
-
-namespace Renko.Data
+namespace Renko.Utility
 {
 	/// <summary>
 	/// A class that represents JSON object.
@@ -72,10 +68,6 @@ namespace Renko.Data
 			objectData = new Dictionary<string, JsonData>();
 		}
 
-		public JsonObject(SOCollection collection) : this() {
-			AddCollection(collection);
-		}
-
 		/// <summary>
 		/// Adds the specified key and value.
 		/// </summary>
@@ -88,19 +80,6 @@ namespace Renko.Data
 		/// </summary>
 		public void Add (KeyValuePair<string, JsonData> item) {
 			AddIfNotExists(item.Key, item.Value);
-		}
-
-		/// <summary>
-		/// Adds all elements from specified collection.
-		/// </summary>
-		public void AddCollection(SOCollection collection) {
-			var enumerator = collection.GetEnumerator();
-
-			while(enumerator.MoveNext()) {
-				var pair = (KeyValuePair<string, object>)enumerator.Current;
-				JsonData data = pair.Value as JsonData;
-				Add(pair.Key, data ?? new JsonData(pair.Value));
-			}
 		}
 
 		/// <summary>
@@ -198,18 +177,8 @@ namespace Renko.Data
 			return objectData.GetEnumerator();
 		}
 
-		/// <summary>
-		/// Returns the string representation of this object using default options.
-		/// </summary>
 		public override string ToString () {
-			return ToString(JsonSerializeOptions.Default);
-		}
-
-		/// <summary>
-		/// Returns the string representation of this object using specified options.
-		/// </summary>
-		public string ToString(JsonSerializeOptions options) {
-			return JsonSerializer.Serialize(this, options);
+			return JsonSerializer.Serialize(this);
 		}
 		
 		/// <summary>

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Renko.Data;
+using Renko.Utility;
 
 namespace Renko.MVCFramework
 {

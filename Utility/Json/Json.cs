@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-namespace Renko.Data
+namespace Renko.Utility
 {
 	/// <summary>
 	/// A static helper class for this json module.
@@ -40,8 +40,8 @@ namespace Renko.Data
 		/// <summary>
 		/// Returns a string representation of specified JsonData.
 		/// </summary>
-		public static string ToString(JsonData data, JsonSerializeOptions options) {
-			return JsonSerializer.Serialize(data, options);
+		public static string ToString(JsonData data) {
+			return JsonSerializer.Serialize(data);
 		}
 	}
 }

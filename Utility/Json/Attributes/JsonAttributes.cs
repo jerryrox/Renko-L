@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Renko.Data
+namespace Renko.Utility
 {
 	/// <summary>
 	/// Attribute that tells the target non-public field or property will be included during serialization.

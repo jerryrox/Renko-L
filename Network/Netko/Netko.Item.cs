@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using Renko.Diagnostics;
 using Renko.Network.Internal;
-using Renko.Data;
+using Renko.Utility;
 
 namespace Renko.Network
 {

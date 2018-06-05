@@ -2,7 +2,6 @@
 using System;
 using UnityEngine;
 using Renko.Utility;
-using Renko.Data;
 
 namespace Renko.MVCFramework.Internal
 {

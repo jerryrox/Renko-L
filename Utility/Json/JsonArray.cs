@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Renko.Diagnostics;
 
-namespace Renko.Data
+namespace Renko.Utility
 {
 	/// <summary>
 	/// A class that represents JSON array.
@@ -144,25 +144,12 @@ namespace Renko.Data
 		/// </summary>
 		public void AddCollection(ICollection collection) {
 			var enumerator = collection.GetEnumerator();
-
-			while(enumerator.MoveNext()) {
-				JsonData data = enumerator.Current as JsonData;
-				Add(data ?? new JsonData(enumerator.Current));
-			}
+			while(enumerator.MoveNext())
+				Add(new JsonData(enumerator.Current));
 		}
 
-		/// <summary>
-		/// Returns the string representation of this object using default options.
-		/// </summary>
 		public override string ToString () {
-			return ToString(JsonSerializeOptions.Default);
-		}
-
-		/// <summary>
-		/// Returns the string representation of this object using specified options.
-		/// </summary>
-		public string ToString(JsonSerializeOptions options) {
-			return JsonSerializer.Serialize(this, options);
+			return JsonSerializer.Serialize(this);
 		}
 
 		/// <summary>

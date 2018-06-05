@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Renko.Data;
+using Renko.Utility;
 
 namespace Renko.Plugin
 {

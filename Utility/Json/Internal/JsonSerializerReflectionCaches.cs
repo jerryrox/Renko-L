@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Collections.Generic;
 
-namespace Renko.Data.Internal
+namespace Renko.Utility.Internal
 {
 	/// <summary>
 	/// Manages cached information of reflected Types for serialization.

@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Collections.Generic;
 
-namespace Renko.Data.Internal
+namespace Renko.Utility.Internal
 {
 	/// <summary>
 	/// A class that contains cached field and property infos for performance.

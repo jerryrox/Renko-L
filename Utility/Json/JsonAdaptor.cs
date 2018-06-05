@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Renko.Data.Internal;
+using Renko.Utility.Internal;
 
-namespace Renko.Data
+namespace Renko.Utility
 {
 	/// <summary>
 	/// A class that contains a dictionary of customized (de)serialization handlers for a specific object type.
