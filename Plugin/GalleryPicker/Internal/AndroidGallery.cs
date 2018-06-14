@@ -1,6 +1,6 @@
 ﻿using System;
 using UnityEngine;
-using Renko.Utility;
+using Renko.Data;
 
 namespace Renko.Plugin.Internal
 {
@@ -29,7 +29,7 @@ namespace Renko.Plugin.Internal
 			#if UNITY_ANDROID
 			pluginClass.CallStatic(
 				"PickImage",
-				Json.ToString(new JsonData(cropOption))
+				new JsonData(cropOption).ToString()
 			);
 			#endif
 		}

@@ -1,4 +1,4 @@
-**/*.meta
-**/*.DS_Store
+*.meta
+.DS_Store
 _Hidden
 _SubProjects

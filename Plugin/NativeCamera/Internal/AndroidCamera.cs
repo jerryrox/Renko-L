@@ -4,7 +4,7 @@ using System;
 using UnityEngine;
 using Renko.Extensions;
 using Renko.Diagnostics;
-using Renko.Utility;
+using Renko.Data;
 
 namespace Renko.Plugin.Internal
 {
@@ -41,8 +41,8 @@ namespace Renko.Plugin.Internal
 			#if UNITY_ANDROID
 			camClass.CallStatic(
 				"TakePhoto",
-				Json.ToString(new JsonData(saveOption)),
-				Json.ToString(new JsonData(cropOption))
+				new JsonData(saveOption).ToString(),
+				new JsonData(cropOption).ToString()
 			);
 			#endif
 		}
@@ -51,8 +51,8 @@ namespace Renko.Plugin.Internal
 			#if UNITY_ANDROID
 			camClass.CallStatic(
 				"TakeVideo",
-				Json.ToString(new JsonData(saveOption)),
-				Json.ToString(new JsonData(videoOption))
+				new JsonData(saveOption).ToString(),
+				new JsonData(videoOption).ToString()
 			);
 			#endif
 		}

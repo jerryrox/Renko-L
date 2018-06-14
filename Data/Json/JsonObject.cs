@@ -72,8 +72,19 @@ namespace Renko.Data
 			objectData = new Dictionary<string, JsonData>();
 		}
 
+		/// <summary>
+		/// Initializes a new JsonObject from specified collection.
+		/// Ideally, this would be Dictionary<string, object>
+		/// </summary>
 		public JsonObject(SOCollection collection) : this() {
 			AddCollection(collection);
+		}
+
+		/// <summary>
+		/// Initializes a new JsonObject from another JsonObject.
+		/// </summary>
+		public JsonObject(JsonObject baseObject) {
+			MergeFrom(baseObject);
 		}
 
 		/// <summary>

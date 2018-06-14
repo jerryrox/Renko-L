@@ -43,11 +43,8 @@ namespace Renko.Data.Internal
                 return EvaluateArray(ja);
             else if((jd = obj as JsonData) != null)
                 return EvaluateData(jd);
-            else
-                return EvaluateRaw(obj);
-            
-            RenLog.Log(LogLevel.Warning, "CircularReferenceChecker.Evaluate - This shouldn't have happened...");
-            return true;
+			
+            return EvaluateRaw(obj);
         }
 
         private bool EvaluateObject(JsonObject obj) {
