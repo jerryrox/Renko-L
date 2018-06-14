@@ -18,7 +18,7 @@ namespace Renko.MVCFramework
 		public MVC I;
 
 		public SerializedProperty BaseResolution;
-		public SerializedProperty MatchResolutionToWidth;
+		public SerializedProperty RescaleMode;
 		public SerializedProperty AppIsPortrait;
 		public SerializedProperty InitializeViewOnAwake;
 		public SerializedProperty UiLifecycleMethod;
@@ -29,7 +29,7 @@ namespace Renko.MVCFramework
 			I = target as MVC;
 
 			BaseResolution = serializedObject.FindProperty("BaseResolution");
-			MatchResolutionToWidth = serializedObject.FindProperty("MatchResolutionToWidth");
+			RescaleMode = serializedObject.FindProperty("RescaleMode");
 			AppIsPortrait = serializedObject.FindProperty("AppIsPortrait");
 			InitializeViewOnAwake = serializedObject.FindProperty("InitialViewOnAwake");
 			UiLifecycleMethod = serializedObject.FindProperty("UiLifeType");

@@ -27,21 +27,6 @@ namespace Renko.MVCFramework
 		private static MVC I;
 
 		/// <summary>
-		/// Immutable collection of UI create handlers.
-		/// </summary>
-		private Dictionary<Type,MvcViewMeta> uiMetadatas;
-
-		/// <summary>
-		/// Mutable collection of UI callback handlers.
-		/// </summary>
-		private Dictionary<int,UICallbackHandler> uiCallbacks;
-
-		/// <summary>
-		/// List of all active views' interface.
-		/// </summary>
-		private List<IMvcView> activeViews;
-
-		/// <summary>
 		/// The parent object where all MVC views will be created in.
 		/// </summary>
 		public GameObject ViewParent;
@@ -54,7 +39,7 @@ namespace Renko.MVCFramework
 		/// <summary>
 		/// Whether the screen width will stay and height can resize.
 		/// </summary>
-		public bool MatchResolutionToWidth;
+		public MvcRescaleType RescaleMode;
 
 		/// <summary>
 		/// Whether the application is portrait mode by default.
@@ -71,6 +56,21 @@ namespace Renko.MVCFramework
 		/// Type of method to use for UI lifecycle.
 		/// </summary>
 		public MvcLifeType UiLifeType;
+
+		/// <summary>
+		/// Immutable collection of UI create handlers.
+		/// </summary>
+		private Dictionary<Type,MvcViewMeta> uiMetadatas;
+
+		/// <summary>
+		/// Mutable collection of UI callback handlers.
+		/// </summary>
+		private Dictionary<int,UICallbackHandler> uiCallbacks;
+
+		/// <summary>
+		/// List of all active views' interface.
+		/// </summary>
+		private List<IMvcView> activeViews;
 
 		/// <summary>
 		/// Whether the core components are initialized.
@@ -196,22 +196,52 @@ namespace Renko.MVCFramework
 		/// Initializes the Resolutions library.
 		/// </summary>
 		void InitializeResolutions() {
-			float matchingSideSize = (
-				MatchResolutionToWidth ?
-				BaseResolution.x :
-				BaseResolution.y
-			);
-			float preferredRatio = (
+			float desiredRatio = (
 				AppIsPortrait ? 
 				BaseResolution.x / BaseResolution.y :
 				BaseResolution.y / BaseResolution.x
 			);
 
-			Resolutions.Initialize(
-				MatchResolutionToWidth,
-				matchingSideSize,
-				preferredRatio
-			);
+			if(RescaleMode == MvcRescaleType.MatchToWidth) {
+				Resolutions.Initialize(
+					true,
+					BaseResolution.x,
+					desiredRatio
+				);
+			}
+			else if(RescaleMode == MvcRescaleType.MatchToHeight) {
+				Resolutions.Initialize(
+					false,
+					BaseResolution.y,
+					desiredRatio
+				);
+			}
+			else {
+				// This is the actual screen's aspect ratio.
+				float screenRatio = (
+					AppIsPortrait ?
+					(float)Screen.width / Screen.height :
+					(float)Screen.height / Screen.width
+				);
+
+				// View should match to width if screen 
+				bool shouldMatchToWidth = (
+					AppIsPortrait ?
+					desiredRatio > screenRatio :
+					screenRatio > desiredRatio
+				);
+				float matchingSideSize = (
+					shouldMatchToWidth ?
+					BaseResolution.x :
+					BaseResolution.y
+				);
+
+				Resolutions.Initialize(
+					shouldMatchToWidth,
+					matchingSideSize,
+					desiredRatio
+				);
+			}
 		}
 
 		/// <summary>

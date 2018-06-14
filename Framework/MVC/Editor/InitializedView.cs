@@ -45,6 +45,18 @@ namespace Renko.MVCFramework
 			RenderView(editor);
 		}
 
+		private static string GetRescaleModeHelMessage(int index) {
+			switch(index) {
+			case 0:
+				return "Your views' width will stay constant while the height rescales.";
+			case 1:
+				return "Your views' height will stay constant while the width rescales.";
+			case 2:
+				return "Your views' width or height will scale based on screen ratio.";
+			}
+			return "Unknown";
+		}
+
 		private static void RenderSpace() {
 			EditorGUILayout.Space();
 			EditorGUILayout.Space();
@@ -95,9 +107,13 @@ namespace Renko.MVCFramework
 
 			EditorGUILayout.Space();
 
-			EditorGUILayout.LabelField("Whether your UI will scale at Y-axis (height) or X-axis (width).");
+			EditorGUILayout.LabelField("Defines how your MVC Views will adapt to any screen resolution.");
 			EditorGUILayout.PropertyField(
-				editor.MatchResolutionToWidth, new GUIContent("MatchResolutionToWidth")
+				editor.RescaleMode, new GUIContent("RescaleMode")
+			);
+			EditorGUILayout.HelpBox(
+				GetRescaleModeHelMessage(editor.RescaleMode.enumValueIndex),
+				MessageType.Info
 			);
 
 			EditorGUILayout.Space();
