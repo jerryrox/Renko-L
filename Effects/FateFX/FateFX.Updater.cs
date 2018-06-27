@@ -42,7 +42,7 @@ namespace Renko.Effects
 			/// Processes update.
 			/// </summary>
 			public void Update() {
-				for(int i=0; i<items.Count; i++) {
+				for(int i=items.Count-1; i>=0; i--) {
 					items[i].Update();
 				}
 			}

@@ -68,7 +68,7 @@ namespace Renko.Utility
 			}
 
 			public void Update() {
-				for(int i=0; i<items.Count; i++) {
+				for(int i=items.Count-1; i>=0; i--) {
 					Timer.Item item = items[i];
 
 					if(!item.IsUpdating)
