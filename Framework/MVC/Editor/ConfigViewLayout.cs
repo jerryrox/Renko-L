@@ -86,7 +86,9 @@ namespace Renko.MVCFramework
 		private static void DrawOpenedView(MVCEditor editor, MvcConfig config, MvcConfig.View view, int index) {
 			GUILayout.BeginVertical("LightmapEditorSelectedHighlight");
 
-			editingName = EditorGUILayout.TextField("View name", editingName);
+			editingName = ViewNameTrim(
+				EditorGUILayout.TextField("View name", editingName), true
+			);
 			editingBaseClassName = EditorGUILayout.TextField("Custom base class", editingBaseClassName);
 			editingLifeType = (MvcLifeType)EditorGUILayout.EnumPopup("Custom lifecycle", editingLifeType);
 			editingInitial = EditorGUILayout.Toggle("Is initial view?", editingInitial);
@@ -114,6 +116,22 @@ namespace Renko.MVCFramework
 			GUILayout.EndVertical();
 		}
 
+		private static string ViewNameTrim(string value, bool displayAlert) {
+			if(!value.EndsWith("View"))
+				return value;
+
+			string targetString = value.Substring(0, value.Length-4);
+			if(displayAlert) {
+				EditorDialog.OpenAlert(
+					"Invalid name ending",
+
+					"All views are automatically added with suffix 'View'.\n" +
+					"Your view name will be trimmed to " + targetString + " instead."
+				);
+			}
+			return targetString;
+		}
+
 		private static void SetEdit(MvcConfig.View view) {
 			editingName = view.Name;
 			editingBaseClassName = view.GetBaseClass();
@@ -122,6 +140,9 @@ namespace Renko.MVCFramework
 		}
 
 		private static bool ApplyEdit(MvcConfig config, MvcConfig.View view) {
+			// Silently replace view name that ends with suffix "View".
+			editingName = ViewNameTrim(editingName, false);
+
 			if(view.SetViewName(editingName) && view.SetBaseClassName(editingBaseClassName)) {
 				view.LifeType = editingLifeType;
 				if(editingInitial != view.IsInitial)
