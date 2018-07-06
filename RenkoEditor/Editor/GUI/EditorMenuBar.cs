@@ -12,7 +12,7 @@ namespace RenkoEditor
 		public static void CreateMVC() {
 			var mvc = GameObject.FindObjectOfType<MVC>();
 			if(mvc == null)
-				mvc = new GameObject().AddComponent<MVC>();
+				mvc = new GameObject("MVC").AddComponent<MVC>();
 			Selection.activeGameObject = mvc.gameObject;
 		}
 

@@ -36,5 +36,26 @@ namespace Renko.Diagnostics
 				break;
 			}
 		}
+
+		/// <summary>
+		/// Outputs a debug log with Info level.
+		/// </summary>
+		public static void Log(object message) {
+			Log(LogLevel.Info, message);
+		}
+
+		/// <summary>
+		/// Outputs a debug log with Warning level.
+		/// </summary>
+		public static void LogWarning(object message) {
+			Log(LogLevel.Warning, message);
+		}
+
+		/// <summary>
+		/// Outputs a debug log with Error level.
+		/// </summary>
+		public static void LogError(object message) {
+			Log(LogLevel.Error, message);
+		}
 	}
 }

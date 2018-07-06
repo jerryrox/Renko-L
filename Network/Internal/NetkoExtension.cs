@@ -3,7 +3,7 @@ using System;
 
 namespace Renko.Network.Internal
 {
-	public static class ExtensionDictionary {
+	public static class NetkoExtension {
 
 		/// <summary>
 		/// Parses response code from this dictionary.
@@ -24,6 +24,28 @@ namespace Renko.Network.Internal
 			if (!long.TryParse(components[1], out ret))
 				return 0;
 			return ret;
+		}
+
+		/// <summary>
+		/// Returns the uri-escaped representation of this string.
+		/// </summary>
+		public static string GetUriEscaped(this string context, bool unescapeFirst = false) {
+			if(unescapeFirst) {
+				string decoded = Uri.UnescapeDataString(context);
+				if(!decoded.Equals(context))
+					return context;
+			}
+			return Uri.EscapeUriString(context);
+		}
+
+		/// <summary>
+		/// Returns the parsed value of this string in long.
+		/// If failed, it will return 0.
+		/// </summary>
+		public static long ParseLong(this string context) {
+			long l = 0;
+			long.TryParse(context, out l);
+			return l;
 		}
 	}
 }

@@ -19,7 +19,7 @@ namespace Renko.Network
 		/// <summary>
 		/// Object that handles Netko's update process.
 		/// </summary>
-		private ProcessQueue processQueue;
+		private Updater updater;
 
 		/// <summary>
 		/// Backing field of NewGroupId property.
@@ -31,15 +31,15 @@ namespace Renko.Network
 		/// Returns the number of requests currently being processed.
 		/// </summary>
 		public static int CurrentRequestCount {
-			get { return I.processQueue.currentProcessCount; }
+			get { return I.updater.currentProcessCount; }
 		}
 
 		/// <summary>
 		/// Max number of requests that can be processed at once.
 		/// </summary>
 		public static int MaxConcurrentRequests {
-			get { return I.processQueue.maxProcessCount; }
-			set { I.processQueue.maxProcessCount = value; }
+			get { return I.updater.maxProcessCount; }
+			set { I.updater.maxProcessCount = value; }
 		}
 
 		/// <summary>
@@ -59,26 +59,40 @@ namespace Renko.Network
 				return;
 			
 			I = RenkoLibrary.CreateModule<Netko>(true);
-			I.processQueue = new ProcessQueue();
+			I.updater = new Updater();
 		}
 
 		/// <summary>
 		/// Registers the specified item to processing queue and returns it.
 		/// </summary>
-		public static Item RegisterItem(Item item) {
-			I.processQueue.AddItem(item);
+		public static NetkoItem RegisterItem(NetkoItem item) {
+			I.updater.AddItem(item);
 			return item;
 		}
 
 		/// <summary>
-		/// Terminates all items with specified id.
+		/// Stops all items with specified id.
 		/// </summary>
-		public static void TerminateGroup(int id) {
-			I.processQueue.RemoveGroup(id);
+		public static void StopGroup(int id) {
+			I.updater.RemoveGroup(id);
+		}
+
+		/// <summary>
+		/// Whether Netko updater contains the specified item.
+		/// </summary>
+		public static bool ContainsItem(NetkoItem item) {
+			return I.updater.Items.Contains(item);
+		}
+
+		/// <summary>
+		/// Returns an enumerator of all items.
+		/// </summary>
+		public static IEnumerator<NetkoItem> GetItems() {
+			return I.updater.Items.GetEnumerator();
 		}
 
 		void Update() {
-			processQueue.Process();
+			updater.Update();
 		}
 	}
 }

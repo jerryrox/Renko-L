@@ -1,6 +1,9 @@
 ﻿namespace Renko.Network
 {
-	public static class HttpVerb {
+	/// <summary>
+	/// Class that contains constant strings of various http methods available.
+	/// </summary>
+	public static class HttpMethods {
 
 		public const string DELETE = "DELETE";
 		public const string CREATE = "CREATE";

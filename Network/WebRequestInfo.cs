@@ -10,59 +10,83 @@ namespace Renko.Network
 	/// </summary>
 	public class WebRequestInfo {
 
-		protected string url;
+		/// <summary>
+		/// The base url to make a request to.
+		/// </summary>
+		protected string baseUrl;
+
+		/// <summary>
+		/// Method used for making a web request.
+		/// </summary>
 		protected string method;
+
+		/// <summary>
+		/// (Optional) Query param string builder for convenience.
+		/// </summary>
 		protected UrlParamBuilder urlParamBuilder;
+
+		/// <summary>
+		/// (Optional) Form to submit during a POST request.
+		/// </summary>
 		protected WWWForm form;
 
 
 		/// <summary>
-		/// The target url to make a request on.
-		/// Any url parameters registered on this info will be added automatically.
+		/// Base url to make a request on.
+		/// If you wish to retrieve a url with the query param applied, use the Url property instead.
 		/// </summary>
-		public string Url {
-			get {
-				return url + urlParamBuilder.Output();
-			}
+		public string BaseUrl {
+			get { return baseUrl; }
 			set {
-				url = value;
-				if(url == null)
-					url = string.Empty;
+				baseUrl = value;
+				if(baseUrl == null)
+					baseUrl = string.Empty;
 			}
 		}
+
+		/// <summary>
+		/// Returns the target url to make a request on.
+		/// Will return the base url + UrlParam value.
+		/// </summary>
+		public string Url {
+			get { return baseUrl + urlParamBuilder.Output(); }
+		}
+
+		/// <summary>
+		/// Request method to use.
+		/// </summary>
 		public string Method {
-			get {
-				return method;
-			}
+			get { return method; }
 			set {
 				switch(value) {
-				case HttpVerb.CREATE:
-				case HttpVerb.DELETE:
-				case HttpVerb.GET:
-				case HttpVerb.HEAD:
-				case HttpVerb.POST:
-				case HttpVerb.PUT:
+				case HttpMethods.CREATE:
+				case HttpMethods.DELETE:
+				case HttpMethods.GET:
+				case HttpMethods.HEAD:
+				case HttpMethods.POST:
+				case HttpMethods.PUT:
 					method = value;
 					break;
-
 				default:
-					method = HttpVerb.GET;
+					method = HttpMethods.GET;
 					break;
 				}
 			}
 		}
+
+		/// <summary>
+		/// Query parameter string to add on the base url.
+		/// </summary>
 		public string UrlParam {
-			get {
-				return urlParamBuilder.Output();
-			}
-			set {
-				urlParamBuilder = UrlParamBuilder.Create(value);
-			}
+			get { return urlParamBuilder.Output(); }
+			set { urlParamBuilder = UrlParamBuilder.Create(value); }
 		}
+
+		/// <summary>
+		/// The form object to use during post requests.
+		/// </summary>
 		public WWWForm Form {
-			get {
-				return form;
-			}
+			get { return form; }
 			set {
 				form = value;
 				if(form == null)
@@ -71,22 +95,22 @@ namespace Renko.Network
 		}
 
 
-		public WebRequestInfo(string _url, string _method) {
-			url = _url;
-			method = _method;
+		public WebRequestInfo(string url, string method) {
+			baseUrl = url;
+			this.method = method;
 			urlParamBuilder = UrlParamBuilder.Create();
 			form = new WWWForm();
 		}
 
 		/// <summary>
-		/// Adds specified key and value to url param.
+		/// Adds specified key and value to url query param.
 		/// </summary>
 		public void AddUrlParam(string key, object value) {
 			urlParamBuilder.Add(key, value);
 		}
 
 		/// <summary>
-		/// Adds specified key and value to form.
+		/// Adds specified key and value to post form.
 		/// </summary>
 		public void AddFormParam(string key, object value, Encoding encoding = null) {
 			if(encoding == null)
@@ -95,7 +119,7 @@ namespace Renko.Network
 		}
 
 		/// <summary>
-		/// Adds specified binary data to form.
+		/// Adds specified binary data to post form.
 		/// </summary>
 		public void AddFormBinary(string key, byte[] data, string fileName = null, string mimeType = null) {
 			form.AddBinaryData(key, data, fileName, mimeType);
