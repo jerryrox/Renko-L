@@ -82,8 +82,8 @@ namespace Renko.Data.Internal
 				FieldInfo field = fields.Current;
 				Type fieldType = field.FieldType;
 
-				//Field must be non-const, and non-readonly.
-				if(field.IsLiteral || field.IsInitOnly)
+				//Field must be non-const
+				if(field.IsLiteral)
 					continue;
 				//JsonIgnoreSerializeAttribute
 				if(ShouldIgnoreType(fieldType))
