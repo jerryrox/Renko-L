@@ -41,6 +41,12 @@ namespace Renko.MVCFramework.Internal
 			GameObject child = new GameObject("Container");
 			InitializeTransform(child, prefab.transform);
 
+			// Attach the UIPanel component first, then WidgetContainer.
+			// Even though MVC Views require them as a dependency, it doesn't really look nice with the
+			// component order all mixed up.
+			prefab.AddComponent<UIPanel>();
+			prefab.AddComponent<UIWidgetContainer>();
+
 			// Find view's type and attach a view component on it.
 			Type type = null;
 			var checkResult = MvcValidator.CheckTypeExists(view.ViewName, out type);
@@ -49,6 +55,7 @@ namespace Renko.MVCFramework.Internal
 					"MvcPrefabMaker.Create - Failed to find type: {0}. Make sure the configuration is applied.",
 					view.ViewName
 				));
+				GameObject.DestroyImmediate(prefab);
 				return;
 			}
 			prefab.AddComponent(type);
@@ -60,10 +67,7 @@ namespace Renko.MVCFramework.Internal
 
 			// Create prefab
 			string path = "Assets/Resources/" + view.ResourcePath + ".prefab";
-			PrefabUtility.CreatePrefab(path, prefab);
-
-			// Cleanup
-			GameObject.DestroyImmediate(prefab);
+			PrefabUtility.CreatePrefab(path, prefab, ReplacePrefabOptions.ConnectToPrefab);
 		}
 
 		private static void InitializeTransform(GameObject obj, Transform parent)
