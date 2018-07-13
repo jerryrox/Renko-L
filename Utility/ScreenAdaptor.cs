@@ -110,7 +110,7 @@ namespace Renko.Utility
 			case ScaleMode.FitToWidth:
 				return new Vector2(
 					1f,
-					(Screen.width * BaseResolution.y) / (BaseResolution.x * Screen.height)
+					(BaseResolution.x * Screen.height) / (Screen.width * BaseResolution.y)
 				);
 			case ScaleMode.FitToHeight:
 				return new Vector2(
@@ -129,7 +129,7 @@ namespace Renko.Utility
 				else {
 					return new Vector2(
 						1f,
-						(Screen.width * BaseResolution.y) / (BaseResolution.x * Screen.height)
+						(BaseResolution.x * Screen.height) / (Screen.width * BaseResolution.y)
 					);
 				}
 			}
