@@ -10,20 +10,25 @@ namespace Renko.MVCFramework
 {
 	/// <summary>
 	/// The base class of all MVC view components.
-	/// 
 	/// </summary>
 	public class BaseMvcView : MonoBehaviour, IMvcView {
 
+		#if UNITY_EDITOR
 		/// <summary>
-		/// Just for keeping this value as a reference rather than hard-coding it every time I need it.
+		/// Just keeping this value as a reference rather than hard-coding it every time an editor script needs it.
 		/// </summary>
 		public const string ClassName = "BaseMvcView";
+		#endif
 
 		/// <summary>
 		/// Whether to reset the UIPanel's rect based on current resolution.
 		/// </summary>
 		public bool ResizePanel = true;
 
+		/// <summary>
+		/// Backing field of ViewSize property.
+		/// </summary>
+		public ScreenAdaptor ViewSize;
 
 		/// <summary>
 		/// Whether the view is no longer being managed by MVC.
@@ -76,20 +81,32 @@ namespace Renko.MVCFramework
 
 
 		/// <summary>
-		/// MonoBehaviour's standard Awake method for pre-initialization.
+		/// For integration with auto generated code with MVC base views.
+		/// You should use OnInitialize for the actual initialization process.
 		/// </summary>
 		public virtual void Awake() {
+			// Nothing to do!
+		}
+
+		/// <summary>
+		/// Use this method to resize UIPanel and handle view anchoring.
+		/// Called ONLY once after Awake() and before OnInitialize().
+		/// </summary>
+		public virtual void OnAdaptView(ScreenAdaptor viewSize, MvcRescaleType type) {
+			this.ViewSize = viewSize;
+
 			if(ResizePanel) {
+				Vector2 newSize = viewSize.GetScaledResolution((ScreenAdaptor.ScaleMode)(int)type);
 				UIPanel up = GetComponent<UIPanel>();
 				if(up != null) {
-					up.SetRect(0f, 0f, Resolutions.Width, Resolutions.Height);
+					up.SetRect(0f, 0f, newSize.x, newSize.y);
 				}
 			}
 		}
 
 		/// <summary>
 		/// Use this method to handle initialization of fields, resources, etc.
-		/// Called right after Awake().
+		/// Called ONLY once after Awake() and OnAdaptView().
 		/// </summary>
 		public virtual void OnInitialize(int viewId, JsonObject param) {
 			this.viewId = viewId;
@@ -98,7 +115,8 @@ namespace Renko.MVCFramework
 
 		/// <summary>
 		/// Use this method to handle re-initialization of fields, resources, etc.
-		/// Will invoke OnViewInitialize() afterwards.
+		/// Will invoke OnViewShow() afterwards.
+		/// Called everytime this view is being recycled.
 		/// </summary>
 		public virtual void OnRecycle(int viewId,JsonObject param) {
 			this.viewId = viewId;

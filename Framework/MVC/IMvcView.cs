@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Renko.Data;
+using Renko.Utility;
 
 namespace Renko.MVCFramework
 {
@@ -36,14 +37,20 @@ namespace Renko.MVCFramework
 		void Awake();
 
 		/// <summary>
+		/// Use this method to resize UIPanel and handle view anchoring.
+		/// Called ONLY once after Awake() and before OnInitialize().
+		/// </summary>
+		void OnAdaptView(ScreenAdaptor viewSize, MvcRescaleType type);
+
+		/// <summary>
 		/// Use this method to handle initialization of fields, resources, etc.
-		/// Called ONLY once right after Awake().
+		/// Called ONLY once after Awake() and OnAdaptView().
 		/// </summary>
 		void OnInitialize(int viewId, JsonObject param);
 
 		/// <summary>
 		/// Use this method to handle re-initialization of fields, resources, etc.
-		/// Will invoke OnViewInitialize() afterwards.
+		/// Will invoke OnViewShow() afterwards.
 		/// Called everytime this view is being recycled.
 		/// </summary>
 		void OnRecycle(int viewId, JsonObject param);

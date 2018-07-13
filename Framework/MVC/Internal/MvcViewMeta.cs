@@ -26,11 +26,22 @@ namespace Renko.MVCFramework.Internal
 		/// </summary>
 		private IMvcLife mvcLifeHandler;
 
+		/// <summary>
+		/// Type of MVC view scale mode.
+		/// </summary>
+		private MvcRescaleType viewRescaleMode;
 
 
-		public MvcViewMeta(MVC mvc, MvcLifeType lifeType, string resourcePath, GameObject viewParent) {
-			ResourcePath = resourcePath;
-			ViewParent = viewParent;
+
+		public MvcViewMeta(MVC mvc, MvcLifeType lifeType, MvcRescaleType viewRescaleMode,
+			string resourcePath, GameObject viewParent)
+		{
+			this.ResourcePath = resourcePath;
+			this.ViewParent = viewParent;
+
+			if(viewRescaleMode == MvcRescaleType.Default)
+				viewRescaleMode = mvc.RescaleMode;
+			this.viewRescaleMode = viewRescaleMode;
 
 			mvcLifeHandler = GetLifeHandler(lifeType == MvcLifeType.Default ? mvc.UiLifeType : lifeType);
 			mvcLifeHandler.Initialize(this);
@@ -40,7 +51,7 @@ namespace Renko.MVCFramework.Internal
 		/// Returns a new MVC view instance.
 		/// </summary>
 		public IMvcView OnShow(int viewId, JsonObject param) {
-			return mvcLifeHandler.NewView(viewId, param);
+			return mvcLifeHandler.NewView(viewId, viewRescaleMode, param);
 		}
 
 		/// <summary>

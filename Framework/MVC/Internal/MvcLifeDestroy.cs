@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using Renko.Utility;
 using Renko.Data;
+using Renko.MVCFramework;
 
 namespace Renko.MVCFramework.Internal
 {
@@ -24,8 +25,9 @@ namespace Renko.MVCFramework.Internal
 		/// <summary>
 		/// Returns a new MVC view.
 		/// </summary>
-		public IMvcView NewView (int viewId, JsonObject param) {
+		public IMvcView NewView (int viewId, MvcRescaleType viewRescaleMode, JsonObject param) {
 			var view = ResourceLoader.CreateObject(owner.ViewParent, owner.ResourcePath).GetComponent<IMvcView>();
+			view.OnAdaptView(MVC.ViewSize, viewRescaleMode);
 			view.OnInitialize(viewId, param);
 			view.OnViewShow();
 			return view;
@@ -37,7 +39,6 @@ namespace Renko.MVCFramework.Internal
 		public void DisposeView (IMvcView view) {
 			GameObject.Destroy(view.ViewObject);
 		}
-
 	}
 }
 #endif

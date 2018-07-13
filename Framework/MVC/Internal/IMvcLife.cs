@@ -1,6 +1,8 @@
 ﻿#if NGUI
 using System;
 using Renko.Data;
+using Renko.Utility;
+using Renko.MVCFramework;
 
 namespace Renko.MVCFramework.Internal
 {
@@ -14,7 +16,7 @@ namespace Renko.MVCFramework.Internal
 		/// <summary>
 		/// Returns a new MVC view.
 		/// </summary>
-		IMvcView NewView(int viewId, JsonObject param);
+		IMvcView NewView(int viewId, MvcRescaleType viewRescaleMode, JsonObject param);
 
 		/// <summary>
 		/// Disposes the specified view.

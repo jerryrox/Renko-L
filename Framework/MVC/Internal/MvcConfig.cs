@@ -157,7 +157,7 @@ namespace Renko.MVCFramework
 			/// <summary>
 			/// The latest view config version.
 			/// </summary>
-			private const int LatestVersion = 0;
+			private const int LatestVersion = 1;
 
 			/// <summary>
 			/// The object that contains this view instance.
@@ -188,6 +188,11 @@ namespace Renko.MVCFramework
 			/// The custom lifecycle method of this view.
 			/// </summary>
 			public MvcLifeType LifeType;
+
+			/// <summary>
+			/// The custom rescaling mode of this view.
+			/// </summary>
+			public MvcRescaleType ViewRescaleMode = MvcRescaleType.Default;
 
 
 			/// <summary>
@@ -291,6 +296,7 @@ namespace Renko.MVCFramework
 				BaseClassName = json["base_class_name"].AsString(BaseMvcView.ClassName);
 				IsInitial = json["is_initial"].AsBool(false);
 				LifeType = (MvcLifeType)json["life_type"].AsInt();
+				ViewRescaleMode = (MvcRescaleType)json["rescale_mode"].AsInt((int)MvcRescaleType.Default);
 			}
 
 			public JsonObject ToJson() {
@@ -301,6 +307,7 @@ namespace Renko.MVCFramework
 				json["base_class_name"] = BaseClassName;
 				json["is_initial"] = IsInitial;
 				json["life_type"] = (int)LifeType;
+				json["rescale_mode"] = (int)ViewRescaleMode;
 
 				return json;
 			}

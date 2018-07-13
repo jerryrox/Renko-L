@@ -37,7 +37,7 @@ namespace Renko.MVCFramework
 		public Vector2 BaseResolution;
 
 		/// <summary>
-		/// Whether the screen width will stay and height can resize.
+		/// The default MVC view scaling mode to use during screen size adaptation.
 		/// </summary>
 		public MvcRescaleType RescaleMode;
 
@@ -83,9 +83,14 @@ namespace Renko.MVCFramework
 		private Type firstViewType;
 
 		/// <summary>
-		/// Backing field for property "NextViewID".
+		/// Backing field of NextViewID property.
 		/// </summary>
 		private int nextViewId;
+
+		/// <summary>
+		/// Backing field of ViewSize property.
+		/// </summary>
+		private ScreenAdaptor viewSize;
 
 
 		/// <summary>
@@ -100,6 +105,13 @@ namespace Renko.MVCFramework
 		/// </summary>
 		public static List<IMvcView> ActiveViews {
 			get { return I.activeViews; }
+		}
+
+		/// <summary>
+		/// Returns the screen adaptor for MVC views to scale their views if necessary.
+		/// </summary>
+		public static ScreenAdaptor ViewSize {
+			get { return I.viewSize; }
 		}
 
 
@@ -196,52 +208,7 @@ namespace Renko.MVCFramework
 		/// Initializes the Resolutions library.
 		/// </summary>
 		void InitializeResolutions() {
-			float desiredRatio = (
-				AppIsPortrait ? 
-				BaseResolution.x / BaseResolution.y :
-				BaseResolution.y / BaseResolution.x
-			);
-
-			if(RescaleMode == MvcRescaleType.MatchToWidth) {
-				Resolutions.Initialize(
-					true,
-					BaseResolution.x,
-					desiredRatio
-				);
-			}
-			else if(RescaleMode == MvcRescaleType.MatchToHeight) {
-				Resolutions.Initialize(
-					false,
-					BaseResolution.y,
-					desiredRatio
-				);
-			}
-			else {
-				// This is the actual screen's aspect ratio.
-				float screenRatio = (
-					AppIsPortrait ?
-					(float)Screen.width / Screen.height :
-					(float)Screen.height / Screen.width
-				);
-
-				// View should match to width if screen 
-				bool shouldMatchToWidth = (
-					AppIsPortrait ?
-					desiredRatio > screenRatio :
-					screenRatio > desiredRatio
-				);
-				float matchingSideSize = (
-					shouldMatchToWidth ?
-					BaseResolution.x :
-					BaseResolution.y
-				);
-
-				Resolutions.Initialize(
-					shouldMatchToWidth,
-					matchingSideSize,
-					desiredRatio
-				);
-			}
+			viewSize = new ScreenAdaptor(BaseResolution);
 		}
 
 		/// <summary>

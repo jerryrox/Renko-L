@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using Renko.Utility;
 using Renko.Data;
+using Renko.MVCFramework;
 
 namespace Renko.MVCFramework.Internal
 {
@@ -43,12 +44,13 @@ namespace Renko.MVCFramework.Internal
 		/// <summary>
 		/// Returns a new MVC view.
 		/// </summary>
-		public IMvcView NewView (int viewId, JsonObject param) {
+		public IMvcView NewView (int viewId, MvcRescaleType viewRescaleMode, JsonObject param) {
 			IMvcView view = null;
 
 			// If a new view should be created
 			if(recycler.InactiveCount == 0) {
 				view = recycler.NextItem();
+				view.OnAdaptView(MVC.ViewSize, viewRescaleMode);
 				view.OnInitialize(viewId, param);
 				view.OnViewShow();
 			}

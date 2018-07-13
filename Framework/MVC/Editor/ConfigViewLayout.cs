@@ -19,6 +19,7 @@ namespace Renko.MVCFramework
 		private static string editingName;
 		private static string editingBaseClassName;
 		private static MvcLifeType editingLifeType;
+		private static MvcRescaleType editingRescaleMode;
 		private static bool editingInitial;
 
 
@@ -91,6 +92,7 @@ namespace Renko.MVCFramework
 			);
 			editingBaseClassName = EditorGUILayout.TextField("Custom base class", editingBaseClassName);
 			editingLifeType = (MvcLifeType)EditorGUILayout.EnumPopup("Custom lifecycle", editingLifeType);
+			editingRescaleMode = (MvcRescaleType)EditorGUILayout.EnumPopup("View rescale mode", editingRescaleMode);
 			editingInitial = EditorGUILayout.Toggle("Is initial view?", editingInitial);
 
 			if(GUILayout.Button("Save")) {
@@ -136,6 +138,7 @@ namespace Renko.MVCFramework
 			editingName = view.Name;
 			editingBaseClassName = view.GetBaseClass();
 			editingLifeType = view.LifeType;
+			editingRescaleMode = view.ViewRescaleMode;
 			editingInitial = view.IsInitial;
 		}
 
@@ -145,6 +148,7 @@ namespace Renko.MVCFramework
 
 			if(view.SetViewName(editingName) && view.SetBaseClassName(editingBaseClassName)) {
 				view.LifeType = editingLifeType;
+				view.ViewRescaleMode = editingRescaleMode;
 				if(editingInitial != view.IsInitial)
 					config.ToggleInitial(editingInitial ? view : null);
 				return true;

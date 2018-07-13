@@ -22,6 +22,11 @@ namespace Renko.MVCFramework
 		/// Rescaling either side to guarantee that no sides will shrink on any screen resolutions.
 		/// </summary>
 		MatchToBoth = 2,
+
+		/// <summary>
+		/// Unassigned.
+		/// </summary>
+		Default = 100,
 	}
 }
 #endif

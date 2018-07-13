@@ -14,7 +14,7 @@ namespace Renko.MVCFramework.Internal
 		private const string ScriptFileName = "MVC.AutoGen.cs";
 		private const string FirstViewLine = "\t\t\tfirstViewType = typeof({0});";
 		private const string MetaListLine = "\t\t\tuiMetadatas = new Dictionary<Type, MvcViewMeta>({0});";
-		private const string ViewMetaLine = "\t\t\tuiMetadatas.Add(typeof({0}), new MvcViewMeta(this, MvcLifeType.{1}, \"{2}\", ViewParent));";
+		private const string ViewMetaLine = "\t\t\tuiMetadatas.Add(typeof({0}), new MvcViewMeta(this, MvcLifeType.{1}, MvcRescaleType.{2}, \"{3}\", ViewParent));";
 
 		private const string FirstViewReplaceTarget = "|0|";
 		private const string MetaListReplaceTarget = "|1|";
@@ -64,7 +64,7 @@ namespace Renko.MVCFramework.Internal
 			StringBuilder viewsSB = new StringBuilder();
 			for(int i=0; i<views.Count; i++)  {
 				viewsSB.AppendLine(string.Format(
-					ViewMetaLine, views[i].ViewName, views[i].LifeType, views[i].ResourcePath
+					ViewMetaLine, views[i].ViewName, views[i].LifeType, views[i].ViewRescaleMode, views[i].ResourcePath
 				));
 			}
 			baseSB.Replace(ViewMetaReplaceTarget, viewsSB.ToString());

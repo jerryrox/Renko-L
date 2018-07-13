@@ -45,6 +45,14 @@ namespace Renko.MVCFramework
 			RenderView(editor);
 		}
 
+		private static int ClampRescaleModeValue(int index)
+		{
+			// If default
+			if(index == 3)
+				return 0;
+			return index;
+		}
+
 		private static string GetRescaleModeHelMessage(int index) {
 			switch(index) {
 			case 0:
@@ -107,10 +115,11 @@ namespace Renko.MVCFramework
 
 			EditorGUILayout.Space();
 
-			EditorGUILayout.LabelField("Defines how your MVC Views will adapt to any screen resolution.");
+			EditorGUILayout.LabelField("Set default scaling mode for all views.");
 			EditorGUILayout.PropertyField(
 				editor.RescaleMode, new GUIContent("RescaleMode")
 			);
+			editor.RescaleMode.enumValueIndex = ClampRescaleModeValue(editor.RescaleMode.enumValueIndex);
 			EditorGUILayout.HelpBox(
 				GetRescaleModeHelMessage(editor.RescaleMode.enumValueIndex),
 				MessageType.Info
