@@ -42,11 +42,6 @@ namespace Renko.MVCFramework
 		public MvcRescaleType RescaleMode;
 
 		/// <summary>
-		/// Whether the application is portrait mode by default.
-		/// </summary>
-		public bool AppIsPortrait;
-
-		/// <summary>
 		/// Whether to initialize the first view on awake.
 		/// If false, the developer should manually call the first view handler.
 		/// </summary>
@@ -92,6 +87,11 @@ namespace Renko.MVCFramework
 		/// </summary>
 		private ScreenAdaptor viewSize;
 
+		/// <summary>
+		/// Backing field of NguiRoot property.
+		/// </summary>
+		private UIRoot uiRoot;
+
 
 		/// <summary>
 		/// Returns the ID for a newly created view.
@@ -114,6 +114,21 @@ namespace Renko.MVCFramework
 			get { return I.viewSize; }
 		}
 
+		/// <summary>
+		/// Returns the UIRoot component.
+		/// </summary>
+		public static UIRoot NguiRoot {
+			get {
+				// Find it first
+				if(I.uiRoot == null) {
+					I.uiRoot = I.ViewParent.GetComponent<UIRoot>();
+					if(I.uiRoot == null)
+						I.uiRoot = I.ViewParent.GetComponentInParent<UIRoot>();
+				}
+				return I.uiRoot;
+			}
+		}
+
 
 		/// <summary>
 		/// Delegate for a callback from UI destruction.
@@ -134,10 +149,7 @@ namespace Renko.MVCFramework
 
 			// Core MVC initialization.
 			// This method is auto-generated in a new partial script so we use SendMessage.
-			SendMessage("InitializeCore", SendMessageOptions.RequireReceiver);
-
-			// Final process
-			FinalizeAwake();
+			SendMessage("InitializeCore", SendMessageOptions.DontRequireReceiver);
 		}
 
 		/// <summary>
@@ -215,10 +227,17 @@ namespace Renko.MVCFramework
 		/// Finalizes the awake process.
 		/// </summary>
 		void FinalizeAwake() {
-			// No core, no MVC
+			// No initialization, no MVC
 			if(!isCoreInitialized) {
 				RenLog.Log(LogLevel.Error, "MVC.FinalizeAwake - Core MVC components are not initialized!");
 				Destroy(gameObject);
+				return;
+			}
+			// View parent is not set.
+			// If user really wants to MVC without the parent, ShowView should be called manually.
+			if(ViewParent == null) {
+				RenLog.LogWarning("MVC.FinalizeAwake - ViewParent property is null! " +
+					"Call MVC.ShowView after setting the property.");
 				return;
 			}
 

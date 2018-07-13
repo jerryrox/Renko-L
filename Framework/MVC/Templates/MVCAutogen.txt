@@ -24,6 +24,7 @@ namespace Renko.MVCFramework
 
 			// Initialized
 			isCoreInitialized = true;
+			FinalizeAwake();
 		}
 	}
 }

@@ -126,11 +126,6 @@ namespace Renko.MVCFramework
 			);
 
 			EditorGUILayout.Space();
-
-			EditorGUILayout.LabelField("Whether your UI orientation is portrait mode.");
-			EditorGUILayout.PropertyField(
-				editor.AppIsPortrait, new GUIContent("AppIsPortrait")
-			);
 		}
 
 		private static void RenderView(MVCEditor editor) {
@@ -145,6 +140,13 @@ namespace Renko.MVCFramework
 					ConfigSynchronizer.Sync(Config);
 			}
 			EditorGUILayout.HelpBox("Click the button above whenever you make changes in this area.", MessageType.Info);
+
+			EditorGUILayout.Space();
+
+			if(GUILayout.Button("Generate prefabs")) {
+				if(Config.IsConfigValid() && !EditorApplication.isCompiling)
+					MvcPrefabMaker.CreatePrefabs(editor.I, Config);
+			}
 
 			EditorGUILayout.Space();
 

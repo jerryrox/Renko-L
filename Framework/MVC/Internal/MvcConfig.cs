@@ -223,6 +223,13 @@ namespace Renko.MVCFramework
 				get { return MvcResources.GetViewPrefabPath(this); }
 			}
 
+			/// <summary>
+			/// Returns the full system path to this view's prefab object.
+			/// </summary>
+			public string FullResourcePath {
+				get { return MvcResources.GetViewPrefabPath(this, true); }
+			}
+
 
 			public View(MvcConfig owner) {
 				Owner = owner;

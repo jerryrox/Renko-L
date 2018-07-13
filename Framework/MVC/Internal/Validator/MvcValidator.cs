@@ -80,6 +80,15 @@ namespace Renko.MVCFramework
 		}
 
 		/// <summary>
+		/// Checks whether a Type with specified string value exists.
+		/// Outputs the parsed type.
+		/// </summary>
+		public static ValidationResult CheckTypeExists(string value, out Type type) {
+			type = Type.GetType(value);
+			return type != null ? ValidationResult.Success : ValidationResult.TypeDoesntExist;
+		}
+
+		/// <summary>
 		/// Checks whether specified value is a valid class name.
 		/// </summary>
 		public static ValidationResult CheckClassName(string value) {
