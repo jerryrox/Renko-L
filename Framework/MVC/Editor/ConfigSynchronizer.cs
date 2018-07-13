@@ -12,12 +12,13 @@ namespace Renko.MVCFramework
 		/// <summary>
 		/// Synchronizes project with MVC configuration.
 		/// </summary>
-		public static void Sync(MvcConfig config) {
+		public static void Sync(MVC mvc, MvcConfig config) {
 			config.Save();
 
 			MvcWorkspace.AutogenMVC(config);
 			for(int i=0; i<config.Views.Count; i++) {
 				MvcWorkspace.AutogenView(config.Views[i]);
+				MvcPrefabMaker.Create(mvc, config.Views[i]);
 			}
 
 			AssetDatabase.Refresh();

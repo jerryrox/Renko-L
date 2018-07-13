@@ -9,10 +9,10 @@ using UnityEngine;
 using Renko.MVCFramework;
 using Renko.Data;
 
-[RequireComponent(typeof({0}Model))]
-[RequireComponent(typeof({0}Controller))]
 [RequireComponent(typeof(UIPanel))]
 [RequireComponent(typeof(UIWidgetContainer))]
+[RequireComponent(typeof({0}Model))]
+[RequireComponent(typeof({0}Controller))]
 public partial class {0}View : {1} {
 
 	[HideInInspector]
