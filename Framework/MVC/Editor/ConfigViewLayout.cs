@@ -12,15 +12,20 @@ namespace Renko.MVCFramework
 {
 	public static class ConfigViewLayout {
 
+		private const string DeleteWarning = "(This is an irreversible action!)";
 		private static List<bool> viewFlags;
-
-		private static bool showingViews;
 
 		private static string editingName;
 		private static string editingBaseClassName;
 		private static MvcLifeType editingLifeType;
 		private static MvcRescaleType editingRescaleMode;
 		private static bool editingInitial;
+
+
+		private static bool IsShowingView {
+			get { return EditorPrefs.GetBool("MVCFramework.ConfigViewLayout.IsShowingView", false); }
+			set { EditorPrefs.SetBool("MVCFramework.ConfigViewLayout.IsShowingView", value); }
+		}
 
 
 		/// <summary>
@@ -34,12 +39,12 @@ namespace Renko.MVCFramework
 		}
 
 		private static void DrawControls(MVCEditor editor, MvcConfig config) {
-			if(GUILayout.Button(showingViews ? "Hide views" : "Show views"))
-				showingViews = !showingViews;
+			if(GUILayout.Button(IsShowingView ? "Hide views" : "Show views"))
+				IsShowingView = !IsShowingView;
 		}
 
 		private static void DrawViews(MVCEditor editor, MvcConfig config) {
-			if(!showingViews)
+			if(!IsShowingView)
 				return;
 
 			GUILayout.BeginVertical("GroupBox");
@@ -88,50 +93,90 @@ namespace Renko.MVCFramework
 			GUILayout.BeginVertical("LightmapEditorSelectedHighlight");
 
 			editingName = ViewNameTrim(
-				EditorGUILayout.TextField("View name", editingName), true
+				EditorGUILayout.TextField("View name", editingName)
 			);
 			editingBaseClassName = EditorGUILayout.TextField("Custom base class", editingBaseClassName);
 			editingLifeType = (MvcLifeType)EditorGUILayout.EnumPopup("Custom lifecycle", editingLifeType);
 			editingRescaleMode = (MvcRescaleType)EditorGUILayout.EnumPopup("View rescale mode", editingRescaleMode);
 			editingInitial = EditorGUILayout.Toggle("Is initial view?", editingInitial);
 
-			if(GUILayout.Button("Save")) {
-				ApplyEdit(config, view);
-			}
 			if(GUILayout.Button("Save & Close")) {
 				if(ApplyEdit(config, view)) {
 					ConfigViewEditorFlags.ResetFlags();
 				}
 			}
-			if(GUILayout.Button("Delete")) {
-				if(EditorDialog.OpenAlert(
-					"Delete view \""+view.Name+'\"',
-					"Are you sure you want to delete this view? (This an irreversible action!)",
-					"Yes", "No")) {
 
-					config.Views.RemoveAt(index);
-					ConfigViewEditorFlags.Setup(config);
-					ConfigViewEditorFlags.ResetFlags();
+			if(GUILayout.Button("Danger Zone!")) {
+				ConfigViewEditorFlags.IsDeleteOpen ^= true;
+			}
+
+			if(ConfigViewEditorFlags.IsDeleteOpen) {
+				GUILayout.BeginVertical("GroupBox");
+
+				EditorGUILayout.HelpBox(
+					"It is highly recommended to apply configurations first before performing any actions here.",
+					MessageType.Warning
+				);
+
+				if(GUILayout.Button("Delete config")) {
+					if(EditorDialog.OpenAlert(
+						"Delete view configuration.",
+						"Are you sure you want to delete this view's configuration? " + DeleteWarning,
+						"Yes", "No")) {
+
+						// Remove view from views list.
+						MvcViewRemover.RemoveFromConfig(config.Views, index);
+						ConfigViewEditorFlags.Setup(config);
+						ConfigViewEditorFlags.ResetFlags();
+					}
 				}
+
+				// If loaded from resources, the user must've already created a prefab or at least scripts.
+				if(view.IsFromResources) {
+					EditorGUILayout.Space();
+
+					if(GUILayout.Button("Delete prefab")) {
+						// Confirm prefab deletion
+						if(EditorDialog.OpenAlert(
+							"Delete view prefab",
+							"Are you sure you want to delete this view's prefab? " + DeleteWarning,
+							"Yes", "No")) {
+
+							MvcViewRemover.RemovePrefab(view);
+						}
+					}
+
+					EditorGUILayout.Space();
+
+					if(GUILayout.Button("Delete all")) {
+						// Confirm deletion of all view-related things
+						if(EditorDialog.OpenAlert(
+							"Delete view config, scripts, prefab",
+							"Are you sure you want to delete this view's config, scripts, and prefab?" + DeleteWarning,
+							"Yes", "No")) {
+
+							MvcViewRemover.RemoveFromConfig(config.Views, index);
+							MvcViewRemover.RemoveScripts(view);
+							MvcViewRemover.RemovePrefab(view);
+							MvcViewRemover.Finalize(config);
+
+							ConfigViewEditorFlags.Setup(config);
+							ConfigViewEditorFlags.ResetFlags();
+						}
+					}
+				}
+
+				GUILayout.EndVertical();
 			}
 
 			GUILayout.EndVertical();
 		}
 
-		private static string ViewNameTrim(string value, bool displayAlert) {
+		private static string ViewNameTrim(string value) {
 			if(!value.EndsWith("View"))
 				return value;
-
-			string targetString = value.Substring(0, value.Length-4);
-			if(displayAlert) {
-				EditorDialog.OpenAlert(
-					"Invalid name ending",
-
-					"All views are automatically added with suffix 'View'.\n" +
-					"Your view name will be trimmed to " + targetString + " instead."
-				);
-			}
-			return targetString;
+			
+			return value.Substring(0, value.Length-4);
 		}
 
 		private static void SetEdit(MvcConfig.View view) {
@@ -144,9 +189,11 @@ namespace Renko.MVCFramework
 
 		private static bool ApplyEdit(MvcConfig config, MvcConfig.View view) {
 			// Silently replace view name that ends with suffix "View".
-			editingName = ViewNameTrim(editingName, false);
+			editingName = ViewNameTrim(editingName);
 
-			if(view.SetViewName(editingName) && view.SetBaseClassName(editingBaseClassName)) {
+			if(view.SetViewName(editingName) && view.SetBaseClassName(editingBaseClassName) &&
+				config.IsConfigValid()) {
+
 				view.LifeType = editingLifeType;
 				view.ViewRescaleMode = editingRescaleMode;
 				if(editingInitial != view.IsInitial)

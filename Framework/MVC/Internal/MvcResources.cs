@@ -51,8 +51,8 @@ namespace Renko.MVCFramework.Internal
 		/// <summary>
 		/// Returns the resource path for specified config view.
 		/// </summary>
-		public static string GetViewPrefabPath(MvcConfig.View view, bool fullPath = false) {
-			string path = Path.Combine(GetResourcePath(fullPath), view.ViewName);
+		public static string GetViewPrefabPath(MvcConfig.View view, string viewName, bool fullPath = false) {
+			string path = Path.Combine(GetResourcePath(fullPath), viewName);
 			if(fullPath)
 				path += ".prefab";
 			return path;

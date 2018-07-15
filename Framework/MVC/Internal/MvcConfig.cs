@@ -175,6 +175,11 @@ namespace Renko.MVCFramework
 			public string Name;
 
 			/// <summary>
+			/// The original name loaded from resources.
+			/// </summary>
+			public string OriginalName;
+
+			/// <summary>
 			/// The full name of custom MVC view base class.
 			/// </summary>
 			public string BaseClassName;
@@ -196,38 +201,10 @@ namespace Renko.MVCFramework
 
 
 			/// <summary>
-			/// Returns Name+"View".
+			/// Returns whether this view config is loaded from resources.
 			/// </summary>
-			public string ViewName {
-				get { return Name + "View"; }
-			}
-
-			/// <summary>
-			/// Returns Name+"Model".
-			/// </summary>
-			public string ModelName {
-				get { return Name + "Model"; }
-			}
-
-			/// <summary>
-			/// Returns Name+"Controller".
-			/// </summary>
-			public string ControllerName {
-				get { return Name + "Controller"; }
-			}
-
-			/// <summary>
-			/// Returns the resource path to this view's prefab object.
-			/// </summary>
-			public string ResourcePath {
-				get { return MvcResources.GetViewPrefabPath(this); }
-			}
-
-			/// <summary>
-			/// Returns the full system path to this view's prefab object.
-			/// </summary>
-			public string FullResourcePath {
-				get { return MvcResources.GetViewPrefabPath(this, true); }
+			public bool IsFromResources {
+				get { return !string.IsNullOrEmpty(OriginalName); }
 			}
 
 
@@ -276,6 +253,34 @@ namespace Renko.MVCFramework
 			}
 
 			/// <summary>
+			/// Returns the path to this view's prefab object.
+			/// </summary>
+			public string GetResourcePath(bool isFullPath, bool fromOriginal = false) {
+				return MvcResources.GetViewPrefabPath(this, GetViewName(fromOriginal), isFullPath);
+			}
+
+			/// <summary>
+			/// Returns the View file name
+			/// </summary>
+			public string GetViewName(bool fromOriginal = false) {
+				return (fromOriginal ? OriginalName : Name) + "View";
+			}
+
+			/// <summary>
+			/// Returns the Model file name
+			/// </summary>
+			public string GetModelName(bool fromOriginal = false) {
+				return (fromOriginal ? OriginalName : Name) + "Model";
+			}
+
+			/// <summary>
+			/// Returns the Controller file name
+			/// </summary>
+			public string GetControllerName(bool fromOriginal = false) {
+				return (fromOriginal ? OriginalName : Name) + "Controller";
+			}
+
+			/// <summary>
 			/// Returns whether all fields in this config view are valid.
 			/// </summary>
 			public bool IsAllFieldsValid() {
@@ -299,7 +304,7 @@ namespace Renko.MVCFramework
 			/// </summary>
 			public void Load(JsonObject json) {
 				Version = json["version"].AsInt(LatestVersion);
-				Name = json["name"].AsString();
+				OriginalName = Name = json["name"].AsString();
 				BaseClassName = json["base_class_name"].AsString(BaseMvcView.ClassName);
 				IsInitial = json["is_initial"].AsBool(false);
 				LifeType = (MvcLifeType)json["life_type"].AsInt();

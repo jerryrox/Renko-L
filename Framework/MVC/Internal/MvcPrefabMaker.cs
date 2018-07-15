@@ -30,11 +30,11 @@ namespace Renko.MVCFramework.Internal
 		private static void Create(MVC mvc, MvcConfig.View view)
 		{
 			// If prefab file already exists, return
-			if(File.Exists(view.FullResourcePath))
+			if(File.Exists(view.GetResourcePath(true)))
 				return;
 			
 			// Create a new object to make prefab.
-			GameObject prefab = new GameObject(view.ViewName);
+			GameObject prefab = new GameObject(view.GetViewName());
 			InitializeTransform(prefab, mvc.ViewParent.transform);
 
 			// Create a child _Holder object.
@@ -49,11 +49,11 @@ namespace Renko.MVCFramework.Internal
 
 			// Find view's type and attach a view component on it.
 			Type type = null;
-			var checkResult = MvcValidator.CheckTypeExists(view.ViewName, out type);
+			var checkResult = MvcValidator.CheckTypeExists(view.GetViewName(), out type);
 			if(type == null) {
 				RenLog.LogWarning(string.Format(
 					"MvcPrefabMaker.Create - Failed to find type: {0}. Make sure the configuration is applied.",
-					view.ViewName
+					view.GetViewName()
 				));
 				GameObject.DestroyImmediate(prefab);
 				return;
@@ -66,7 +66,7 @@ namespace Renko.MVCFramework.Internal
 			panel.SetRect(0f, 0f, mvc.BaseResolution.x, mvc.BaseResolution.y);
 
 			// Create prefab
-			string path = "Assets/Resources/" + view.ResourcePath + ".prefab";
+			string path = "Assets/Resources/" + view.GetResourcePath(false) + ".prefab";
 			PrefabUtility.CreatePrefab(path, prefab, ReplacePrefabOptions.ConnectToPrefab);
 		}
 

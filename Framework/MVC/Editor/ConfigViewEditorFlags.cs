@@ -8,6 +8,7 @@ namespace Renko.MVCFramework
 	public static class ConfigViewEditorFlags {
 
 		public static List<bool> IsOpen;
+		public static bool IsDeleteOpen;
 
 
 		public static void Setup(MvcConfig config) {
@@ -25,11 +26,13 @@ namespace Renko.MVCFramework
 		public static void ResetFlags() {
 			for(int i=0; i<IsOpen.Count; i++)
 				IsOpen[i] = false;
+			IsDeleteOpen = false;
 		}
 
 		public static void SetOpen(int viewIndex) {
 			ResetFlags();
 			IsOpen[viewIndex] = true;
+			IsDeleteOpen = false;
 		}
 	}
 }

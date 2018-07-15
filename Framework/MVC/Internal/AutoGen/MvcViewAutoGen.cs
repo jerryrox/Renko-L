@@ -30,9 +30,9 @@ namespace Renko.MVCFramework.Internal
 			// Generate view, model, controller scripts.
 			// They must be generated ONLY if there is no existing file.
 			CreateViewDirectory(configView);
-			string viewScriptPath = Path.Combine(workspacePath, string.Format(ViewFileName, configView.Name));
-			string modelScriptPath = Path.Combine(workspacePath, string.Format(ModelFileName, configView.Name));
-			string controllerScriptPath = Path.Combine(workspacePath, string.Format(ControllerFileName, configView.Name));
+			string viewScriptPath = GetViewScriptPath(workspacePath, configView.Name);
+			string modelScriptPath = GetModelScriptPath(workspacePath, configView.Name);
+			string controllerScriptPath = GetControllerScriptPath(workspacePath, configView.Name);
 			if(!File.Exists(viewScriptPath))
 				File.WriteAllText(viewScriptPath, GetViewScriptContents(configView));
 			if(!File.Exists(modelScriptPath))
@@ -42,10 +42,38 @@ namespace Renko.MVCFramework.Internal
 		}
 
 		/// <summary>
+		/// Returns the path to MVC scripts directory.
+		/// </summary>
+		public static string GetDirectoryPath(string autogenPath, string viewName) {
+			return Path.Combine(autogenPath, string.Format(ViewDirectory, viewName));
+		}
+
+		/// <summary>
 		/// Returns the path to base view script file.
 		/// </summary>
-		private static string GetBaseScriptPath(string autogenPath, string viewName) {
+		public static string GetBaseScriptPath(string autogenPath, string viewName) {
 			return Path.Combine(autogenPath, string.Format(BaseFileName, viewName));
+		}
+
+		/// <summary>
+		/// Returns the path to the MVC View script file.
+		/// </summary>
+		public static string GetViewScriptPath(string workspacePath, string viewName) {
+			return Path.Combine(workspacePath, string.Format(ViewFileName, viewName));
+		}
+
+		/// <summary>
+		/// Returns the path to the MVC View script file.
+		/// </summary>
+		public static string GetModelScriptPath(string workspacePath, string viewName) {
+			return Path.Combine(workspacePath, string.Format(ModelFileName, viewName));
+		}
+
+		/// <summary>
+		/// Returns the path to the MVC View script file.
+		/// </summary>
+		public static string GetControllerScriptPath(string workspacePath, string viewName) {
+			return Path.Combine(workspacePath, string.Format(ControllerFileName, viewName));
 		}
 
 		/// <summary>

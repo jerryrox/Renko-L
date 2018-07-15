@@ -11,15 +11,19 @@ namespace Renko.MVCFramework
 {
 	public static class WarningView {
 
-		private static bool showWarnings = true;
+
+		private static bool IsShowingWarning {
+			get { return EditorPrefs.GetBool("MVCFramework.WarningView.IsShowingWarning", true); }
+			set { EditorPrefs.SetBool("MVCFramework.WarningView.IsShowingWarning", value); }
+		}
 
 
 		public static void Render(MVCEditor editor, MvcConfig config) {
-			if(GUILayout.Button(showWarnings ? "Hide warnings" : "Show warnings")) {
-				showWarnings = !showWarnings;
+			if(GUILayout.Button(IsShowingWarning ? "Hide warnings" : "Show warnings")) {
+				IsShowingWarning = !IsShowingWarning;
 			}
 
-			if(showWarnings) {
+			if(IsShowingWarning) {
 				RenderMissingPrefab(editor, config);
 			}
 		}
@@ -27,18 +31,14 @@ namespace Renko.MVCFramework
 		private static void RenderMissingPrefab(MVCEditor editor, MvcConfig config) {
 			for(int i=0; i<config.Views.Count; i++) {
 				var view = config.Views[i];
-				if(!File.Exists(MvcResources.GetViewPrefabPath(view, true))) {
+				if(!File.Exists(MvcResources.GetViewPrefabPath(view, view.GetViewName(), true))) {
 					EditorGUILayout.HelpBox(string.Format(
 						"Missing prefab for view ({0}) at path: Resources/{1}",
 						view.Name,
-						MvcResources.GetViewPrefabPath(view)
+						MvcResources.GetViewPrefabPath(view, view.GetViewName())
 					), MessageType.Warning);
 				}
 			}
-		}
-
-		private static void RenderAutogenCleanup(MVCEditor editor, MvcConfig config) {
-			
 		}
 	}
 }

@@ -49,7 +49,7 @@ namespace Renko.MVCFramework.Internal
 
 			// Initial view setup
 			if(initialView != null) {
-				baseSB.Replace("|0|", string.Format(FirstViewLine, initialView.ViewName));
+				baseSB.Replace("|0|", string.Format(FirstViewLine, initialView.GetViewName()));
 			}
 			else {
 				baseSB.Replace(FirstViewReplaceTarget, "");
@@ -64,7 +64,11 @@ namespace Renko.MVCFramework.Internal
 			StringBuilder viewsSB = new StringBuilder();
 			for(int i=0; i<views.Count; i++)  {
 				viewsSB.AppendLine(string.Format(
-					ViewMetaLine, views[i].ViewName, views[i].LifeType, views[i].ViewRescaleMode, views[i].ResourcePath
+					ViewMetaLine,
+					views[i].GetViewName(),
+					views[i].LifeType,
+					views[i].ViewRescaleMode,
+					views[i].GetResourcePath(false)
 				));
 			}
 			baseSB.Replace(ViewMetaReplaceTarget, viewsSB.ToString());
