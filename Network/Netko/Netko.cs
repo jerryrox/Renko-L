@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.Networking;
+using Renko.Network.Internal;
 
 namespace Renko.Network
 {
@@ -31,15 +32,15 @@ namespace Renko.Network
 		/// Returns the number of requests currently being processed.
 		/// </summary>
 		public static int CurrentRequestCount {
-			get { return I.updater.currentProcessCount; }
+			get { return I.updater.CurrentProcessCount; }
 		}
 
 		/// <summary>
 		/// Max number of requests that can be processed at once.
 		/// </summary>
 		public static int MaxConcurrentRequests {
-			get { return I.updater.maxProcessCount; }
-			set { I.updater.maxProcessCount = value; }
+			get { return I.updater.MaxProcessCount; }
+			set { I.updater.MaxProcessCount = value; }
 		}
 
 		/// <summary>
@@ -63,14 +64,6 @@ namespace Renko.Network
 		}
 
 		/// <summary>
-		/// Registers the specified item to processing queue and returns it.
-		/// </summary>
-		public static NetkoItem RegisterItem(NetkoItem item) {
-			I.updater.AddItem(item);
-			return item;
-		}
-
-		/// <summary>
 		/// Stops all items with specified id.
 		/// </summary>
 		public static void StopGroup(int id) {
@@ -80,19 +73,46 @@ namespace Renko.Network
 		/// <summary>
 		/// Whether Netko updater contains the specified item.
 		/// </summary>
-		public static bool ContainsItem(NetkoItem item) {
-			return I.updater.Items.Contains(item);
+		public static bool ContainsItem(INetkoItem item) {
+			return I.updater.Items.Contains(item as NetkoItem);
 		}
 
 		/// <summary>
 		/// Returns an enumerator of all items.
 		/// </summary>
-		public static IEnumerator<NetkoItem> GetItems() {
-			return I.updater.Items.GetEnumerator();
+		public static IEnumerator<INetkoItem> GetItems() {
+			var enumerator = I.updater.Items.GetEnumerator();
+			while(enumerator.MoveNext()) {
+				yield return enumerator.Current as INetkoItem;
+			}
+		}
+
+		/// <summary>
+		/// Registers the specified item to processing queue and returns it.
+		/// </summary>
+		public NetkoItem RegisterItem(NetkoItem item) {
+			updater.AddItem(item);
+			return item;
 		}
 
 		void Update() {
 			updater.Update();
+		}
+
+
+		/// <summary>
+		/// The type of request for Netko Items.
+		/// </summary>
+		public enum RequestType {
+			Get,
+			Post,
+			Delete,
+			Put,
+			Head,
+			Audio,
+			AudioStream,
+			AssetBundle,
+			Texture
 		}
 	}
 }

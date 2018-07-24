@@ -5,17 +5,12 @@ using System.Linq;
 using Renko.Data;
 using Renko.Network.Internal;
 
-namespace Renko.Network
+namespace Renko.Network.Internal
 {
 	/// <summary>
 	/// Holds response data of a NetkoItem.
 	/// </summary>
-	public class NetkoResponse {
-
-		/// <summary>
-		/// The item containing this instance.
-		/// </summary>
-		private NetkoItem item;
+	public class NetkoResponse : INetkoResponse {
 
 		/// <summary>
 		/// The request manager in item.
@@ -94,7 +89,7 @@ namespace Renko.Network
 		}
 
 		/// <summary>
-		/// Returns the response audio data.
+		/// Returns the response audio (full/stream) data.
 		/// </summary>
 		public AudioClip AudioData {
 			get {
@@ -157,7 +152,7 @@ namespace Renko.Network
 		}
 
 		/// <summary>
-		/// Returns the Content-Type value from header.
+		/// Returns the Content-Length value from header.
 		/// </summary>
 		public long ContentLength {
 			get {
@@ -173,8 +168,7 @@ namespace Renko.Network
 
 
 		public NetkoResponse(NetkoItem item) {
-			this.item = item;
-			this.request = item.Request;
+			this.request = item.Request as NetkoRequest;
 		}
 
 	}

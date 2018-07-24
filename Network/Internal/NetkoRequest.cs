@@ -3,27 +3,22 @@ using UnityEngine.Networking;
 using Renko.Network.Internal;
 using Renko.Diagnostics;
 
-namespace Renko.Network
+namespace Renko.Network.Internal
 {
 	/// <summary>
 	/// A class that manages requests for NetkoItem.
 	/// </summary>
-	public class NetkoRequest {
-
-		/// <summary>
-		/// The item containing this instance.
-		/// </summary>
-		private NetkoItem item;
+	public class NetkoRequest : INetkoRequest {
 
 		/// <summary>
 		/// Web request object for almost all request types.
 		/// </summary>
-		private UnityWebRequest unityRequest;
+		public UnityWebRequest UnityRequest;
 
 		/// <summary>
 		/// Web request object for audio streams only.
 		/// </summary>
-		private AudioStreamRequest audioRequest;
+		public AudioStreamRequest AudioRequest;
 
 		/// <summary>
 		/// Backing field of RequestInfo property.
@@ -42,24 +37,10 @@ namespace Renko.Network
 
 
 		/// <summary>
-		/// Source of data to use for request.
+		/// Returns the request type being performed.
 		/// </summary>
-		public NetkoRequestInfo RequestInfo {
-			get { return requestInfo; }
-		}
-
-		/// <summary>
-		/// Returns the direct instance of UnityWebRequest.
-		/// </summary>
-		public UnityWebRequest UnityRequest {
-			get { return unityRequest; }
-		}
-
-		/// <summary>
-		/// Returns the direct instance of AudioStreamRequest.
-		/// </summary>
-		public AudioStreamRequest AudioRequest {
-			get { return audioRequest; }
+		public Netko.RequestType Type {
+			get { return requestInfo.RequestType; }
 		}
 
 		/// <summary>
@@ -67,10 +48,10 @@ namespace Renko.Network
 		/// </summary>
 		public string Url {
 			get {
-				if(unityRequest != null)
-					return unityRequest.url;
-				else if(audioRequest != null)
-					return audioRequest.Url;
+				if(UnityRequest != null)
+					return UnityRequest.url;
+				else if(AudioRequest != null)
+					return AudioRequest.Url;
 				return null;
 			}
 		}
@@ -83,14 +64,21 @@ namespace Renko.Network
 		}
 
 		/// <summary>
+		/// Returns a readable message of request errors.
+		/// </summary>
+		public string Error {
+			get { return customError; }
+		}
+
+		/// <summary>
 		/// Returns the current download progress from 0~1.
 		/// </summary>
 		public float DownloadProgress {
 			get {
-				if(unityRequest != null)
-					return unityRequest.downloadProgress;
-				if(audioRequest != null)
-					return audioRequest.DownloadProgress;
+				if(UnityRequest != null)
+					return UnityRequest.downloadProgress;
+				if(AudioRequest != null)
+					return AudioRequest.DownloadProgress;
 				return 0f;
 			}
 		}
@@ -101,8 +89,8 @@ namespace Renko.Network
 		/// </summary>
 		public float UploadProgress {
 			get {
-				if(unityRequest != null)
-					return unityRequest.uploadProgress;
+				if(UnityRequest != null)
+					return UnityRequest.uploadProgress;
 				return 0f;
 			}
 		}
@@ -126,7 +114,7 @@ namespace Renko.Network
 		/// Returns whether this item is terminated.
 		/// </summary>
 		public bool IsTerminated {
-			get { return unityRequest == null && audioRequest == null; }
+			get { return UnityRequest == null && AudioRequest == null; }
 		}
 
 		/// <summary>
@@ -144,10 +132,10 @@ namespace Renko.Network
 			get {
 				if(!string.IsNullOrEmpty(customError))
 					return true;
-				if(unityRequest != null)
-					return unityRequest.isDone;
-				if(audioRequest != null)
-					return audioRequest.IsDone;
+				if(UnityRequest != null)
+					return UnityRequest.isDone;
+				if(AudioRequest != null)
+					return AudioRequest.IsDone;
 				return false;
 			}
 		}
@@ -159,16 +147,8 @@ namespace Renko.Network
 			get { return TimeOutTime < Time.realtimeSinceStartup; }
 		}
 
-		/// <summary>
-		/// Returns a readable message of request errors.
-		/// </summary>
-		public string Error {
-			get { return customError; }
-		}
 
-
-		public NetkoRequest(NetkoItem item, NetkoRequestInfo requestInfo) {
-			this.item = item;
+		public NetkoRequest(NetkoRequestInfo requestInfo) {
 			this.requestInfo = requestInfo;
 		}
 
@@ -178,35 +158,35 @@ namespace Renko.Network
 		public void Setup() {
 			// Determine which request to use.
 			switch(requestInfo.RequestType) {
-			case RequestType.Get:
-				unityRequest = UnityWebRequest.Get(requestInfo.Url.GetUriEscaped());
+			case Netko.RequestType.Get:
+				UnityRequest = UnityWebRequest.Get(requestInfo.Url.GetUriEscaped());
 				break;
-			case RequestType.Post:
-				unityRequest = UnityWebRequest.Post(requestInfo.Url.GetUriEscaped(), requestInfo.Form);
+			case Netko.RequestType.Post:
+				UnityRequest = UnityWebRequest.Post(requestInfo.Url.GetUriEscaped(), requestInfo.Form);
 				break;
-			case RequestType.Delete:
-				unityRequest = UnityWebRequest.Delete(requestInfo.Url.GetUriEscaped());
+			case Netko.RequestType.Delete:
+				UnityRequest = UnityWebRequest.Delete(requestInfo.Url.GetUriEscaped());
 				break;
-			case RequestType.Put:
-				unityRequest = UnityWebRequest.Put(requestInfo.Url.GetUriEscaped(), requestInfo.PutData);
+			case Netko.RequestType.Put:
+				UnityRequest = UnityWebRequest.Put(requestInfo.Url.GetUriEscaped(), requestInfo.PutData);
 				break;
-			case RequestType.Head:
-				unityRequest = UnityWebRequest.Head(requestInfo.Url.GetUriEscaped());
+			case Netko.RequestType.Head:
+				UnityRequest = UnityWebRequest.Head(requestInfo.Url.GetUriEscaped());
 				break;
-			case RequestType.Audio:
-				unityRequest = UnityWebRequest.GetAudioClip(requestInfo.Url.GetUriEscaped(), requestInfo.AudioType);
+			case Netko.RequestType.Audio:
+				UnityRequest = UnityWebRequest.GetAudioClip(requestInfo.Url.GetUriEscaped(), requestInfo.AudioType);
 				break;
-			case RequestType.AudioStream:
-				audioRequest = new AudioStreamRequest(requestInfo.Url.GetUriEscaped(true));
+			case Netko.RequestType.AudioStream:
+				AudioRequest = new AudioStreamRequest(requestInfo.Url.GetUriEscaped(true));
 				break;
-			case RequestType.Texture:
-				unityRequest = UnityWebRequest.GetTexture(
+			case Netko.RequestType.Texture:
+				UnityRequest = UnityWebRequest.GetTexture(
 					requestInfo.Url.GetUriEscaped(), requestInfo.TextureNonReadable
 				);
 				break;
-			case RequestType.AssetBundle:
-				unityRequest = UnityWebRequest.GetAssetBundle(
-					requestInfo.Url.GetUriEscaped(), requestInfo.AssetBundleVersion, RequestInfo.AssetBundleCRC
+			case Netko.RequestType.AssetBundle:
+				UnityRequest = UnityWebRequest.GetAssetBundle(
+					requestInfo.Url.GetUriEscaped(), requestInfo.AssetBundleVersion, requestInfo.AssetBundleCRC
 				);
 				break;
 			}
@@ -222,10 +202,10 @@ namespace Renko.Network
 		/// </summary>
 		public void Send() {
 			// Send request.
-			if(unityRequest != null)
-				unityRequest.Send();
-			else if(audioRequest != null)
-				audioRequest.Send();
+			if(UnityRequest != null)
+				UnityRequest.Send();
+			else if(AudioRequest != null)
+				AudioRequest.Send();
 			isProcessing = true;
 
 			//Start timeout detection
@@ -236,12 +216,12 @@ namespace Renko.Network
 		/// Terminates requests.
 		/// </summary>
 		public void Terminate() {
-			if(unityRequest != null)
-				unityRequest.Abort();
-			else if(audioRequest != null)
-				audioRequest.Dispose();
-			unityRequest = null;
-			audioRequest = null;
+			if(UnityRequest != null)
+				UnityRequest.Abort();
+			else if(AudioRequest != null)
+				AudioRequest.Dispose();
+			UnityRequest = null;
+			AudioRequest = null;
 		}
 
 		/// <summary>

@@ -11,7 +11,7 @@ namespace Renko.Network.Internal
 		/// <summary>
 		/// Type of request to make in Netko.
 		/// </summary>
-		public RequestType RequestType;
+		public Netko.RequestType RequestType;
 
 		/// <summary>
 		/// Max duration in seconds allowed before terminating a Netko request due to timeout.
@@ -45,7 +45,7 @@ namespace Renko.Network.Internal
 
 
 		public NetkoRequestInfo(
-			RequestType requestType,
+			Netko.RequestType requestType,
 			string url,
 			string method,
 			float timeOut,

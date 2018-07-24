@@ -4,58 +4,85 @@ using System;
 using UnityEngine;
 using UnityEngine.Networking;
 using Renko.Diagnostics;
-using Renko.Network.Internal;
 
-namespace Renko.Network
+namespace Renko.Network.Internal
 {
 	/// <summary>
 	/// A class that represents a single request in Netko.
 	/// </summary>
-	public class NetkoItem {
+	public class NetkoItem : INetkoItem {
 		
 		/// <summary>
 		/// An instance that holds Netko events.
 		/// </summary>
-		public NetkoEvent Events;
+		public NetkoEvent EventInfo;
 
 		/// <summary>
 		/// Contains methods and properties for making a request.
 		/// You may access any public members except methods.
 		/// </summary>
-		public NetkoRequest Request;
+		public NetkoRequest RequestInfo;
 
 		/// <summary>
 		/// Contains properties for retrieving response data.
 		/// You may access any public members except methods.
 		/// </summary>
-		public NetkoResponse Response;
+		public NetkoResponse ResponseInfo;
+
+
 
 		/// <summary>
-		/// An optional data associated with this item.
-		/// You can assign any value here to store value and use it later when OnFinished is fired, for example.
+		/// Returns the event handler of this item.
 		/// </summary>
-		public object ExtraData;
+		public INetkoEvent Events {
+			get { return EventInfo; }
+		}
+
+		/// <summary>
+		/// Returns the request info of this item.
+		/// </summary>
+		public INetkoRequest Request {
+			get { return RequestInfo; }
+		}
+
+		/// <summary>
+		/// Returns the response info of this item.
+		/// </summary>
+		public INetkoResponse Response {
+			get { return ResponseInfo; }
+		}
+
+		/// <summary>
+		/// An option data associated with this item.
+		/// You can assign any value here to store value and use it later when OnFinished is called.
+		/// </summary>
+		public object ExtraData {
+			get; set;
+		}
 
 		/// <summary>
 		/// The group id which this item is associated with.
 		/// </summary>
-		public int GroupId;
+		public int GroupId {
+			get; set;
+		}
+
 
 
 		/// <summary>
 		/// Creates a new instance of NetkoItem.
 		/// Highly recommended to use Netko's factory methods instead.
 		/// </summary>
-		public NetkoItem(int groupId, NetkoRequestInfo requestInfo) {
+		public NetkoItem(Netko netko, int groupId, NetkoRequestInfo requestInfo) {
 			GroupId = groupId;
-			Events = new NetkoEvent(this);
-			Request = new NetkoRequest(this, requestInfo);
-			Response = new NetkoResponse(this);
+			EventInfo = new NetkoEvent(this);
+			RequestInfo = new NetkoRequest(requestInfo);
+			ResponseInfo = new NetkoResponse(this);
 
 			Initialize();
 
 			// Register the item to Netko updater.
-			Netko.RegisterItem(this);
+			netko.RegisterItem(this);
 		}
 
 		/// <summary>
@@ -66,20 +93,20 @@ namespace Renko.Network
 		}
 
 		/// <summary>
+		/// Forcefully stops request if on-going.
+		/// </summary>
+		public void ForceStop() {
+			RequestInfo.SetError("The request was stopped by user.");
+		}
+
+		/// <summary>
 		/// Sends the request to server.
 		/// If you call this directly, this item will make a request immediately
 		/// without waiting in the updater queue but it's not recommended.
 		/// </summary>
 		public void Send() {
 			DispatchEvent(0);
-			Request.Send();
-		}
-
-		/// <summary>
-		/// Stops an on-going request.
-		/// </summary>
-		public void Stop() {
-			Request.SetError("The request was stopped by user.");
+			RequestInfo.Send();
 		}
 
 		/// <summary>
@@ -87,7 +114,7 @@ namespace Renko.Network
 		/// </summary>
 		public void Update() {
 			DispatchEvent(1);
-			Request.CheckError();
+			RequestInfo.CheckError();
 		}
 
 		/// <summary>
@@ -96,7 +123,7 @@ namespace Renko.Network
 		/// </summary>
 		public void Terminate() {
 			DispatchEvent(3);
-			Request.Terminate();
+			RequestInfo.Terminate();
 		}
 
 		/// <summary>
@@ -105,10 +132,10 @@ namespace Renko.Network
 		/// </summary>
 		public void DispatchEvent(int type) {
 			switch(type) {
-			case 0: Events.InvokeOnRequested(); break;
-			case 1: Events.InvokeOnProcessing(Request.Progress); break;
-			case 2: Events.InvokeOnFinished(); break;
-			case 3: Events.InvokeOnTerminated(); break;
+			case 0: EventInfo.InvokeOnRequested(); break;
+			case 1: EventInfo.InvokeOnProcessing(RequestInfo.Progress); break;
+			case 2: EventInfo.InvokeOnFinished(); break;
+			case 3: EventInfo.InvokeOnTerminated(); break;
 			}
 		}
 
@@ -116,23 +143,7 @@ namespace Renko.Network
 		/// Sets this item to its initial state.
 		/// </summary>
 		void Initialize() {
-			Request.Setup();
+			RequestInfo.Setup();
 		}
-	}
-
-
-	/// <summary>
-	/// The type of request for Netko Items.
-	/// </summary>
-	public enum RequestType {
-		Get,
-		Post,
-		Delete,
-		Put,
-		Head,
-		Audio,
-		AudioStream,
-		AssetBundle,
-		Texture
 	}
 }

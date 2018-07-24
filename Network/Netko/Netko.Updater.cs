@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Renko.Diagnostics;
+using Renko.Network.Internal;
 
 namespace Renko.Network
 {
@@ -15,12 +16,12 @@ namespace Renko.Network
 			/// <summary>
 			/// Number of requests currently being processed.
 			/// </summary>
-			public int currentProcessCount;
+			public int CurrentProcessCount;
 
 			/// <summary>
 			/// Max number of requests that can be processed at once.
 			/// </summary>
-			public int maxProcessCount = 10;
+			public int MaxProcessCount = 10;
 
 			/// <summary>
 			/// The list of Netko items queued for processing.
@@ -32,7 +33,7 @@ namespace Renko.Network
 			/// Returns whether there is a vacancy for a new request.
 			/// </summary>
 			public bool CanMakeRequest {
-				get { return currentProcessCount < maxProcessCount; }
+				get { return CurrentProcessCount < MaxProcessCount; }
 			}
 
 
@@ -46,7 +47,7 @@ namespace Renko.Network
 			public void RemoveGroup(int id) {
 				for(int i=Items.Count-1; i>=0; i--) {
 					if(Items[i].GroupId == id)
-						Items[i].Stop();
+						Items[i].ForceStop();
 				}
 			}
 
@@ -93,10 +94,10 @@ namespace Renko.Network
 			/// Returns whether removal was successful.
 			/// </summary>
 			private bool RemoveTerminated(NetkoItem item, ref int i) {
-				if(item.Request.IsTerminated) {
+				if(item.RequestInfo.IsTerminated) {
 					// If items weren't being processed and just got terminated, we should manually handle the process count management.
-					if(!item.Request.IsProcessing)
-						currentProcessCount --;
+					if(!item.RequestInfo.IsProcessing)
+						CurrentProcessCount --;
 					Items.RemoveAt(i--);
 					return true;
 				}
@@ -108,10 +109,10 @@ namespace Renko.Network
 			/// Returns whether item has successfully started its request or is waiting in the queue.
 			/// </summary>
 			private bool StartRequest(NetkoItem item) {
-				if(!item.Request.IsProcessing) {
+				if(!item.RequestInfo.IsProcessing) {
 					// Start the request only if there is an empty space in the queue.
 					if(CanMakeRequest) {
-						currentProcessCount ++;
+						CurrentProcessCount ++;
 						item.Send();
 					}
 					return true;
@@ -124,20 +125,20 @@ namespace Renko.Network
 			/// Returns whether finish process was done.
 			/// </summary>
 			private bool FinishRequest(NetkoItem item) {
-				if(item.Request.IsFinished) {
+				if(item.RequestInfo.IsFinished) {
 					// Request count management.
-					currentProcessCount --;
+					CurrentProcessCount --;
 
 					// OnFinished callack.
 					item.DispatchEvent(2);
 
 					// If item wasn't flagged for retry (IsProcessing == true), we should terminate it.
-					if(item.Request.IsProcessing)
+					if(item.RequestInfo.IsProcessing)
 						item.Terminate();
 					// Flagged retry
 					else {
 						//If attempted termination after calling retry, this is an invalid action.
-						if(item.Request.IsTerminated) {
+						if(item.RequestInfo.IsTerminated) {
 							RenLog.LogWarning(
 								"Netko.Updater.FinishRequest - You should not call item.Terminate() directly after " +
 								"retrying! Forcing retry..."

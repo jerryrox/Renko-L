@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace Renko.Network
+namespace Renko.Network.Internal
 {
 	/// <summary>
 	/// A class that provides Netko delegate signatures and contains events in an instance.
 	/// </summary>
-	public class NetkoEvent {
+	public class NetkoEvent : INetkoEvent {
 		
 		/// <summary>
 		/// Event to invoke when the request is made.
@@ -30,35 +30,32 @@ namespace Renko.Network
 		/// <summary>
 		/// The item that contains this instance.
 		/// </summary>
-		private NetkoItem item;
+		private INetkoItem item;
 
 
 		/// <summary>
 		/// Delegate for handling general callbacks.
 		/// </summary>
-		public delegate void GeneralHandler(NetkoItem item);
+		public delegate void GeneralHandler(INetkoItem item);
 
 		/// <summary>
 		/// Delegate for handling progress callbacks.
 		/// </summary>
-		public delegate void ProgressHandler(NetkoItem item, float progress);
+		public delegate void ProgressHandler(INetkoItem item, float progress);
 
 
-		public NetkoEvent(NetkoItem item) {
+		public NetkoEvent(INetkoItem item) {
 			this.item = item;
 		}
 
 		/// <summary>
-		/// Registers specified set of callbacks.
-		/// Or you can directly access each event to add callbacks.
+		/// Clears all registered events.
 		/// </summary>
-		public void Setup(GeneralHandler onRequested, ProgressHandler onProcessing,
-			GeneralHandler onFinished, GeneralHandler onTerminated) {
-
-			OnRequested += onRequested;
-			OnProcessing += onProcessing;
-			OnFinished += onFinished;
-			OnTerminated += onTerminated;
+		public void Clear() {
+			OnRequested = null;
+			OnProcessing = null;
+			OnFinished = null;
+			OnTerminated = null;
 		}
 
 		/// <summary>
