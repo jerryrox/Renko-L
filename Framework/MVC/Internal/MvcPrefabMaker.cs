@@ -50,7 +50,7 @@ namespace Renko.MVCFramework.Internal
 			// Find view's type and attach a view component on it.
 			Type type = null;
 			var checkResult = MvcValidator.CheckTypeExists(view.GetViewName(), out type);
-			if(type == null) {
+			if(checkResult != ValidationResult.Success || type == null) {
 				RenLog.LogWarning(string.Format(
 					"MvcPrefabMaker.Create - Failed to find type: {0}. Make sure the configuration is applied.",
 					view.GetViewName()
