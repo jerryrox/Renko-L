@@ -11,6 +11,14 @@ namespace Renko.Extensions
 			string name = context.Name;
 			return name.Substring(name.LastIndexOf('.') + 1);
 		}
+
+		/// <summary>
+		/// Returns whether specified type is an anonymous type.
+		/// </summary>
+		public static bool IsAnonymous(this Type context) {
+			string name = context.Name;
+			return name.StartsWith("<>") && name.Contains("Anon");
+		}
 	}
 }
 

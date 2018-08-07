@@ -23,12 +23,17 @@ namespace Renko.Data.Internal
 			JsonReflectedInfo info = new JsonReflectedInfo(type);
 			infos.Add(info);
 
-			AddMetaInfo(info, type);
+			if(info.IsAnonymous) {
+				AddAnonymousPropertyInfo(info, type);
+			}
+			else {
+				AddMetaInfo(info, type);
 
-			// We want to avoid unneccessary processes when serialization should be ignored!
-			if(!info.shouldIgnore) {
-				AddFieldInfo(info, type);
-				AddPropertyInfo(info, type);
+				// We want to avoid unneccessary processes when serialization should be ignored!
+				if(!info.ShouldIgnore) {
+					AddFieldInfo(info, type);
+					AddPropertyInfo(info, type);
+				}
 			}
 
 			return info;
@@ -46,7 +51,7 @@ namespace Renko.Data.Internal
 		/// </summary>
 		public static JsonReflectedInfo GetInfo(Type type) {
 			for(int i=0; i<infos.Count; i++) {
-				if(infos[i].targetType == type)
+				if(infos[i].TargetType == type)
 					return infos[i];
 			}
 			return Add(type);
@@ -57,18 +62,18 @@ namespace Renko.Data.Internal
 		/// </summary>
 		public static bool ShouldIgnoreType(Type type) {
 			for(int i=0; i<infos.Count; i++) {
-				if(infos[i].targetType == type) {
-					return infos[i].shouldIgnore;
+				if(infos[i].TargetType == type) {
+					return infos[i].ShouldIgnore;
 				}
 			}
-			return Add(type).shouldIgnore;
+			return Add(type).ShouldIgnore;
 		}
 
 		/// <summary>
 		/// Adds miscellaneous info of specified type.
 		/// </summary>
 		private static void AddMetaInfo(JsonReflectedInfo info, Type type) {
-			info.shouldIgnore = (
+			info.ShouldIgnore = (
 				type.GetCustomAttributes(typeof(JsonIgnoreSerializeAttribute), false).Length > 0
 			);
 		}
@@ -90,10 +95,10 @@ namespace Renko.Data.Internal
 					continue;
 
 				//Is it enumerable? (except string)
-				if(fieldType.GetInterface("IEnumerable") != null && fieldType != typeof(string))
-					info.enumerableFields.Add(field);
+				if(IsEnumerableType(fieldType))
+					info.EnumerableFields.Add(field);
 				else
-					info.fields.Add(field);
+					info.Fields.Add(field);
 			}
 		}
 
@@ -136,11 +141,28 @@ namespace Renko.Data.Internal
 				if(ShouldIgnoreType(propertyType))
 					continue;
 
-				//If it enumerable? (except string)
-				if(propertyType.GetInterface("IEnumerable") != null && propertyType != typeof(string))
-					info.enumerableProperties.Add(property);
+				//Is it enumerable? (except string)
+				if(IsEnumerableType(propertyType))
+					info.EnumerableProperties.Add(property);
 				else
-					info.properties.Add(property);
+					info.Properties.Add(property);
+			}
+		}
+
+		/// <summary>
+		/// Adds the specified anonymous type's properties to the info.
+		/// </summary>
+		private static void AddAnonymousPropertyInfo(JsonReflectedInfo info, Type type) {
+			// Get all properties in the type
+			PropertyInfo[] properties = type.GetProperties();
+			for(int i=0; i<properties.Length; i++) {
+				PropertyInfo property = properties[i];
+
+				// If this property is an enumerable type
+				if(IsEnumerableType(property.PropertyType))
+					info.EnumerableProperties.Add(property);
+				else
+					info.Properties.Add(property);
 			}
 		}
 
@@ -160,6 +182,13 @@ namespace Renko.Data.Internal
 
 				yield return properties[i];
 			}
+		}
+
+		/// <summary>
+		/// Returns whether specified type is enumerable.
+		/// </summary>
+		private static bool IsEnumerableType(Type type) {
+			return type.GetInterface("IEnumerable") != null && type != typeof(string);
 		}
 	}
 }

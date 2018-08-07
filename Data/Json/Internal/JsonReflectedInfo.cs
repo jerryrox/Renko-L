@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Collections.Generic;
+using Renko.Extensions;
 
 namespace Renko.Data.Internal
 {
@@ -10,23 +11,32 @@ namespace Renko.Data.Internal
 	public class JsonReflectedInfo {
 
 		/// <summary>
-		/// Whether the targetType's attribute contains a JsonIgnoreSerializeAttribute.
+		/// Whether the TargetType's attribute contains a JsonIgnoreSerializeAttribute.
 		/// </summary>
-		public bool shouldIgnore;
+		public bool ShouldIgnore;
 
-		public Type targetType;
-		public List<FieldInfo> fields;
-		public List<PropertyInfo> properties;
-		public List<FieldInfo> enumerableFields;
-		public List<PropertyInfo> enumerableProperties;
+		/// <summary>
+		/// Whether the TargetType is an anonymous type.
+		/// </summary>
+		public bool IsAnonymous;
+
+		public Type TargetType;
+		public List<FieldInfo> Fields;
+		public List<PropertyInfo> Properties;
+		public List<FieldInfo> EnumerableFields;
+		public List<PropertyInfo> EnumerableProperties;
 
 
 		public JsonReflectedInfo(Type type) {
-			targetType = type;
-			fields = new List<FieldInfo>();
-			enumerableFields = new List<FieldInfo>();
-			properties = new List<PropertyInfo>();
-			enumerableProperties = new List<PropertyInfo>();
+			TargetType = type;
+
+			// Assign anonymous flag
+			IsAnonymous = type.IsAnonymous();
+
+			Fields = new List<FieldInfo>();
+			EnumerableFields = new List<FieldInfo>();
+			Properties = new List<PropertyInfo>();
+			EnumerableProperties = new List<PropertyInfo>();
 		}
 	}
 }

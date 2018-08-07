@@ -36,17 +36,17 @@ namespace Renko.Data.Internal
 		/// Returns the final output.
 		/// </summary>
 		public JsonObject Process() {
-			for(int i=0; i<info.fields.Count; i++) {
-				ProcessField(info.fields[i]);
+			for(int i=0; i<info.Fields.Count; i++) {
+				ProcessField(info.Fields[i]);
 			}
-			for(int i=0; i<info.enumerableFields.Count; i++) {
-				ProcessEnumerableField(info.enumerableFields[i]);
+			for(int i=0; i<info.EnumerableFields.Count; i++) {
+				ProcessEnumerableField(info.EnumerableFields[i]);
 			}
-			for(int i=0; i<info.properties.Count; i++) {
-				ProcessProperty(info.properties[i]);
+			for(int i=0; i<info.Properties.Count; i++) {
+				ProcessProperty(info.Properties[i]);
 			}
-			for(int i=0; i<info.enumerableProperties.Count; i++) {
-				ProcessEnumerableProperty(info.enumerableProperties[i]);
+			for(int i=0; i<info.EnumerableProperties.Count; i++) {
+				ProcessEnumerableProperty(info.EnumerableProperties[i]);
 			}
 			return json;
 		}

@@ -110,12 +110,14 @@ namespace Renko.Data
 			Type dataType = data.GetType();
 			JsonObject serializedData = null;
 
+			// Serialize objects registered to adaptor.
 			serializedData = JsonAdaptor.Serialize(dataType, data);
 			if(serializedData != null) {
 				SerializeObject(serializedData);
 				return;
 			}
 
+			// Serialize jsonable objects
 			IJsonable jsonableObject = data as IJsonable;
 			if(jsonableObject != null) {
 				serializedData = jsonableObject.ToJsonObject();
@@ -125,6 +127,7 @@ namespace Renko.Data
 				}
 			}
 
+			// Use reflection.
 			serializedData = JsonTypeSerializer.Serialize(dataType, data);
 			if(serializedData != null) {
 				SerializeObject(serializedData);
