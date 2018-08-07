@@ -32,7 +32,7 @@ namespace Renko.Data
 		public static T Parse<T>(JsonObject json, T instance) where T : new() {
 			Type type = typeof(T);
 			object value = JsonDeserializer.Deserialize(type, instance, json);
-			if(value == null || value.GetType() != type)
+			if(value == null || value is T)
 				return default(T);
 			return (T)value;
 		}
