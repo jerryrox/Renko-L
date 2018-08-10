@@ -163,6 +163,8 @@ namespace Renko.Network.Internal
 				break;
 			case Netko.RequestType.Post:
 				UnityRequest = UnityWebRequest.Post(requestInfo.Url.GetUriEscaped(), requestInfo.Form);
+				if(requestInfo.UploadHandler != null)
+					UnityRequest.uploadHandler = requestInfo.UploadHandler;
 				break;
 			case Netko.RequestType.Delete:
 				UnityRequest = UnityWebRequest.Delete(requestInfo.Url.GetUriEscaped());

@@ -2,11 +2,12 @@
 using System.Text;
 using System;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Renko.Network
 {
 	/// <summary>
-	/// A class that contains data required to make a simple web request.
+	/// A class that contains data required to make a web request.
 	/// </summary>
 	public class WebRequestInfo {
 
@@ -92,6 +93,13 @@ namespace Renko.Network
 				if(form == null)
 					form = new WWWForm();
 			}
+		}
+
+		/// <summary>
+		/// The object used for transferring data while POST request.
+		/// </summary>
+		public UploadHandlerRaw UploadHandler {
+			get; set;
 		}
 
 

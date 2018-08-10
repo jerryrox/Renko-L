@@ -37,6 +37,20 @@ namespace Renko.Network
 		}
 
 		/// <summary>
+		/// Makes a new POST request using a custom upload handler.
+		/// </summary>
+		public static INetkoItem Post(string url, UploadHandlerRaw handler, int groupId = 0, float timeOut = 60f) {
+			NetkoRequestInfo info = new NetkoRequestInfo(
+				RequestType.Post,
+				url,
+				HttpMethods.POST,
+				timeOut
+			);
+			info.UploadHandler = handler;
+			return new NetkoItem(Netko.I, groupId, info);
+		}
+
+		/// <summary>
 		/// Makes a new DELETE request.
 		/// </summary>
 		public static INetkoItem Delete(string url, int groupId = 0, float timeOut = 60f) {
