@@ -48,7 +48,7 @@ namespace Renko.Network.Internal
 		/// * Will always create a new IQLResponse.
 		/// </summary>
 		public IQLResponse Response {
-			get { return new QLResponse(webRequest); }
+			get { return webRequest.WebRequest == null ? new QLResponse() : new QLResponse(webRequest); }
 		}
 
 		/// <summary>

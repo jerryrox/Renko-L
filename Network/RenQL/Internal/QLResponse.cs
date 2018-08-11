@@ -38,6 +38,9 @@ namespace Renko.Network.Internal
 		}
 
 
+		/// <summary>
+		/// Initializes a new QLResponse object based on specified web request result.
+		/// </summary>
 		public QLResponse (QLWebRequest webRequest)
 		{
 			// Parse out response data
@@ -53,6 +56,19 @@ namespace Renko.Network.Internal
 				TextData = req.downloadHandler.text;
 			}
 		}
+
+		/// <summary>
+		/// Initializes a new QLResponse object with specified error message.
+		/// </summary>
+		public QLResponse(string errorMessage)
+		{
+			ErrorMessage = errorMessage;
+		}
+
+		/// <summary>
+		/// Initializes a new QLResponse object with a default error message.
+		/// </summary>
+		public QLResponse() : this("No request record exists.") {}
 	}
 }
 
