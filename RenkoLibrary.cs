@@ -23,11 +23,13 @@ namespace Renko
 		/// <summary>
 		/// Initializes all general modules.
 		/// Modules that need manual initialization: IAPManager
+		/// It's recommended to manually initialize the modules you only need.
 		/// </summary>
 		public static void Initialize(bool includePluginModules) {
 			NyanPath.CreateRenkoDirectories();
 
 			Netko.Initialize();
+			RenQL.Initialize();
 			UnityThread.Initialize();
 			Timer.Initialize();
 			FateFX.Initialize();
