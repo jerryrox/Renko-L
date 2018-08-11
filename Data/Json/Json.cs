@@ -38,10 +38,17 @@ namespace Renko.Data
 		}
 
 		/// <summary>
-		/// Returns a string representation of specified JsonData.
+		/// Returns a json representation of specified object.
 		/// </summary>
-		public static string ToString(JsonData data, JsonSerializeOptions options) {
-			return JsonSerializer.Serialize(data, options);
+		public static string ToString(object data) {
+			return ToString(data, JsonSerializeOptions.Default);
+		}
+
+		/// <summary>
+		/// Returns a json representation of specified object and options.
+		/// </summary>
+		public static string ToString(object data, JsonSerializeOptions options) {
+			return JsonSerializer.Serialize(new JsonData(data), options);
 		}
 	}
 }
