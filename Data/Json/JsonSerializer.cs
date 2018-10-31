@@ -12,12 +12,14 @@ namespace Renko.Data
 	/// Used MiniJSON for reference.
 	/// </summary>
 	public class JsonSerializer {
-
+		
 		private StringBuilder sb;
+		private JsonSerializeOptions options;
 
 
-		private JsonSerializer(object data) {
+		private JsonSerializer(object data, JsonSerializeOptions options) {
 			sb = new StringBuilder();
+			this.options = options;
 			Process(data);
 		}
 
@@ -28,7 +30,7 @@ namespace Renko.Data
 			if(!JsonSerializeSafety.IsJsonSafe(data, options))
 				throw new Exception("JsonSerializer.Serialize - Failed to serialize data. See console for details.");
 
-			return new JsonSerializer(data.Value).sb.ToString();
+			return new JsonSerializer(data.Value, options).sb.ToString();
 		}
 		
 		/// <summary>
@@ -172,7 +174,7 @@ namespace Renko.Data
 				default: {
 						//Reference: http://www.asciitable.com/
 						int codeNumber = (int)c;
-						if ((codeNumber >= 32) && (codeNumber <= 126))
+						if (((codeNumber >= 32) && (codeNumber <= 126)) || options.IgnoreUnicodeEncode)
 							sb.Append(c);
 						//Other characters should be added as \u**** format.
 						else

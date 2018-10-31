@@ -6,12 +6,7 @@ namespace Renko.Data
     /// Options that affect a json serialization process.
     /// </summary>
     public struct JsonSerializeOptions {
-
-        /// <summary>
-        /// Default options to apply during serialization when none was specified.
-        /// </summary>
-        private static JsonSerializeOptions DefaultOption = new JsonSerializeOptions { IgnoreSafetyChecks = true };
-
+		
         /// <summary>
         /// Whether all safety checks should be ignored.
         /// </summary>
@@ -22,13 +17,18 @@ namespace Renko.Data
         /// </summary>
         public bool IgnoreCircularReference;
 
+		/// <summary>
+		/// Whether unicode characters should be saved as-is.
+		/// </summary>
+		public bool IgnoreUnicodeEncode;
+
 
         /// <summary>
         /// Returns the default options:
         /// - Does not perform any safety checks.
         /// </summary>
         public static JsonSerializeOptions Default {
-            get { return DefaultOption; }
+			get { return new JsonSerializeOptions { IgnoreSafetyChecks = true }; }
         }
     }
 }
