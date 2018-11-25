@@ -45,6 +45,11 @@ namespace Renko.MVCFramework
 		/// </summary>
 		private BaseMvcAnimation[] animations;
 
+		/// <summary>
+		/// The longest hide animation for temporary use.
+		/// </summary>
+		private BaseMvcAnimation longestHideAni;
+
 
 		/// <summary>
 		/// Returns the gameObject component of this view.
@@ -164,16 +169,16 @@ namespace Renko.MVCFramework
 		/// </summary>
 		public void PlayHideAnimations() {
 			var ani = Animations;
-			BaseMvcAnimation longestAni = null;
+			longestHideAni = null;
 			for(int i=0; i<ani.Length; i++) {
 				var curAni = ani[i];
 				if(curAni.Play(MvcAnimationEvent.OnViewHide)) {
 
-					if(longestAni == null) {
-						longestAni = curAni;
+					if(longestHideAni == null) {
+						longestHideAni = curAni;
 					}
-					else if(curAni.Duration > longestAni.Duration) {
-						longestAni = curAni;
+					else if(curAni.Duration > longestHideAni.Duration) {
+						longestHideAni = curAni;
 					}
 				}
 				else if(curAni.TargetEvent == MvcAnimationEvent.OnViewShow) {
@@ -182,14 +187,21 @@ namespace Renko.MVCFramework
 			}
 
 			// Raising view disposal event.
-			if(longestAni != null) {
-				longestAni.FateAni.OnReset += delegate(FateItem item) {
-					MVC.DisposeView(this);
-				};
+			if(longestHideAni != null) {
+				longestHideAni.FateAni.OnReset += OnHideAniEnded;
 			}
 			else {
 				MVC.DisposeView(this);
 			}
+		}
+
+		/// <summary>
+		/// Callback method after longestHideAni finishes.
+		/// </summary>
+		void OnHideAniEnded(FateItem item)
+		{
+			longestHideAni.FateAni.OnReset -= OnHideAniEnded;
+			MVC.DisposeView(this);
 		}
 	}
 }
