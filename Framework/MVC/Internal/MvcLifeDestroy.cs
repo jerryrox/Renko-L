@@ -37,6 +37,7 @@ namespace Renko.MVCFramework.Internal
 		/// Disposes the specified view.
 		/// </summary>
 		public void DisposeView (IMvcView view) {
+			view.OnDisposeView();
 			GameObject.Destroy(view.ViewObject);
 		}
 	}
