@@ -13,24 +13,14 @@ namespace Renko.MVCFramework.Internal
 
 		private MvcViewMeta owner;
 
-		private BaseRecycler<IMvcView> recycler;
+		private MvcRecycler recycler;
 
 
 		public MvcLifeRecycle() {
-			recycler = new BaseRecycler<IMvcView>(
-				delegate() {
-					var view = ResourceLoader.CreateObject(owner.ViewParent, owner.ResourcePath).GetComponent<IMvcView>();
-					return view;
-				},
-				delegate(IMvcView obj) {
-					return obj.IsActive;
-				},
-				null,
-				delegate(IMvcView obj) {
-					var viewObj = obj.ViewObject;
-					GameObject.Destroy(viewObj);
-				}
-			);
+			recycler = new MvcRecycler(delegate() {
+				var view = ResourceLoader.CreateObject(owner.ViewParent, owner.ResourcePath).GetComponent<IMvcView>();
+				return view;
+			});
 		}
 
 		/// <summary>
@@ -47,15 +37,15 @@ namespace Renko.MVCFramework.Internal
 			IMvcView view = null;
 
 			// If a new view should be created
-			if(recycler.InactiveCount == 0) {
-				view = recycler.NextItem();
+			if(recycler.Count == 0) {
+				view = recycler.GetView();
 				view.OnAdaptView(MVC.ViewSize, viewRescaleMode);
 				view.OnInitialize(viewId, param);
 				view.OnViewShow();
 			}
 			// Else, we have a recyclable view.
 			else {
-				view = recycler.NextItem();
+				view = recycler.GetView();
 				view.ViewObject.SetActive(true);
 				view.OnRecycle(viewId, param);
 				view.OnViewShow();
@@ -69,7 +59,7 @@ namespace Renko.MVCFramework.Internal
 		/// </summary>
 		public void DisposeView (IMvcView view) {
 			view.OnDisposeView();
-			view.ViewObject.SetActive(false);
+			recycler.ReturnView(view);
 		}
 
 	}
