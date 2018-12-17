@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if NGUI
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -92,4 +93,4 @@ namespace Renko.MVCFramework
 		}
 	}
 }
-
+#endif
