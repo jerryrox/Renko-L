@@ -135,10 +135,15 @@ namespace Renko.MVCFramework
 
 			EditorGUILayout.Space();
 
-			if(GUILayout.Button("Apply configuration")) {
-				if(Config.IsConfigValid())
-					ConfigSynchronizer.Sync(Config);
+			EditorColors.SetBackgroundColor(Color.green);
+			{
+				if(GUILayout.Button("Apply configuration")) {
+					if(Config.IsConfigValid())
+						ConfigSynchronizer.Sync(Config);
+				}
 			}
+			EditorColors.ResetBackgroundColor();
+
 			EditorGUILayout.HelpBox("Click the button above whenever you make changes in this area.", MessageType.Info);
 
 			EditorGUILayout.Space();

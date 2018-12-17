@@ -56,15 +56,19 @@ namespace Renko.MVCFramework
 					DrawClosedView(editor, config, config.Views[i], i);
 			}
 
-			if(GUILayout.Button("Create View")) {
-				config.Views.Add(new MvcConfig.View(config) {
-					Name = "View"+config.Views.Count
-				});
+			EditorColors.SetBackgroundColor(Color.green);
+			{
+				if(GUILayout.Button("Create View")) {
+					config.Views.Add(new MvcConfig.View(config) {
+						Name = "View"+config.Views.Count
+					});
 
-				ConfigViewEditorFlags.Setup(config);
-				ConfigViewEditorFlags.SetOpen(config.Views.Count-1);
-				SetEdit(config.Views.GetLast());
+					ConfigViewEditorFlags.Setup(config);
+					ConfigViewEditorFlags.SetOpen(config.Views.Count-1);
+					SetEdit(config.Views.GetLast());
+				}
 			}
+			EditorColors.ResetBackgroundColor();
 
 			GUILayout.EndVertical();
 		}
@@ -106,9 +110,13 @@ namespace Renko.MVCFramework
 				}
 			}
 
-			if(GUILayout.Button("Danger Zone!")) {
-				ConfigViewEditorFlags.IsDeleteOpen ^= true;
+			EditorColors.SetBackgroundColor(Color.red);
+			{
+				if(GUILayout.Button("Danger Zone!")) {
+					ConfigViewEditorFlags.IsDeleteOpen ^= true;
+				}
 			}
+			EditorColors.ResetBackgroundColor();
 
 			if(ConfigViewEditorFlags.IsDeleteOpen) {
 				GUILayout.BeginVertical("GroupBox");
@@ -118,53 +126,58 @@ namespace Renko.MVCFramework
 					MessageType.Warning
 				);
 
-				if(GUILayout.Button("Delete config")) {
-					if(EditorDialog.OpenAlert(
-						"Delete view configuration.",
-						"Are you sure you want to delete this view's configuration? " + DeleteWarning,
-						"Yes", "No")) {
-
-						// Remove view from views list.
-						MvcViewRemover.RemoveFromConfig(config.Views, index);
-						ConfigViewEditorFlags.Setup(config);
-						ConfigViewEditorFlags.ResetFlags();
-					}
-				}
-
-				// If loaded from resources, the user must've already created a prefab or at least scripts.
-				if(view.IsFromResources) {
-					EditorGUILayout.Space();
-
-					if(GUILayout.Button("Delete prefab")) {
-						// Confirm prefab deletion
+				// Red background for danger zone buttons
+				EditorColors.SetBackgroundColor(Color.red);
+				{
+					if(GUILayout.Button("Delete config")) {
 						if(EditorDialog.OpenAlert(
-							"Delete view prefab",
-							"Are you sure you want to delete this view's prefab? " + DeleteWarning,
+							"Delete view configuration.",
+							"Are you sure you want to delete this view's configuration? " + DeleteWarning,
 							"Yes", "No")) {
 
-							MvcViewRemover.RemovePrefab(view);
-						}
-					}
-
-					EditorGUILayout.Space();
-
-					if(GUILayout.Button("Delete all")) {
-						// Confirm deletion of all view-related things
-						if(EditorDialog.OpenAlert(
-							"Delete view config, scripts, prefab",
-							"Are you sure you want to delete this view's config, scripts, and prefab?" + DeleteWarning,
-							"Yes", "No")) {
-
+							// Remove view from views list.
 							MvcViewRemover.RemoveFromConfig(config.Views, index);
-							MvcViewRemover.RemoveScripts(view);
-							MvcViewRemover.RemovePrefab(view);
-							MvcViewRemover.Finalize(config);
-
 							ConfigViewEditorFlags.Setup(config);
 							ConfigViewEditorFlags.ResetFlags();
 						}
 					}
+
+					// If loaded from resources, the user must've already created a prefab or at least scripts.
+					if(view.IsFromResources) {
+						EditorGUILayout.Space();
+
+						if(GUILayout.Button("Delete prefab")) {
+							// Confirm prefab deletion
+							if(EditorDialog.OpenAlert(
+								"Delete view prefab",
+								"Are you sure you want to delete this view's prefab? " + DeleteWarning,
+								"Yes", "No")) {
+
+								MvcViewRemover.RemovePrefab(view);
+							}
+						}
+
+						EditorGUILayout.Space();
+
+						if(GUILayout.Button("Delete all")) {
+							// Confirm deletion of all view-related things
+							if(EditorDialog.OpenAlert(
+								"Delete view config, scripts, prefab",
+								"Are you sure you want to delete this view's config, scripts, and prefab?" + DeleteWarning,
+								"Yes", "No")) {
+
+								MvcViewRemover.RemoveFromConfig(config.Views, index);
+								MvcViewRemover.RemoveScripts(view);
+								MvcViewRemover.RemovePrefab(view);
+								MvcViewRemover.Finalize(config);
+
+								ConfigViewEditorFlags.Setup(config);
+								ConfigViewEditorFlags.ResetFlags();
+							}
+						}
+					}
 				}
+				EditorColors.ResetBackgroundColor();
 
 				GUILayout.EndVertical();
 			}

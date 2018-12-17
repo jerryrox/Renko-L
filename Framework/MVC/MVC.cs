@@ -8,7 +8,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Renko;
-using Renko.Data;
 using Renko.Utility;
 using Renko.Effects;
 using Renko.Diagnostics;
@@ -55,12 +54,12 @@ namespace Renko.MVCFramework
 		/// <summary>
 		/// Immutable collection of UI create handlers.
 		/// </summary>
-		private Dictionary<Type,MvcViewMeta> uiMetadatas;
+		private Dictionary<Type, MvcViewMeta> uiMetadatas;
 
 		/// <summary>
 		/// Mutable collection of UI callback handlers.
 		/// </summary>
-		private Dictionary<int,UICallbackHandler> uiCallbacks;
+		private Dictionary<int, UICallbackHandler> uiCallbacks;
 
 		/// <summary>
 		/// List of all active views' interface.
@@ -133,7 +132,7 @@ namespace Renko.MVCFramework
 		/// <summary>
 		/// Delegate for a callback from UI destruction.
 		/// </summary>
-		public delegate void UICallbackHandler(JsonObject param);
+		public delegate void UICallbackHandler(MvcParameter param);
 
 
 		void Awake() {
@@ -155,7 +154,7 @@ namespace Renko.MVCFramework
 		/// <summary>
 		/// Shows the specified view with parameters.
 		/// </summary>
-		public static IMvcView ShowView(Type viewType, JsonObject param = null) {
+		public static IMvcView ShowView(Type viewType, MvcParameter param = null) {
 			// Unregistered type is an invalid request.
 			if(!I.uiMetadatas.ContainsKey(viewType)) {
 				Debug.LogWarning("MVC.ShowView - No MVC metadata found for specified type: " + viewType.FullName);
@@ -164,7 +163,7 @@ namespace Renko.MVCFramework
 
 			// Null-checks are dirty, so we just pass a non-null value.
 			if(param == null)
-				param = new JsonObject();
+				param = new MvcParameter();
 
 			// Show view
 			var view = I.uiMetadatas[viewType].OnShow(NextViewID, param);
@@ -175,8 +174,8 @@ namespace Renko.MVCFramework
 		/// <summary>
 		/// Hides the specified view and returns its data.
 		/// </summary>
-		public static JsonObject HideView(IMvcView view) {
-			JsonObject returnData = view.OnViewHide();
+		public static MvcParameter HideView(IMvcView view) {
+			MvcParameter returnData = view.OnViewHide();
 			DoCallback(view.ViewId, returnData);
 			return returnData;
 		}
@@ -209,7 +208,7 @@ namespace Renko.MVCFramework
 		/// <summary>
 		/// Invokes the callback attached to the specified view id.
 		/// </summary>
-		public static void DoCallback(int viewId, JsonObject returnData) {
+		public static void DoCallback(int viewId, MvcParameter returnData) {
 			if(I.uiCallbacks.ContainsKey(viewId)) {
 				I.uiCallbacks[viewId].Invoke(returnData);
 				I.uiCallbacks.Remove(viewId);

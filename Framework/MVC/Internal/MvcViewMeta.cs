@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Renko.Data;
 
 namespace Renko.MVCFramework.Internal
 {
@@ -50,7 +49,7 @@ namespace Renko.MVCFramework.Internal
 		/// <summary>
 		/// Returns a new MVC view instance.
 		/// </summary>
-		public IMvcView OnShow(int viewId, JsonObject param) {
+		public IMvcView OnShow(int viewId, MvcParameter param) {
 			return mvcLifeHandler.NewView(viewId, viewRescaleMode, param);
 		}
 

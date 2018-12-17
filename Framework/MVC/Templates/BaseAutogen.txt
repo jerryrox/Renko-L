@@ -7,7 +7,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Renko.MVCFramework;
-using Renko.Data;
 
 [RequireComponent(typeof(UIPanel))]
 [RequireComponent(typeof(UIWidgetContainer))]
@@ -43,7 +42,7 @@ public partial class {0}Model : MonoBehaviour {
 	/// <summary>
 	/// Parameters received on view creation.
 	/// </summary>
-	public JsonObject Params;
+	public MvcParameter Params;
 }
 
 public partial class {0}Controller : MonoBehaviour {

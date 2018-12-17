@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Renko.Data;
 using Renko.Utility;
 
 namespace Renko.MVCFramework
@@ -46,14 +45,14 @@ namespace Renko.MVCFramework
 		/// Use this method to handle initialization of fields, resources, etc.
 		/// Called ONLY once after Awake() and OnAdaptView().
 		/// </summary>
-		void OnInitialize(int viewId, JsonObject param);
+		void OnInitialize(int viewId, MvcParameter param);
 
 		/// <summary>
 		/// Use this method to handle re-initialization of fields, resources, etc.
 		/// Will invoke OnViewShow() afterwards.
 		/// Called everytime this view is being recycled.
 		/// </summary>
-		void OnRecycle(int viewId, JsonObject param);
+		void OnRecycle(int viewId, MvcParameter param);
 
 		/// <summary>
 		/// Use this method to handle view setup. Ideal place for a show animation, if any.
@@ -62,10 +61,10 @@ namespace Renko.MVCFramework
 
 		/// <summary>
 		/// Use this method to handle view hiding. Ideal place for a hide animation, if any.
-		/// You should return a JsonObject value that represents a return data from this view.
+		/// You should return a MvcParameter value that represents a return data from this view.
 		/// If none, just return null.
 		/// </summary>
-		JsonObject OnViewHide();
+		MvcParameter OnViewHide();
 
 		/// <summary>
 		/// Use this method to dispose unused resources.

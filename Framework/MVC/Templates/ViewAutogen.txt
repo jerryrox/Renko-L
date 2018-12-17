@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Renko.MVCFramework;
-using Renko.Data;
 
 public partial class {0}View : {1} {
 
@@ -10,7 +9,7 @@ public partial class {0}View : {1} {
 	/// Use this method to handle initialization of fields, resources, etc.
 	/// Called ONLY once right after Awake().
 	/// </summary>
-	public override void OnInitialize(int viewId, JsonObject param) {
+	public override void OnInitialize(int viewId, MvcParameter param) {
 		base.OnInitialize(viewId, param);
 		Model.Params = param;
 	}
@@ -20,7 +19,7 @@ public partial class {0}View : {1} {
 	/// Will invoke OnViewInitialize() afterwards.
 	/// Called everytime this view is being recycled.
 	/// </summary>
-	public override void OnRecycle(int viewId, JsonObject param) {
+	public override void OnRecycle(int viewId, MvcParameter param) {
 		base.OnRecycle(viewId, param);
 		Model.Params = param;
 	}
@@ -34,10 +33,10 @@ public partial class {0}View : {1} {
 
 	/// <summary>
 	/// Use this method to handle view hiding. Ideal place for a hide animation, if any.
-	/// You should return a JsonObject value that represents a return data from this view.
+	/// You should return a MvcParameter value that represents a return data from this view.
 	/// If none, just return null.
 	/// </summary>
-	public override JsonObject OnViewHide() {
+	public override MvcParameter OnViewHide() {
 		return base.OnViewHide();
 	}
 
