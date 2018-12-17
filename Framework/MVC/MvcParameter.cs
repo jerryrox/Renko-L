@@ -72,7 +72,7 @@ namespace Renko.MVCFramework
 		public T GetValueType<T>(string key, T defaultValue = default(T)) where T : struct
 		{
 			object value = TryGetValueInternal(key);
-			if(value.GetType() == typeof(T))
+			if(value != null && value.GetType() == typeof(T))
 				return (T)value;
 			return defaultValue;
 		}
