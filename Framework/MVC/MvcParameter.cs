@@ -61,6 +61,10 @@ namespace Renko.MVCFramework
 
 		public Quaternion GetQuaternion(string key, Quaternion defaultValue = default(Quaternion)) { return GetValueType<Quaternion>(key, defaultValue); }
 
+		/// <summary>
+		/// Returns the T (class) value associated with the specified key.
+		/// If you wish to get a struct value, use GetValueType instead.
+		/// </summary>
 		public T Get<T>(string key, T defaultValue = null) where T : class
 		{
 			object value = TryGetValueInternal(key);
@@ -69,6 +73,9 @@ namespace Renko.MVCFramework
 			return defaultValue;
 		}
 
+		/// <summary>
+		/// Returns the T (struct) value associated with the specified key.
+		/// </summary>
 		public T GetValueType<T>(string key, T defaultValue = default(T)) where T : struct
 		{
 			object value = TryGetValueInternal(key);
@@ -77,6 +84,10 @@ namespace Renko.MVCFramework
 			return defaultValue;
 		}
 
+		/// <summary>
+		/// Adds the value to the dictionary using specified key.
+		/// If the key already exists, the value will be replaced by the specified value.
+		/// </summary>
 		public void Set(string key, object value)
 		{
 			if(ContainsKey(key))
