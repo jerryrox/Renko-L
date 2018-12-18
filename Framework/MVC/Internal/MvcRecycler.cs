@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if NGUI
+using System;
 using System.Collections.Generic;
 
 namespace Renko.MVCFramework.Internal
@@ -41,4 +42,4 @@ namespace Renko.MVCFramework.Internal
 		}
 	}
 }
-
+#endif
