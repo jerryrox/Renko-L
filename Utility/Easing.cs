@@ -332,10 +332,9 @@ namespace Renko.Utility
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
 		public static float SineEaseInOut( float t, float b, float c, float d ) {
-			if ( ( t *= 2f ) < 1 )
-				return c * 0.5f * ( Mathf.Sin( Mathf.PI * t * 0.5f ) ) + b;
-			
-			return -c * 0.5f * ( Mathf.Cos( Mathf.PI * --t * 0.5f ) - 2 ) + b;
+			if ((t *= 2f) < 1)
+				return SineEaseIn(t, b, c*0.5f, d);
+			return SineEaseOut(t, b + c*0.5f, c*0.5f, d);
 		}
 		
 		/// <summary>
@@ -348,10 +347,10 @@ namespace Renko.Utility
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value.</returns>
 		public static float SineEaseOutIn( float t, float b, float c, float d ) {
-			if ( t < 0.5f )
-				return SineEaseOut( t * 2, b, c * 0.5f, d );
+			if (t < 0.5f)
+				return SineEaseOut(t * 2, b, c * 0.5f, d);
 			
-			return SineEaseIn( ( t * 2 ) - 1f, b + c * 0.5f, c * 0.5f, d );
+			return SineEaseIn((t * 2) - 1f, b + c * 0.5f, c * 0.5f, d);
 		}
 		
 		/// <summary>
