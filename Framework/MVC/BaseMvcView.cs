@@ -12,12 +12,10 @@ namespace Renko.MVCFramework
 	/// </summary>
 	public class BaseMvcView : MonoBehaviour, IMvcView {
 
-		#if UNITY_EDITOR
 		/// <summary>
 		/// Just keeping this value as a reference rather than hard-coding it every time an editor script needs it.
 		/// </summary>
 		public const string ClassName = "BaseMvcView";
-		#endif
 
 		/// <summary>
 		/// Whether to reset the UIPanel's rect based on current resolution.
