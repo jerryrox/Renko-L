@@ -30,6 +30,9 @@ namespace Renko.Data
 		/// Instance may be null, but if no adaptor is registered for this type and there is no parameterless constructor, the deserialization will not work.
 		/// </summary>
 		public static T Parse<T>(JsonObject json, T instance) where T : new() {
+			if(json == null)
+				return default(T);
+				
 			Type type = typeof(T);
 			object value = JsonDeserializer.Deserialize(type, instance, json);
 			if(value == null || value is T)

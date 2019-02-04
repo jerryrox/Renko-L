@@ -35,7 +35,7 @@ namespace Renko.Utility
 		public static void Initialize() {
 			if(Handlers != null)
 				return;
-			
+
 			Handlers = new Dictionary<EaseType, EaseHandler>();
 			Handlers.Add(EaseType.BackEaseIn, BackEaseIn);
 			Handlers.Add(EaseType.BackEaseInOut, BackEaseInOut);
@@ -116,7 +116,7 @@ namespace Renko.Utility
 		public static float EaseIn( float t, float b, float c, float d ) {
 			return QuadEaseIn(t, b, c, d);
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for an exponential (2^t) easing out: 
 		/// decelerating from zero velocity.
@@ -128,7 +128,7 @@ namespace Renko.Utility
 		public static float ExpoEaseOut( float t, float b, float c, float d ) {
 			return ( t == 1 ) ? b + c : c * ( -Mathf.Pow( 2, -10 * t ) + 1 ) + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for an exponential (2^t) easing in: 
 		/// accelerating from zero velocity.
@@ -141,7 +141,7 @@ namespace Renko.Utility
 		public static float ExpoEaseIn( float t, float b, float c, float d ) {
 			return ( t == 0 ) ? b : c * Mathf.Pow( 2, 10 * ( t - 1 ) ) + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for an exponential (2^t) easing in/out: 
 		/// acceleration until halfway, then deceleration.
@@ -154,16 +154,16 @@ namespace Renko.Utility
 		public static float ExpoEaseInOut( float t, float b, float c, float d ) {
 			if ( t == 0 )
 				return b;
-			
+
 			if ( t == 1 )
 				return b + c;
-			
+
 			if ( (t *= 2) < 1 )
 				return c  * 0.5f * Mathf.Pow( 2, 10 * ( t - 1 ) ) + b;
-			
+
 			return c  * 0.5f * ( -Mathf.Pow( 2, -10 * --t ) + 2 ) + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for an exponential (2^t) easing out/in: 
 		/// deceleration until halfway, then acceleration.
@@ -176,10 +176,10 @@ namespace Renko.Utility
 		public static float ExpoEaseOutIn( float t, float b, float c, float d ) {
 			if ( t < 0.5f )
 				return ExpoEaseOut( t * 2, b, c  * 0.5f, d );
-			
+
 			return ExpoEaseIn( ( t * 2 ) - 1f, b + c * 0.5f, c * 0.5f, d );
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a circular (sqrt(1-t^2)) easing out: 
 		/// decelerating from zero velocity.
@@ -192,7 +192,7 @@ namespace Renko.Utility
 		public static float CircEaseOut( float t, float b, float c, float d ) {
 			return c * Mathf.Sqrt( 1 - ( t = t - 1 ) * t ) + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a circular (sqrt(1-t^2)) easing in: 
 		/// accelerating from zero velocity.
@@ -205,7 +205,7 @@ namespace Renko.Utility
 		public static float CircEaseIn( float t, float b, float c, float d ) {
 			return -c * ( Mathf.Sqrt( 1 - t * t ) - 1 ) + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a circular (sqrt(1-t^2)) easing in/out: 
 		/// acceleration until halfway, then deceleration.
@@ -218,10 +218,10 @@ namespace Renko.Utility
 		public static float CircEaseInOut( float t, float b, float c, float d ) {
 			if ( (t *= 2f) < 1 )
 				return -c * 0.5f * ( Mathf.Sqrt( 1 - t * t ) - 1 ) + b;
-			
+
 			return c * 0.5f * ( Mathf.Sqrt( 1 - ( t -= 2 ) * t ) + 1 ) + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a circular (sqrt(1-t^2)) easing in/out: 
 		/// acceleration until halfway, then deceleration.
@@ -234,10 +234,10 @@ namespace Renko.Utility
 		public static float CircEaseOutIn( float t, float b, float c, float d ) {
 			if ( t < 0.5f )
 				return CircEaseOut( t * 2, b, c * 0.5f, d );
-			
+
 			return CircEaseIn( ( t * 2 ) - 1f, b + c * 0.5f, c * 0.5f, d );
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a quadratic (t^2) easing out: 
 		/// decelerating from zero velocity.
@@ -250,7 +250,7 @@ namespace Renko.Utility
 		public static float QuadEaseOut( float t, float b, float c, float d ) {
 			return -c * t * ( t - 2 ) + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a quadratic (t^2) easing in: 
 		/// accelerating from zero velocity.
@@ -263,7 +263,7 @@ namespace Renko.Utility
 		public static float QuadEaseIn( float t, float b, float c, float d ) {
 			return c * t * t + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a quadratic (t^2) easing in/out: 
 		/// acceleration until halfway, then deceleration.
@@ -276,10 +276,10 @@ namespace Renko.Utility
 		public static float QuadEaseInOut( float t, float b, float c, float d ) {
 			if ( (t *= 2f) < 1 )
 				return c * 0.5f * t * t + b;
-			
+
 			return -c * 0.5f * ( ( --t ) * ( t - 2 ) - 1 ) + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a quadratic (t^2) easing out/in: 
 		/// deceleration until halfway, then acceleration.
@@ -292,10 +292,10 @@ namespace Renko.Utility
 		public static float QuadEaseOutIn( float t, float b, float c, float d ) {
 			if ( t < 0.5f )
 				return QuadEaseOut( t * 2, b, c * 0.5f, d );
-			
+
 			return QuadEaseIn( ( t * 2 ) - 1f, b + c * 0.5f, c * 0.5f, d );
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a sinusoidal (sin(t)) easing out: 
 		/// decelerating from zero velocity.
@@ -308,7 +308,7 @@ namespace Renko.Utility
 		public static float SineEaseOut( float t, float b, float c, float d ) {
 			return c * Mathf.Sin( t * ( Mathf.PI * 0.5f ) ) + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a sinusoidal (sin(t)) easing in: 
 		/// accelerating from zero velocity.
@@ -321,7 +321,7 @@ namespace Renko.Utility
 		public static float SineEaseIn( float t, float b, float c, float d ) {
 			return -c * Mathf.Cos( t * ( Mathf.PI * 0.5f ) ) + c + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a sinusoidal (sin(t)) easing in/out: 
 		/// acceleration until halfway, then deceleration.
@@ -334,9 +334,9 @@ namespace Renko.Utility
 		public static float SineEaseInOut( float t, float b, float c, float d ) {
 			if ((t *= 2f) < 1)
 				return SineEaseIn(t, b, c*0.5f, d);
-			return SineEaseOut(t, b + c*0.5f, c*0.5f, d);
+			return SineEaseOut(t-1, b + c*0.5f, c*0.5f, d);
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a sinusoidal (sin(t)) easing in/out: 
 		/// deceleration until halfway, then acceleration.
@@ -349,10 +349,10 @@ namespace Renko.Utility
 		public static float SineEaseOutIn( float t, float b, float c, float d ) {
 			if (t < 0.5f)
 				return SineEaseOut(t * 2, b, c * 0.5f, d);
-			
+
 			return SineEaseIn((t * 2) - 1f, b + c * 0.5f, c * 0.5f, d);
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a cubic (t^3) easing out: 
 		/// decelerating from zero velocity.
@@ -365,7 +365,7 @@ namespace Renko.Utility
 		public static float CubicEaseOut( float t, float b, float c, float d ) {
 			return c * ( ( t = t - 1 ) * t * t + 1 ) + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a cubic (t^3) easing in: 
 		/// accelerating from zero velocity.
@@ -378,7 +378,7 @@ namespace Renko.Utility
 		public static float CubicEaseIn( float t, float b, float c, float d ) {
 			return c * t * t * t + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a cubic (t^3) easing in/out: 
 		/// acceleration until halfway, then deceleration.
@@ -391,10 +391,10 @@ namespace Renko.Utility
 		public static float CubicEaseInOut( float t, float b, float c, float d ) {
 			if ( (t *= 2f) < 1 )
 				return c * 0.5f * t * t * t + b;
-			
+
 			return c * 0.5f * ( ( t -= 2 ) * t * t + 2 ) + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a cubic (t^3) easing out/in: 
 		/// deceleration until halfway, then acceleration.
@@ -407,10 +407,10 @@ namespace Renko.Utility
 		public static float CubicEaseOutIn( float t, float b, float c, float d ) {
 			if ( t < 0.5f )
 				return CubicEaseOut( t * 2, b, c * 0.5f, d );
-			
+
 			return CubicEaseIn( ( t * 2 ) - 1f, b + c * 0.5f, c * 0.5f, d );
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a quartic (t^4) easing out: 
 		/// decelerating from zero velocity.
@@ -423,7 +423,7 @@ namespace Renko.Utility
 		public static float QuartEaseOut( float t, float b, float c, float d ) {
 			return -c * ( ( t = t - 1 ) * t * t * t - 1 ) + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a quartic (t^4) easing in: 
 		/// accelerating from zero velocity.
@@ -436,7 +436,7 @@ namespace Renko.Utility
 		public static float QuartEaseIn( float t, float b, float c, float d ) {
 			return c * t * t * t * t + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a quartic (t^4) easing in/out: 
 		/// acceleration until halfway, then deceleration.
@@ -449,10 +449,10 @@ namespace Renko.Utility
 		public static float QuartEaseInOut( float t, float b, float c, float d ) {
 			if ( (t *= 2f) < 1 )
 				return c * 0.5f * t * t * t * t + b;
-			
+
 			return -c * 0.5f * ( ( t -= 2 ) * t * t * t - 2 ) + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a quartic (t^4) easing out/in: 
 		/// deceleration until halfway, then acceleration.
@@ -465,10 +465,10 @@ namespace Renko.Utility
 		public static float QuartEaseOutIn( float t, float b, float c, float d ) {
 			if ( t < 0.5f )
 				return QuartEaseOut( t * 2, b, c * 0.5f, d );
-			
+
 			return QuartEaseIn( ( t * 2 ) - 1f, b + c * 0.5f, c * 0.5f, d );
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a quintic (t^5) easing out: 
 		/// decelerating from zero velocity.
@@ -481,7 +481,7 @@ namespace Renko.Utility
 		public static float QuintEaseOut( float t, float b, float c, float d ) {
 			return c * ( ( t = t - 1 ) * t * t * t * t + 1 ) + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a quintic (t^5) easing in: 
 		/// accelerating from zero velocity.
@@ -494,7 +494,7 @@ namespace Renko.Utility
 		public static float QuintEaseIn( float t, float b, float c, float d ) {
 			return c * t * t * t * t * t + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a quintic (t^5) easing in/out: 
 		/// acceleration until halfway, then deceleration.
@@ -509,7 +509,7 @@ namespace Renko.Utility
 				return c * 0.5f * t * t * t * t * t + b;
 			return c * 0.5f * ( ( t -= 2 ) * t * t * t * t + 2 ) + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a quintic (t^5) easing in/out: 
 		/// acceleration until halfway, then deceleration.
@@ -524,7 +524,7 @@ namespace Renko.Utility
 				return QuintEaseOut( t * 2, b, c * 0.5f, d );
 			return QuintEaseIn( ( t * 2 ) - 1f, b + c * 0.5f, c * 0.5f, d );
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for an elastic (exponentially decaying sine wave) easing out: 
 		/// decelerating from zero velocity.
@@ -537,13 +537,13 @@ namespace Renko.Utility
 		public static float ElasticEaseOut( float t, float b, float c, float d ) {
 			if ( t == 1 )
 				return b + c;
-			
+
 			float p = d * 0.3f;
 			float s = p * 0.25f;
-			
+
 			return ( c * Mathf.Pow( 2, -10 * t ) * Mathf.Sin( ( t * d - s ) * ( 2 * Mathf.PI ) / p ) + c + b );
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for an elastic (exponentially decaying sine wave) easing in: 
 		/// accelerating from zero velocity.
@@ -556,13 +556,13 @@ namespace Renko.Utility
 		public static float ElasticEaseIn( float t, float b, float c, float d ) {
 			if ( t == 1 )
 				return b + c;
-			
+
 			float p = d * 0.3f;
 			float s = p * 0.25f;
-			
+
 			return -( c * Mathf.Pow( 2, 10 * ( t -= 1 ) ) * Mathf.Sin( ( t * d - s ) * ( 2 * Mathf.PI ) / p ) ) + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for an elastic (exponentially decaying sine wave) easing in/out: 
 		/// acceleration until halfway, then deceleration.
@@ -575,15 +575,15 @@ namespace Renko.Utility
 		public static float ElasticEaseInOut( float t, float b, float c, float d ) {
 			if ( (t *= 2f) == 2 )
 				return b + c;
-			
+
 			float p = d * 0.45f;//( 0.3f * 1.5f );
 			float s = p * 0.25f;
-			
+
 			if ( t < 1 )
 				return -0.5f * ( c * Mathf.Pow( 2, 10 * ( t -= 1 ) ) * Mathf.Sin( ( t * d - s ) * ( 2 * Mathf.PI ) / p ) ) + b;
 			return c * Mathf.Pow( 2, -10 * ( t -= 1 ) ) * Mathf.Sin( ( t * d - s ) * ( 2 * Mathf.PI ) / p ) * 0.5f + c + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for an elastic (exponentially decaying sine wave) easing out/in: 
 		/// deceleration until halfway, then acceleration.
@@ -598,7 +598,7 @@ namespace Renko.Utility
 				return ElasticEaseOut( t * 2, b, c * 0.5f, d );
 			return ElasticEaseIn( ( t * 2 ) - 1f, b + c * 0.5f, c * 0.5f, d );
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a bounce (exponentially decaying parabolic bounce) easing out: 
 		/// decelerating from zero velocity.
@@ -618,7 +618,7 @@ namespace Renko.Utility
 			else
 				return c * ( 7.5625f * ( t -= 0.95452875f ) * t + 0.984375f ) + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a bounce (exponentially decaying parabolic bounce) easing in: 
 		/// accelerating from zero velocity.
@@ -631,7 +631,7 @@ namespace Renko.Utility
 		public static float BounceEaseIn( float t, float b, float c, float d ) {
 			return c - BounceEaseOut( 1f - t, 0, c, d ) + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a bounce (exponentially decaying parabolic bounce) easing in/out: 
 		/// acceleration until halfway, then deceleration.
@@ -647,7 +647,7 @@ namespace Renko.Utility
 			else
 				return BounceEaseOut( t * 2 - 1f, 0, c, d ) * 0.5f + c * 0.5f + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a bounce (exponentially decaying parabolic bounce) easing out/in: 
 		/// deceleration until halfway, then acceleration.
@@ -662,7 +662,7 @@ namespace Renko.Utility
 				return BounceEaseOut( t * 2, b, c * 0.5f, d );
 			return BounceEaseIn( ( t * 2 ) - 1f, b + c * 0.5f, c * 0.5f, d );
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a back (overshooting cubic easing: (s+1)*t^3 - s*t^2) easing out: 
 		/// decelerating from zero velocity.
@@ -675,7 +675,7 @@ namespace Renko.Utility
 		public static float BackEaseOut( float t, float b, float c, float d ) {
 			return c * ( ( t = t - 1 ) * t * ( 2.70158f * t + 1.70158f ) + 1 ) + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a back (overshooting cubic easing: (s+1)*t^3 - s*t^2) easing in: 
 		/// accelerating from zero velocity.
@@ -688,7 +688,7 @@ namespace Renko.Utility
 		public static float BackEaseIn( float t, float b, float c, float d ) {
 			return c * t * t * ( 2.70158f * t - 1.70158f ) + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a back (overshooting cubic easing: (s+1)*t^3 - s*t^2) easing in/out: 
 		/// acceleration until halfway, then deceleration.
@@ -704,7 +704,7 @@ namespace Renko.Utility
 				return c * 0.5f * ( t * t * ( ( ( s *= 1.525f ) + 1 ) * t - s ) ) + b;
 			return c * 0.5f * ( ( t -= 2 ) * t * ( ( ( s *= 1.525f ) + 1 ) * t + s ) + 2 ) + b;
 		}
-		
+
 		/// <summary>
 		/// Easing equation function for a back (overshooting cubic easing: (s+1)*t^3 - s*t^2) easing out/in: 
 		/// deceleration until halfway, then acceleration.
