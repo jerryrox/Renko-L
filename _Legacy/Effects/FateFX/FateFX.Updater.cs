@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Renko.Effects
+namespace Renko.Legacy.Effects
 {
 	public partial class FateFX {
 

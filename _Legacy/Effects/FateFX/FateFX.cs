@@ -5,7 +5,7 @@ using Renko.Utility;
 using Renko.Diagnostics;
 using Renko;
 
-namespace Renko.Effects
+namespace Renko.Legacy.Effects
 {
 	/// <summary>
 	/// A simple library that allows you to create animations programmatically.

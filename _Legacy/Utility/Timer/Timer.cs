@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Renko.Utility
+namespace Renko.Legacy.Utility
 {
 	/// <summary>
 	/// A module that helps with time-controlled events.

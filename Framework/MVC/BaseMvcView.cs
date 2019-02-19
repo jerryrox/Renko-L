@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Renko.Utility;
-using Renko.Effects;
+using Renko.LapseFramework;
 
 namespace Renko.MVCFramework
 {
@@ -11,7 +11,7 @@ namespace Renko.MVCFramework
 	/// The base class of all MVC view components.
 	/// </summary>
 	public class BaseMvcView : MonoBehaviour, IMvcView {
-
+		
 		/// <summary>
 		/// Just keeping this value as a reference rather than hard-coding it every time an editor script needs it.
 		/// </summary>
@@ -185,7 +185,7 @@ namespace Renko.MVCFramework
 
 			// Raising view disposal event.
 			if(longestHideAni != null) {
-				longestHideAni.FateAni.OnReset += OnHideAniEnded;
+				longestHideAni.FateAni.AddEvent(FateEvents.OnEnd, OnHideAniEnded);
 			}
 			else {
 				MVC.DisposeView(this);
@@ -195,9 +195,9 @@ namespace Renko.MVCFramework
 		/// <summary>
 		/// Callback method after longestHideAni finishes.
 		/// </summary>
-		void OnHideAniEnded(FateItem item)
+		void OnHideAniEnded(IFateTimer item)
 		{
-			longestHideAni.FateAni.OnReset -= OnHideAniEnded;
+			longestHideAni.FateAni.RemoveEvent(FateEvents.OnEnd, OnHideAniEnded);
 			MVC.DisposeView(this);
 		}
 	}

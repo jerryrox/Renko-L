@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Renko.Utility;
 
-namespace Renko.Effects
+namespace Renko.Legacy.Effects
 {
 	/// <summary>
 	/// A class that represents a time section within FateFX.

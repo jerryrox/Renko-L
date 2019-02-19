@@ -1,8 +1,8 @@
 ﻿#if NGUI
 using System;
 using UnityEngine;
-using Renko.Effects;
 using Renko.Utility;
+using Renko.LapseFramework;
 
 namespace Renko.MVCFramework
 {
@@ -25,7 +25,7 @@ namespace Renko.MVCFramework
 		/// <summary>
 		/// Returns the FateItem being used for playing animaion.
 		/// </summary>
-		public abstract FateItem FateAni {
+		public abstract IFateTimer FateAni {
 			get;
 		}
 

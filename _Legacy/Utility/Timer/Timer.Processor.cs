@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-namespace Renko.Utility
+namespace Renko.Legacy.Utility
 {
 	public partial class Timer : MonoBehaviour {
 

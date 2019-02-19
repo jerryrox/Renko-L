@@ -6,7 +6,6 @@ using Renko.Network;
 using Renko.Plugin;
 using Renko.Threading;
 using Renko.Utility;
-using Renko.Effects;
 
 namespace Renko
 {
@@ -31,8 +30,6 @@ namespace Renko
 			Netko.Initialize();
 			RenQL.Initialize();
 			UnityThread.Initialize();
-			Timer.Initialize();
-			FateFX.Initialize();
 			Easing.Initialize();
 
 			if(includePluginModules) {

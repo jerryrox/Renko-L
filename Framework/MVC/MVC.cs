@@ -9,9 +9,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Renko;
 using Renko.Utility;
-using Renko.Effects;
 using Renko.Diagnostics;
 using Renko.MVCFramework.Internal;
+using Renko.LapseFramework;
 
 namespace Renko.MVCFramework
 {
@@ -143,8 +143,8 @@ namespace Renko.MVCFramework
 
 			// Initialize required libraries
 			InitializeResolutions();
-			Timer.Initialize();
-			FateFX.Initialize();
+			Timer.Initialize(4);
+			FateFX.Initialize(16);
 
 			// Core MVC initialization.
 			// This method is auto-generated in a new partial script so we use SendMessage.

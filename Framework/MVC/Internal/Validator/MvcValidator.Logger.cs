@@ -6,10 +6,10 @@ using System;
 using UnityEngine;
 using Renko.Diagnostics;
 
-namespace Renko.MVCFramework
+namespace Renko.MVCFramework.Internal
 {
 	public static partial class MvcValidator {
-
+		
 		public static class Output {
 
 			/// <summary>

@@ -8,9 +8,8 @@ using Renko.Diagnostics;
 using Renko.IO;
 using Renko.Utility;
 using Renko.Data;
-using Renko.MVCFramework.Internal;
 
-namespace Renko.MVCFramework
+namespace Renko.MVCFramework.Internal
 {
 	/// <summary>
 	/// The configuration model for MVC.

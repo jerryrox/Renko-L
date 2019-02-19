@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using Renko.Utility;
+using Renko.LapseFramework;
 
 namespace Renko.Plugin.Internal
 {
@@ -21,15 +22,15 @@ namespace Renko.Plugin.Internal
 		}
 
 		public void TakePhoto (SaveOption saveOptions, CropOption cropOptions) {
-			Timer.CreateDelay(0.5f, 0, delegate(Timer.Item item) {
+			Timer.CreateDelay(delegate() {
 				messageTarget.SendMessage("OnPhotoCallback", NativeCamera.EditorCode);
-			});
+			}, 0.5f).Start();
 		}
 
 		public void TakeVideo (SaveOption saveOptions, VideoOption videoOptions) {
-			Timer.CreateDelay(0.5f, 0, delegate(Timer.Item item) {
+			Timer.CreateDelay(delegate() {
 				messageTarget.SendMessage("OnVideoCallback", NativeCamera.EditorCode);
-			});
+			}, 0.5f);
 		}
 
 		public string FinalizePhoto(string filePath) {

@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Renko.MVCFramework.Internal;
 
 namespace Renko.MVCFramework
 {

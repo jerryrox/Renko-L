@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine.Purchasing;
 using Renko.Utility;
+using Renko.LapseFramework;
 
 namespace Renko.Services
 {
@@ -24,12 +25,12 @@ namespace Renko.Services
 			/// <summary>
 			/// Timer for detecting restoration end.
 			/// </summary>
-			private Timer.Item timer;
+			private ITimerDelay timer;
 
 
 			public Restorer(Action onComplete) {
 				restoreCompleted = onComplete;
-				timer = Timer.CreateDelay(RestorePurchaseDuration, 0, OnTimerFinished);
+				timer = Timer.CreateDelay(OnTimerFinished, RestorePurchaseDuration);
 			}
 
 			/// <summary>
@@ -37,9 +38,15 @@ namespace Renko.Services
 			/// </summary>
 			public void Start() {
 				var apple = storeExtensionProvider.GetExtension<IAppleExtensions>();
+				timer.Start();
 				apple.RestoreTransactions((bool result) => {
 					IAP.LogMessage("IAPManager.Restorer.RestorePurchases - Item result: " + result);
-					timer.Progress = 0f;
+
+					if(timer.IsValid)
+					{
+						timer.Stop();
+						timer.Start();
+					}
 				});
 			}
 
@@ -47,7 +54,7 @@ namespace Renko.Services
 			/// OnFinished callback for the timer.
 			/// Having this method called means the restoration is finished.
 			/// </summary>
-			void OnTimerFinished(Timer.Item timer) {
+			void OnTimerFinished() {
 				if(restoreCompleted != null)
 					restoreCompleted();
 			}

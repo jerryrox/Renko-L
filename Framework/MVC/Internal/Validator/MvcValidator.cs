@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Renko.Extensions;
 
-namespace Renko.MVCFramework
+namespace Renko.MVCFramework.Internal
 {
 	public static partial class MvcValidator {
-
+		
 		/// <summary>
 		/// Checks whether specified config values are setup correctly.
 		/// </summary>

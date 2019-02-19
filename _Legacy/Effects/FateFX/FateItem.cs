@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Renko.Utility;
 
-namespace Renko.Effects
+namespace Renko.Legacy.Effects
 {
 	/// <summary>
 	/// The item which represents a single FateFX animation.
