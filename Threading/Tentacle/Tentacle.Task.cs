@@ -20,6 +20,11 @@ namespace Renko.Threading
 			private object locker;
 
 			/// <summary>
+			/// An argument which will be passed to the task.
+			/// </summary>
+			private object argument;
+
+			/// <summary>
 			/// A flag to ensure the Start() method is only called once.
 			/// </summary>
 			private bool alreadyStarted;
@@ -90,7 +95,7 @@ namespace Renko.Threading
 			}
 
 
-			public Task(ProcessHandler handler) {
+			public Task(ProcessHandler handler, object argument) {
 				alreadyStarted = false;
 				locker = new object();
 				workerThread = new Thread(DoProcess);
@@ -128,7 +133,7 @@ namespace Renko.Threading
 			/// </summary>
 			void DoProcess() {
 				try {
-					ReturnData = process();
+					ReturnData = process(argument);
 				}
 				catch(Exception e) {
 					ErrorData = e;

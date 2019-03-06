@@ -11,14 +11,14 @@ namespace Renko.Threading
 		/// <summary>
 		/// Delegate that handles the work.
 		/// </summary>
-		public delegate object ProcessHandler();
+		public delegate object ProcessHandler(object argument);
 
 
 		/// <summary>
 		/// Returns a new Task that processes the specified handler in another thread.
 		/// </summary>
-		public static Task Create(ProcessHandler handler) {
-			return new Task(handler);
+		public static Task Create(ProcessHandler handler, object argument) {
+			return new Task(handler, argument);
 		}
 
 		/// <summary>
