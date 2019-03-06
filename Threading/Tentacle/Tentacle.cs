@@ -17,7 +17,7 @@ namespace Renko.Threading
 		/// <summary>
 		/// Returns a new Task that processes the specified handler in another thread.
 		/// </summary>
-		public static Task Create(ProcessHandler handler, object argument) {
+		public static Task Create(ProcessHandler handler, object argument = null) {
 			return new Task(handler, argument);
 		}
 
