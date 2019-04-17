@@ -35,7 +35,7 @@ namespace Renko.Data
 				
 			Type type = typeof(T);
 			object value = JsonDeserializer.Deserialize(type, instance, json);
-			if(value == null || value is T)
+			if(value == null || !(value is T))
 				return default(T);
 			return (T)value;
 		}
