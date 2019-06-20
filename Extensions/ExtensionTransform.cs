@@ -128,7 +128,7 @@ namespace Renko.Extensions
 		/// <summary>
 		/// Sets the xyz local position of this transform.
 		/// </summary>
-		public static void SetLocalPositionXY(this Transform context, float x, float y, float z) {
+		public static void SetLocalPositionXYZ(this Transform context, float x, float y, float z) {
 			context.localPosition = new Vector3(x, y, z);
 		}
 		
